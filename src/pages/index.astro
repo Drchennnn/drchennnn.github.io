@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a,b) => b.data.date.valueOf()-a.data.date.valueOf() || a.id.localeCompare(b.id));
+const date = (d: Date) => d.toISOString().slice(0,10).replaceAll('-', '.');
+---
+<Base>
+  <section class="intro"><p class="eyebrow">日々の記録 / NOTES & THOUGHTS</p><h1>留一点空白，<br/>写一点日常。</h1><p class="lede">一些想法，一些记录。<br/>把值得留下的片刻，慢慢写在这里。</p><span class="intro-mark" aria-hidden="true">余白</span></section>
+  <section class="entries" aria-labelledby="list-title"><div class="section-label"><h2 id="list-title">文章</h2><span>{String(posts.length).padStart(2, '0')} 篇记录</span></div>
+    {posts.length ? <ol>{posts.map(post => <li><a class="entry" href={`/posts/${post.id}/`}><time datetime={post.data.date.toISOString()}>{date(post.data.date)}</time><div><h3>{post.data.title}</h3>{post.data.description && <p>{post.data.description}</p>}</div><span class="arrow" aria-hidden="true">↗</span></a></li>)}</ol> : <div class="empty">这里还没有文章。留一页空白，等待下一次记录。</div>}
+  </section>
+</Base>
