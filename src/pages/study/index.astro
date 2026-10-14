@@ -1,0 +1,7 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PostList from '../../components/PostList.astro';
+const posts = (await getCollection('posts', ({ data }) => !data.draft && data.category === 'study')).sort((a,b) => b.data.date.valueOf()-a.data.date.valueOf() || a.id.localeCompare(b.id));
+---
+<Base title="学び手帖"><section class="collection-head"><p class="eyebrow">STUDY / 学习心得</p><h1>学び手帖</h1><p class="lede">把读过、试过与想明白的东西，整理成下一次仍能找到的线索。</p></section><section class="entries" aria-labelledby="list-title"><div class="section-label"><h2 id="list-title">全部心得</h2><span>{String(posts.length).padStart(2, '0')} 篇</span></div><PostList {posts} empty="这里还没有学习记录。第一条线索正在路上。" /></section></Base>

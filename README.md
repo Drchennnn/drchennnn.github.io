@@ -2,7 +2,15 @@
 
 Drchennnn 的简洁个人博客，基于 Astro，发布于 https://drchennnn.github.io/ 。
 
-## 写文章（不需要本地命令）
+## 分组与搜索
+
+- **日々小记**：日常、短文和零碎想法。文章 `category: daily`；旧文章没有此字段时也属于这里。
+- **学び手帖**：学习心得。文章 `category: study`。
+- **光影拾遗**：照片记录。后台选择同名集合，新建记录，上传 1–50 张照片；每张可填照片小字和无障碍图片描述，另可填写补充正文。
+- 导航进入各分组；搜索覆盖已发布文章正文和照片说明。隐藏草稿不进入站点搜索索引。
+- 照片记录保存在 `src/content/photos/`，图片上传至 `public/images/`。删除照片记录不会自动删除媒体库图片，以免影响其他文章；媒体库图片需另行管理。
+
+## 写文章（也可直接通过 GitHub 管理）
 
 打开 https://drchennnn.github.io/manage/ ，下载文章模板，用文本编辑器修改后保存为新的英文文件名，例如 `my-note.md`。
 
@@ -14,6 +22,7 @@ Drchennnn 的简洁个人博客，基于 Astro，发布于 https://drchennnn.git
 ---
 title: "文章标题"
 date: 2026-10-15
+category: daily
 description: "文章摘要"
 draft: false
 ---
@@ -51,12 +60,12 @@ npm test
 Pages 的 Source 选择 GitHub Actions。每次推送 main，由 `.github/workflows/deploy.yml` 构建并部署 dist。
 构建失败时查看仓库 Actions，检查 Markdown 头部日期和标题等字段；之前发布的版本保持可访问。
 
-网站没有独立登录后台。文章管理使用 GitHub 的认证与文件操作，不在前端保存访问令牌。
+网站前台由 GitHub Pages 托管；在线后台通过 GitHub 登录获取仓库写入权限。
 
 ## 在线管理
 
 打开 https://drchennnn.github.io/admin/ ，使用 Drchennnn 的 GitHub 账号登录。
-- 新建/编辑：填写标题、日期、摘要和正文，支持可视化编辑及 Markdown，保存后等待 GitHub Actions 发布。
+- 新建/编辑：填写标题、日期、文章分组、摘要和正文，支持可视化编辑及 Markdown，保存后等待 GitHub Actions 发布。
 - 导入：顶部“导入 Markdown”读取 .md 的 frontmatter 与正文，先预览再进入编辑器；最多 500 KB。本地图片须另外上传。
 - 图片：正文图片按钮或媒体库上传至 public/images。
 - 删除：打开文章后使用删除操作并确认；Git 历史保留，可恢复。

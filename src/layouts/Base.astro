@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-interface Props { title?: string; description?: string; }
+interface Props { title?: string; description?: string; category?: 'daily' | 'study'; }
 const { title = '日常手帖', description = 'Drchennnn 的个人博客，记录日常与想法。' } = Astro.props;
 const path = Astro.url.pathname;
 ---
@@ -16,10 +16,10 @@ const path = Astro.url.pathname;
   <a class="skip" href="#main">跳至正文</a>
   <div class="shell">
     <header><a class="brand" href="/"><span class="seal" aria-hidden="true">日<br/>常</span><span>日常手帖<small>DRCHENNNN / JOURNAL</small></span></a>
-      <nav aria-label="主导航"><a href="/" aria-current={path === '/' || path.startsWith('/posts/') ? 'page' : undefined}>文章</a><a href="/about/" aria-current={path === '/about/' ? 'page' : undefined}>关于</a><a href="https://github.com/Drchennnn" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
+      <nav aria-label="主导航"><a href="/daily/" aria-current={path === '/daily/' || (path.startsWith('/posts/') && Astro.props.category === 'daily') ? 'page' : undefined}>日々小记</a><a href="/study/" aria-current={path === '/study/' || (path.startsWith('/posts/') && Astro.props.category === 'study') ? 'page' : undefined}>学び手帖</a><a href="/photos/" aria-current={path.startsWith('/photos/') ? 'page' : undefined}>光影拾遗</a><a href="/search/" aria-current={path === '/search/' ? 'page' : undefined}>搜索</a><a href="/about/" aria-current={path === '/about/' ? 'page' : undefined}>关于</a></nav>
     </header>
     <main id="main"><slot /></main>
-    <footer><span>© {new Date().getFullYear()} Drchennnn<span class="footer-note">慢慢记录，好好生活。</span></span><a href="/admin/">管理登录</a></footer>
+    <footer><span>© {new Date().getFullYear()} Drchennnn<span class="footer-note">慢慢记录，好好生活。</span></span><span class="footer-links"><a href="https://github.com/Drchennnn" target="_blank" rel="noreferrer">GitHub ↗</a><a href="/admin/">管理登录</a></span></footer>
   </div>
 </body>
 </html>

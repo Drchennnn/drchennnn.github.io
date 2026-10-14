@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const photos = await getCollection('photos', ({ data }) => !data.draft);
+const items = [
+  ...posts.map(post => ({ title: post.data.title, description: post.data.description, kind: post.data.category === 'study' ? '学び手帖' : '日々小记', date: post.data.date, href: `/posts/${post.id}/`, search: `${post.data.title} ${post.data.description} ${post.body}` })),
+  ...photos.map(photo => ({ title: photo.data.title, description: photo.data.description, kind: '光影拾遗', date: photo.data.date, href: `/photos/${photo.id}/`, search: `${photo.data.title} ${photo.data.description} ${photo.body} ${photo.data.images.map(image => `${image.caption} ${image.alt}`).join(' ')}` })),
+].sort((a,b) => b.date.valueOf()-a.date.valueOf());
+---
+<Base title="搜索"><section class="search-page"><p class="eyebrow">SEARCH / 寻找记录</p><h1>搜索</h1><label for="site-search">输入标题、正文或照片小字</label><input id="site-search" type="search" autocomplete="off" placeholder="例如：读书、散步、夜晚"/><p id="search-status" class="search-status" aria-live="polite">输入关键词，寻找 {items.length} 条公开记录。</p><ol id="search-results" class="search-results"></ol>
+  <div id="search-index" hidden>{items.map(item => <i data-title={item.title} data-description={item.description} data-kind={item.kind} data-date={item.date.toISOString()} data-href={item.href} data-search={item.search}></i>)}</div></section>
+  <script>
+    const input = document.querySelector<HTMLInputElement>('#site-search')!;
+    const status = document.querySelector<HTMLElement>('#search-status')!;
+    const results = document.querySelector<HTMLOListElement>('#search-results')!;
+    const index = Array.from(document.querySelectorAll<HTMLElement>('#search-index i')).map(node => ({ title: node.dataset.title || '', description: node.dataset.description || '', kind: node.dataset.kind || '', date: node.dataset.date || '', href: node.dataset.href || '', search: (node.dataset.search || '').toLocaleLowerCase() }));
+    const render = () => {
+      const query = input.value.trim().toLocaleLowerCase(); results.replaceChildren();
+      if (!query) { status.textContent = `输入关键词，寻找 ${index.length} 条公开记录。`; return; }
+      const found = index.filter(item => item.search.includes(query)); status.textContent = found.length ? `找到 ${found.length} 条记录。` : '没有找到相符的记录。';
+      found.forEach(item => { const li=document.createElement('li'); const a=document.createElement('a'); a.className='entry'; a.href=item.href; const time=document.createElement('time'); time.dateTime=item.date; time.textContent=item.date.slice(0,10).replaceAll('-','.'); const box=document.createElement('div'); const kind=document.createElement('p'); kind.className='entry-kind'; kind.textContent=item.kind; const h=document.createElement('h2'); h.textContent=item.title; box.append(kind,h); if(item.description){const p=document.createElement('p');p.textContent=item.description;box.append(p)} const arrow=document.createElement('span'); arrow.className='arrow'; arrow.setAttribute('aria-hidden','true'); arrow.textContent='↗'; a.append(time,box,arrow); li.append(a); results.append(li); });
+    };
+    input.addEventListener('input', render);
+  </script>
+</Base>

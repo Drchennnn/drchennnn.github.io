@@ -15,6 +15,8 @@ export function parseArticle(source, filename, loadYaml, today = new Date().toIS
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !Number.isFinite(Date.parse(date)) || new Date(date).toISOString().slice(0,10) !== date) throw new Error('日期请使用 YYYY-MM-DD 格式。');
   if (meta.description != null && typeof meta.description !== 'string') throw new Error('摘要必须是文字。');
   if (meta.draft != null && typeof meta.draft !== 'boolean') throw new Error('draft 只能是 true 或 false。');
+  const category = meta.category ?? 'daily';
+  if (!['daily', 'study'].includes(category)) throw new Error('文章分组 category 只能是 daily（日々小记）或 study（学び手帖）。');
   if (!body.trim()) throw new Error('正文不能为空。');
-  return { title: title.trim(), date, description: meta.description ?? '', draft: meta.draft ?? true, body };
+  return { title: title.trim(), date, category, description: meta.description ?? '', draft: meta.draft ?? true, body };
 }

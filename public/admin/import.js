@@ -16,7 +16,7 @@ input.addEventListener('change', async () => {
     const source = await file.text();
     if (current !== revision) return;
     article = parseArticle(source, file.name, text => load(text, { schema: JSON_SCHEMA }));
-    preview.textContent = `${article.title}\n${article.date}\n${article.draft ? '隐藏草稿' : '公开文章'}\n\n${article.body.slice(0, 2000)}`;
+    preview.textContent = `${article.title}\n${article.date}\n${article.category === 'study' ? '学び手帖' : '日々小记'}\n${article.draft ? '隐藏草稿' : '公开文章'}\n\n${article.body.slice(0, 2000)}`;
     preview.hidden = false; next.disabled = false;
   } catch(error) { if (current === revision) status.textContent = error.message; }
 });
