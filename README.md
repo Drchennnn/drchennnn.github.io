@@ -52,3 +52,16 @@ Pages 的 Source 选择 GitHub Actions。每次推送 main，由 `.github/workfl
 构建失败时查看仓库 Actions，检查 Markdown 头部日期和标题等字段；之前发布的版本保持可访问。
 
 网站没有独立登录后台。文章管理使用 GitHub 的认证与文件操作，不在前端保存访问令牌。
+
+## 在线管理
+
+打开 https://drchennnn.github.io/admin/ ，使用 Drchennnn 的 GitHub 账号登录。
+- 新建/编辑：填写标题、日期、摘要和正文，支持可视化编辑及 Markdown，保存后等待 GitHub Actions 发布。
+- 导入：顶部“导入 Markdown”读取 .md 的 frontmatter 与正文，先预览再进入编辑器；最多 500 KB。本地图片须另外上传。
+- 图片：正文图片按钮或媒体库上传至 public/images。
+- 删除：打开文章后使用删除操作并确认；Git 历史保留，可恢复。
+- 隐藏草稿只从网站移除，公开仓库文件与提交历史仍可见。
+
+OAuth 代码在 worker/src/index.js；配置及部署见 worker/README.md。后台仅请求 public_repo 权限（GitHub OAuth 的该权限适用于账号可写的公共仓库，不能限定单个仓库）；服务额外核对账号和本博客写权限。首次授权请核对应用名称和权限。
+
+编辑器固定使用 Decap CMS 3.17.1，构建时从本地 npm 包复制静态文件，无需运行额外 CMS 服务器。`npm run test:oauth` 验证登录失败和权限边界；`npm run test:admin` 验证导入。第三方 Decap 依赖当前存在 npm 审计告警（包括旧 Markdown 解析器的拒绝服务风险）；只导入可信文件，升级时需重新验证。导入器单独使用修复版本 js-yaml 5.4.3。

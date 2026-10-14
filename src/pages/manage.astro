@@ -1,5 +1,4 @@
 ---
 import Base from '../layouts/Base.astro';
-const repo = 'https://github.com/Drchennnn/drchennnn.github.io';
 ---
-<Base title="文章管理"><section class="simple"><p class="eyebrow">WRITING / 写作</p><h1>管理你的文章。</h1><p class="lede">使用有仓库写入权限的 GitHub 账号登录后，即可上传、编辑或删除文章。提交后会自动发布。</p><div class="actions"><a class="button" href={`${repo}/upload/main/src/content/posts`}>上传文章 ↗</a><a class="text-link" href={`${repo}/tree/main/src/content/posts`}>查看 / 删除文章 ↗</a><a class="text-link" href="/article-template.md" download>下载文章模板 ↓</a></div><div class="prose"><h2>上传</h2><p>下载模板，修改标题、日期和正文，保存为一个新的英文文件名（例如 my-note.md）。点击“上传文章”，上传文件并提交到 main 分支。首页与详情页会自动生成。</p><h2>编辑与删除</h2><p>点击“查看 / 删除文章”，打开对应的 .md 文件。编辑时点击铅笔；删除时打开文件右上角菜单，选择 Delete file，再提交更改。</p><h2>图片与草稿</h2><p>图片可上传至仓库的 public/images 目录，正文中使用 <code>![图片说明](/images/photo.jpg)</code> 引用。设置 <code>draft: true</code> 可从网站隐藏文章；公开仓库里的草稿源码仍然可见。</p><p>发布需要等待构建完成。删除最后一篇文章后，首页会显示空白提示。</p><p><a href={`${repo}/actions`}>查看发布进度 ↗</a> · <a href={`${repo}/upload/main/public/images`}>上传图片 ↗</a></p></div></section></Base>
+<Base title="文章管理"><section class="simple"><p class="eyebrow">WRITING / 写作</p><h1>写下新的日常。</h1><p class="lede">使用 GitHub 登录后，新建、编辑或删除文章。排版交给手帖。</p><div class="actions"><a class="button" href="/admin/">管理登录 →</a><a class="text-link" href="/admin/import.html">导入 Markdown</a></div></section></Base>

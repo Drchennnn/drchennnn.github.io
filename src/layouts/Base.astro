@@ -19,7 +19,7 @@ const path = Astro.url.pathname;
       <nav aria-label="主导航"><a href="/" aria-current={path === '/' || path.startsWith('/posts/') ? 'page' : undefined}>文章</a><a href="/about/" aria-current={path === '/about/' ? 'page' : undefined}>关于</a><a href="https://github.com/Drchennnn" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
     </header>
     <main id="main"><slot /></main>
-    <footer><span>© {new Date().getFullYear()} Drchennnn<span class="footer-note">慢慢记录，好好生活。</span></span><a href="/manage/">文章管理 ↗</a></footer>
+    <footer><span>© {new Date().getFullYear()} Drchennnn<span class="footer-note">慢慢记录，好好生活。</span></span><a href="/admin/">管理登录</a></footer>
   </div>
 </body>
 </html>

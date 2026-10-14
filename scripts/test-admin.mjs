@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import { load, JSON_SCHEMA } from 'js-yaml';
+import { parseArticle } from '../public/admin/import-parser.js';
+const parse = (s, name='note.md') => parseArticle(s, name, text=>load(text,{schema:JSON_SCHEMA}),'2026-10-15');
+const item = parse('---\ntitle: 中文标题\ndate: 2026-10-14\ndescription: 摘要\ndraft: false\n---\n# 正文\n\n1 < 2 & 3');
+assert.equal(item.title,'中文标题'); assert.equal(item.date,'2026-10-14'); assert.equal(item.draft,false); assert(item.body.includes('1 < 2 & 3'));
+assert.equal(parse('# 新文章\n\n正文').title,'新文章'); assert.equal(parse('正文').draft,true);
+assert.equal(parse('\uFEFF---\r\ntitle: 标题\r\n---\r\n正文').title,'标题');
+for (const bad of ['---\ntitle: bad','---\ndate: 2026-02-30\n---\nbody','---\ndraft: nope\n---\nbody','---\n- array\n---\nbody','---\ntitle: [bad]\n---\nbody','']) assert.throws(()=>parse(bad));
+assert.throws(()=>parse('x'.repeat(512001)));
+console.log('PASS: Markdown import metadata, Unicode, defaults, exact body preservation and invalid input.');
