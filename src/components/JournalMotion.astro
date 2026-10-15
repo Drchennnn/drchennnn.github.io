@@ -1,0 +1,33 @@
+<button class="back-top" type="button" aria-label="回到页首" hidden>↑<span>页首</span></button>
+<script>
+  const root = document.documentElement;
+  const motionButton = document.querySelector<HTMLButtonElement>('.motion-toggle');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = root.dataset.motion === 'off';
+  function updateMotion() {
+    root.dataset.motion = paused || reduced.matches ? 'off' : 'on';
+    if (motionButton) {
+      motionButton.disabled = reduced.matches;
+      motionButton.setAttribute('aria-pressed', String(paused || reduced.matches));
+      motionButton.textContent = reduced.matches ? '静态模式' : paused ? '开启动效' : '暂停动效';
+    }
+  }
+  updateMotion();
+  reduced.addEventListener('change', updateMotion);
+  motionButton?.addEventListener('click', () => {
+    paused = !paused;
+    try { localStorage.setItem('journal-motion', paused ? 'off' : 'on'); } catch {}
+    updateMotion();
+  });
+  const chime = document.querySelector<HTMLButtonElement>('.wind-chime');
+  chime?.addEventListener('click', () => {
+    if (root.dataset.motion === 'off' || chime.classList.contains('is-ringing')) return;
+    chime.classList.add('is-ringing');
+  });
+  chime?.querySelector('.chime-swing')?.addEventListener('animationend', () => chime.classList.remove('is-ringing'));
+  const topButton = document.querySelector<HTMLButtonElement>('.back-top');
+  const updateTop = () => { if (topButton) topButton.hidden = window.scrollY < 450; };
+  window.addEventListener('scroll', updateTop, { passive: true });
+  updateTop();
+  topButton?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: root.dataset.motion === 'off' ? 'instant' : 'smooth' }));
+</script>

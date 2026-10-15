@@ -1,25 +1,29 @@
 ---
 import '../styles/global.css';
+import '../styles/journal.css';
+import JournalMotion from '../components/JournalMotion.astro';
 interface Props { title?: string; description?: string; category?: 'daily' | 'study'; }
-const { title = '日常手帖', description = 'Drchennnn 的个人博客，记录日常与想法。' } = Astro.props;
+const { title = '日常手帖', description = 'Link 的个人手帖，收集日常里的小事、学习途中的发现，以及偶然遇见的光。' } = Astro.props;
 const path = Astro.url.pathname;
 ---
 <!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{title} · Drchennnn</title><meta name="description" content={description} />
+  <title>{title} · Link</title><meta name="description" content={description} />
   <link rel="canonical" href={new URL(path, Astro.site)} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <script is:inline>try { document.documentElement.dataset.motion = localStorage.getItem('journal-motion') === 'off' ? 'off' : 'on'; } catch {}</script>
 </head>
 <body>
   <a class="skip" href="#main">跳至正文</a>
   <div class="shell">
-    <header><a class="brand" href="/"><span class="seal" aria-hidden="true">日<br/>常</span><span>日常手帖<small>DRCHENNNN / JOURNAL</small></span></a>
+    <header class="site-header"><a class="brand" href="/"><span class="seal" aria-hidden="true">日<br/>常</span><span>日常手帖<small>LINK / A LITTLE JOURNAL</small></span></a>
       <nav aria-label="主导航"><a href="/daily/" aria-current={path === '/daily/' || (path.startsWith('/posts/') && Astro.props.category === 'daily') ? 'page' : undefined}>日々小记</a><a href="/study/" aria-current={path === '/study/' || (path.startsWith('/posts/') && Astro.props.category === 'study') ? 'page' : undefined}>学び手帖</a><a href="/photos/" aria-current={path.startsWith('/photos/') ? 'page' : undefined}>光影拾遗</a><a href="/search/" aria-current={path === '/search/' ? 'page' : undefined}>搜索</a><a href="/about/" aria-current={path === '/about/' ? 'page' : undefined}>关于</a></nav>
     </header>
     <main id="main"><slot /></main>
-    <footer><span>© {new Date().getFullYear()} Drchennnn<span class="footer-note">慢慢记录，好好生活。</span></span><span class="footer-links"><a href="https://github.com/Drchennnn" target="_blank" rel="noreferrer">GitHub ↗</a><a href="/admin/">管理登录</a></span></footer>
+    <footer><span>© {new Date().getFullYear()} Link<span class="footer-note">慢慢记录，好好生活。</span></span><span class="footer-links"><button class="motion-toggle" type="button" aria-pressed="false">暂停动效</button><a href="https://github.com/Drchennnn" target="_blank" rel="noreferrer">GitHub ↗</a><a href="/admin/">管理登录</a></span></footer>
   </div>
+  <JournalMotion />
 </body>
 </html>
