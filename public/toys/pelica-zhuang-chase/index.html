@@ -16,7 +16,7 @@ html.embedded .controls{margin:0 26px 24px}
 <div class="intro"><h1>等等我，别跑！</h1><p>一个在前面跑，一个在后面追。把速度拉满，一起变成风。</p></div>
 <div class="stage"><svg id="scene" viewBox="0 0 1000 600" role="img" aria-labelledby="scene-title scene-desc">
 <title id="scene-title">佩丽卡追着庄方宜跑</title><desc id="scene-desc">左后方的佩丽卡举着朝后的电锯，追赶右前方保持原图表情的庄方宜。两人随同一个滑块同步加速，双腿自然过渡成旋转漩涡。</desc>
-<defs><radialGradient id="sharedHalo"><stop stop-color="#e7eedf"/><stop offset="1" stop-color="#faf9f3" stop-opacity="0"/></radialGradient><pattern id="road" width="120" height="35" patternUnits="userSpaceOnUse"><path d="M12 22h25M83 7h10" stroke="#c8d5c1" stroke-width="2.5" stroke-linecap="round"/></pattern></defs>
+<defs><radialGradient id="sharedHalo"><stop stop-color="#e7eedf" /><stop offset="1" stop-color="#faf9f3" stop-opacity="0" /></radialGradient><pattern id="road" width="120" height="35" patternUnits="userSpaceOnUse"><path d="M12 22h25M83 7h10" stroke="#c8d5c1" stroke-width="2.5" stroke-linecap="round" /></pattern></defs>
 <defs>
  <radialGradient id="p-halo"><stop stop-color="#e4eddf" /><stop offset="1" stop-color="#faf9f4" stop-opacity="0" /></radialGradient>
  <linearGradient id="p-blade" x2="0" y2="1"><stop stop-color="#f4f7ef" /><stop offset="1" stop-color="#aebeb3" /></linearGradient>
@@ -40,12 +40,11 @@ html.embedded .controls{margin:0 26px 24px}
 <clipPath id="a-leftHornClip"><path d="M340 116L364 18 375 18 401 106 449 172 446 222 479 299 481 343 452 362 421 337 402 243 343 215 340 169 352 168 376 199 391 202 394 177Z" /></clipPath>
 <clipPath id="a-rightHornClip"><path d="M784 170L819 127 849 69 870 18 881 18 897 113 848 173 848 199 861 200 888 168 896 173 893 216 839 239 816 311 793 340 765 319 780 273 789 223Z" /></clipPath>
 <clipPath id="a-silhouette"><path d="M475 191C517 128 628 132 646 208Q726 200 785 246L846 261 853 302 879 333 906 371 892 385 870 374Q909 427 926 471L905 499 905 535Q948 630 944 758L918 732Q943 850 997 889L941 900Q958 948 996 969L939 977Q949 1040 899 1076L910 1015 877 1048 842 1020 825 1096 778 1115 783 1154 726 1174 723 1216 651 1220 649 1170 602 1170 599 1218 531 1218 528 1169 469 1150 472 1125 418 1090 434 1039Q371 1090 343 1050Q281 1034 283 948L254 910Q308 888 339 836L345 771 319 787 321 729 303 764Q298 720 348 652L365 624 342 630 356 607Q326 618 307 605Q340 582 353 546L337 561Q301 527 352 414L412 309 372 317 414 282 427 249 459 224 479 280Q543 225 635 242Q626 157 475 191Z" /></clipPath>
-<mask id="a-bodyMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254"><rect width="1254" height="1254" fill="white" /><path d="M568 711Q544 717 532 751L492 807 536 840 578 776 589 735Z" fill="black" /><path d="M500 789L552 819 508 920 481 958Q450 974 426 946L425 918Z" fill="black" /><path d="M685 711Q715 720 726 756L760 809 715 841 676 778 664 738Z" fill="black" /><path d="M700 818L750 790 825 918 821 949Q799 975 774 954L747 922Z" fill="black" /><path d="M536 869L628 869 629 1090 481 1090 488 1014Z" fill="black" /><path d="M482 1066L628 1066 626 1168 600 1170 600 1219 530 1219 529 1168 470 1145Z" fill="black" /><path d="M626 869L713 869 756 1008 775 1090 626 1090Z" fill="black" /><path d="M625 1066L772 1066 784 1148 725 1171 724 1219 650 1219 650 1170 625 1169Z" fill="black" /><path d="M502 869H747L797 1080 781 1254H466L419 1080Z" fill="black" /></mask></defs>
-
-<ellipse cx="530" cy="310" rx="460" ry="245" fill="url(#sharedHalo)"/>
-<g fill="none" stroke="#d9e2d0" stroke-width="2" stroke-linecap="round"><path d="M70 376h61M850 320h76M475 275h35M921 387h26"/><path d="M83 490l5-13 6 13m826-9 5-13 6 13"/></g>
-<path d="M65 504Q520 490 950 504" fill="none" stroke="#c4d2bb" stroke-width="2"/>
-<path d="M65 505Q520 491 950 505v35H65Z" fill="url(#road)"/>
+<mask id="a-bodyMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254"><rect width="1254" height="1254" fill="white" /><path d="M568 711Q544 717 532 751L492 807 536 840 578 776 589 735Z" fill="black" /><path d="M500 789L552 819 508 920 481 958Q450 974 426 946L425 918Z" fill="black" /><path d="M685 711Q715 720 726 756L760 809 715 841 676 778 664 738Z" fill="black" /><path d="M700 818L750 790 825 918 821 949Q799 975 774 954L747 922Z" fill="black" /><path d="M536 869L628 869 629 1090 481 1090 488 1014Z" fill="black" /><path d="M482 1066L628 1066 626 1168 600 1170 600 1219 530 1219 529 1168 470 1145Z" fill="black" /><path d="M626 869L713 869 756 1008 775 1090 626 1090Z" fill="black" /><path d="M625 1066L772 1066 784 1148 725 1171 724 1219 650 1219 650 1170 625 1169Z" fill="black" /><path d="M502 869H747L797 1080 781 1254H466L419 1080Z" fill="black" /></mask><clipPath id="a-sleevesOnly"><rect x="400" y="700" width="460" height="218" /></clipPath></defs>
+<ellipse cx="530" cy="310" rx="460" ry="245" fill="url(#sharedHalo)" />
+<g fill="none" stroke="#d9e2d0" stroke-width="2" stroke-linecap="round"><path d="M70 376h61M850 320h76M475 275h35M921 387h26" /><path d="M83 490l5-13 6 13m826-9 5-13 6 13" /></g>
+<path d="M65 504Q520 490 950 504" fill="none" stroke="#c4d2bb" stroke-width="2" />
+<path d="M65 505Q520 491 950 505v35H65Z" fill="url(#road)" />
 <g id="p-state" transform="translate(-87 119) scale(.83)"><ellipse id="p-shadow" cx="514" cy="461" rx="86" ry="11" fill="#536a4d" opacity=".13" />
 <g id="p-streaks" stroke="#aec2a2" stroke-width="3" stroke-linecap="round" />
 <g id="p-dust" fill="#dce5d2" />
@@ -121,6 +120,14 @@ html.embedded .controls{margin:0 26px 24px}
 <g id="a-speedLines" fill="none" stroke="#9db59f" stroke-width="3" stroke-linecap="round" /><g id="a-dust" fill="#dbe7d7" />
 <g transform="translate(500 73) scale(.385) translate(-627 0)"><g id="a-character">
 
+<g id="a-rightArm" data-layer="behind-head"><use href="#a-original" clip-path="url(#a-rightUpperClip)" /><g id="a-rightElbow"><g clip-path="url(#a-sleevesOnly)"><use href="#a-original" clip-path="url(#a-rightLowerClip)" /></g><g id="a-rightPalm" transform="translate(790 917) rotate(-24)" aria-label="张开的手掌">
+ <path d="M-12-8H12L15 11Q14 23 0 24Q-14 23-15 11Z" fill="#303536" />
+ <g fill="none" stroke="#303536" stroke-width="8" stroke-linecap="round">
+  <path d="M-10 7L-23 17M-8 18L-16 35M0 21V41M8 18L16 36M12 10L25 23" />
+ </g><path d="M-10-7H10" stroke="#6e7164" stroke-width="4" stroke-linecap="round" />
+ <path d="M-6 8Q0 12 6 8" fill="none" stroke="#555e56" stroke-width="2" stroke-linecap="round" />
+ </g></g></g>
+
 <g id="a-core"><g clip-path="url(#a-silhouette)" mask="url(#a-bodyMask)"><use href="#a-original" /></g><use href="#a-original" clip-path="url(#a-leftHornClip)" /><use href="#a-original" clip-path="url(#a-rightHornClip)" /></g>
 <g id="a-legs" filter="url(#a-legBlur)">
 <g id="a-rightLeg"><use href="#a-original" clip-path="url(#a-rightThighClip)" /><g id="a-rightKnee"><use href="#a-original" clip-path="url(#a-rightShinClip)" /></g></g>
@@ -128,11 +135,14 @@ html.embedded .controls{margin:0 26px 24px}
 </g>
 
 <g id="a-spin" opacity="0" aria-hidden="true"><g id="a-spinHaze" fill="none" stroke="#777c62" stroke-width="38" opacity=".17" filter="url(#a-hazeBlur)" /><g id="a-spinArcs" fill="none" stroke-linecap="round" /><g id="a-spinBoots" fill="#383d38" /><g id="a-spinSpeed" fill="none" stroke="#82967e" stroke-width="7" stroke-linecap="round" /></g>
-<g id="a-leftArm"><use href="#a-original" clip-path="url(#a-leftUpperClip)" /><g id="a-leftElbow"><use href="#a-original" clip-path="url(#a-leftLowerClip)" /></g></g>
-<g id="a-rightArm"><use href="#a-original" clip-path="url(#a-rightUpperClip)" /><g id="a-rightElbow"><use href="#a-original" clip-path="url(#a-rightLowerClip)" /></g></g>
-
-</g></g></g>
-<g class="actor-label" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="17" text-anchor="middle" fill="#687f70"><text x="340" y="565">佩丽卡 · 追上啦！</text><text x="740" y="565">庄方宜 · 再跑快点</text></g>
+<g id="a-leftArm" data-layer="in-front-of-head"><use href="#a-original" clip-path="url(#a-leftUpperClip)" /><g id="a-leftElbow"><g clip-path="url(#a-sleevesOnly)"><use href="#a-original" clip-path="url(#a-leftLowerClip)" /></g><g id="a-leftPalm" transform="translate(464 917) rotate(24)" aria-label="张开的手掌">
+ <path d="M-12-8H12L15 11Q14 23 0 24Q-14 23-15 11Z" fill="#303536" />
+ <g fill="none" stroke="#303536" stroke-width="8" stroke-linecap="round">
+  <path d="M-10 7L-23 17M-8 18L-16 35M0 21V41M8 18L16 36M12 10L25 23" />
+ </g><path d="M-10-7H10" stroke="#6e7164" stroke-width="4" stroke-linecap="round" />
+ <path d="M-6 8Q0 12 6 8" fill="none" stroke="#555e56" stroke-width="2" stroke-linecap="round" />
+ </g></g></g>
+</g></g></g><g class="actor-label" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="17" text-anchor="middle" fill="#687f70"><text x="340" y="565">佩丽卡 · 追上啦！</text><text x="740" y="565">庄方宜 · 再跑快点</text></g>
 </svg></div>
 <section class="controls" aria-label="双人奔跑控制"><div><div class="label">追逐速度</div><div id="status" class="sub" aria-live="polite">保持节奏，一起跑</div></div><div class="range"><div class="range-head"><label for="speed">同步调节两人的速度</label><output id="speedValue" for="speed">1.0×</output></div><input id="speed" type="range" min="0" max="3" step="0.1" value="1" aria-label="追逐速度"><div class="ticks"><span>停下</span><span>小步追赶</span><span>双倍旋风！</span></div></div><button type="button" id="pause" aria-pressed="false">Ⅱ 暂停</button></section>
 <footer><span>你跑，我追，一起把日子跑轻。</span><span>PELICA & ZHUANG FANGYI</span></footer>
@@ -214,14 +224,15 @@ let phase=0,velocity=1;
   const p=phase*Math.PI*2,effort=smooth(0,2.5,velocity),blend=smooth(1.65,2.85,velocity);
   const bounce=-(1-Math.cos(p*2))*(5+effort*13)*(1-blend*.6);
   $('character').setAttribute('transform',`translate(0 ${bounce}) rotate(${3+effort*3+Math.sin(p)*.7} 627 880)`);
-  // Both arms swing along the travel direction: one advances as the other retreats.
-  // Modest shoulder travel and a slightly delayed elbow keep the hands beside the torso.
-  const armSwing=(5+effort*10)*Math.sin(p);
-  const elbowFlex=18+effort*5,elbowFollow=3*Math.sin(p-.35);
-  $('leftArm').setAttribute('transform',`rotate(${armSwing-3} 561 746)`);
-  $('leftElbow').setAttribute('transform',`rotate(${-elbowFlex-elbowFollow} 523 817)`);
-  $('rightArm').setAttribute('transform',`rotate(${armSwing+3} 695 746)`);
-  $('rightElbow').setAttribute('transform',`rotate(${elbowFlex-elbowFollow} 730 817)`);
+  // Lengthen both cutout arms around the shoulders; elbows keep their shared pivots.
+  // The right arm is painted behind the head, with a slightly delayed rearward flap.
+  const frontLift=(5+effort*9)*Math.sin(p+.3);
+  const rearLift=(3+effort*5)*Math.sin(p-.45);
+  const elbowFlap=(3+effort*4)*Math.sin(p-.35);
+  $('leftArm').setAttribute('transform',`translate(561 746) rotate(${112+frontLift}) scale(1.5) translate(-561 -746)`);
+  $('leftElbow').setAttribute('transform',`rotate(${13+elbowFlap} 523 817)`);
+  $('rightArm').setAttribute('transform',`translate(695 746) rotate(${-99+rearLift}) scale(1.7) translate(-695 -746)`);
+  $('rightElbow').setAttribute('transform',`rotate(${-12+elbowFlap} 730 817)`);
   ['left','right'].forEach((side,i)=>{
    const q=p+i*Math.PI,hip=(side==='left'?578:675),kneeX=(side==='left'?554:690);
    const swing=-Math.cos(q)*(12+effort*22);
