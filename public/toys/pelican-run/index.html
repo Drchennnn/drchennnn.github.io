@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>鹈鹕，冲呀！ · Pelican on the run</title>
+<style>
+:root{color-scheme:light;--ink:#293d37;--muted:#748179;--paper:#faf9f4;--green:#438775;--line:#dce4da}
+*{box-sizing:border-box}body{margin:0;background:#e9ede4;color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;min-height:100vh;display:grid;place-items:center;padding:32px}main{width:min(1080px,100%);background:var(--paper);border:1px solid #fff;border-radius:28px;overflow:hidden;box-shadow:0 24px 80px #344a3520}header{padding:32px 42px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-size:12px;letter-spacing:3px;font-weight:650;display:flex;align-items:center;gap:10px}.dot{width:9px;height:9px;border-radius:50%;background:#67a58d}.tag{border:1px solid var(--line);border-radius:30px;padding:7px 12px;font-size:11px;letter-spacing:1.4px;color:var(--muted)}.intro{padding:30px 42px 0;position:relative;z-index:1;pointer-events:none}h1{font-size:clamp(28px,4.5vw,46px);letter-spacing:-2px;margin:0 0 10px;font-weight:750}.intro p{margin:0;color:var(--muted);font-size:14px;letter-spacing:1px}.stage{margin-top:-36px;position:relative}.stage svg{display:block;width:100%;height:auto;overflow:hidden}.motion-note{position:absolute;bottom:28px;left:42px;font-size:11px;letter-spacing:2px;color:#87948a}.controls{margin:0 42px 28px;padding-top:24px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 2fr auto;gap:32px;align-items:center}.label{font-size:14px;font-weight:650}.sub{font-size:11px;color:var(--muted);margin-top:6px;letter-spacing:1px}.range-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:12px;color:var(--muted)}output{font-variant-numeric:tabular-nums;color:var(--green);font-weight:700;font-size:17px}input{width:100%;height:26px;accent-color:var(--green);cursor:pointer;margin:0;touch-action:pan-y}.range-labels{display:flex;justify-content:space-between;font-size:10px;color:#8a958d;margin-top:4px}button{font:inherit;font-size:13px;border:1px solid #cddbd1;border-radius:50px;background:transparent;color:var(--ink);padding:13px 20px;cursor:pointer;min-width:96px}button:hover{background:#e7eee5}button:focus-visible,input:focus-visible{outline:3px solid #91b6a1;outline-offset:4px}footer{display:flex;justify-content:space-between;margin:0 42px 24px;color:#99a198;font-size:10px;letter-spacing:1.5px}.blink{animation:blink 4s infinite;transform-box:fill-box;transform-origin:center}@keyframes blink{0%,43%,47%,100%{transform:scaleY(1)}45%{transform:scaleY(.08)}}.paused .blink{animation-play-state:paused}
+@media(max-width:600px){body{padding:12px}main{border-radius:20px}header{padding:22px 22px 0}.brand{font-size:10px;letter-spacing:2px}.tag{font-size:9px;padding:6px 8px}.intro{padding:25px 22px 0}.intro p{font-size:12px}.stage{margin-top:0}.stage svg{width:140%;max-width:none;margin-left:-20%}.motion-note{left:22px;bottom:10px;font-size:8px}.controls{margin:12px 22px 24px;gap:16px;grid-template-columns:1fr auto}.range{grid-row:2;grid-column:1/-1}.sub{font-size:10px}footer{margin:0 22px 20px;font-size:8px}.controls button{grid-row:1;grid-column:2}h1{letter-spacing:-1px}}
+button:disabled{opacity:.6;cursor:default}
+html.embedded body{display:block;min-height:0;padding:0;background:var(--paper)}
+html.embedded main{width:100%;border:0;border-radius:0;box-shadow:none}
+html.embedded header,html.embedded .intro,html.embedded footer{display:none}
+html.embedded .stage{margin-top:0}
+html.embedded .controls{margin:0 28px 24px}
+@media(max-width:600px){html.embedded .controls{margin:12px 18px 20px}}
+</style>
+<script>if(new URLSearchParams(location.search).has('embed'))document.documentElement.classList.add('embedded');</script>
+</head>
+<body>
+<main id="app">
+<header><div class="brand"><span class="dot"></span>PELICAN RUN CLUB</div><span class="tag">小小鹈鹕 · 全速前进</span></header>
+<div class="intro"><h1>鹈鹕，冲呀！</h1><p>电锯举高高，烦恼追不上。</p></div>
+<div class="stage">
+<svg id="scene" viewBox="0 0 1000 550" role="img" aria-labelledby="scene-title scene-desc">
+<title id="scene-title">鹈鹕高举电锯狂奔</title><desc id="scene-desc">参考图片的米灰色长发、蓝眼睛、白色外套 Q 版角色，双手将运转的电锯举过头顶，双腿屈膝交替奔跑，随着速度增加平滑变成椭圆旋转漩涡，电锯朝向身后，头发和衣摆随风摆动。下方滑块调节整体速度。</desc>
+<defs>
+ <radialGradient id="halo"><stop stop-color="#e4eddf"/><stop offset="1" stop-color="#faf9f4" stop-opacity="0"/></radialGradient>
+ <linearGradient id="blade" x2="0" y2="1"><stop stop-color="#f4f7ef"/><stop offset="1" stop-color="#aebeb3"/></linearGradient>
+ <pattern id="grass" width="140" height="50" patternUnits="userSpaceOnUse"><path d="M20 37h21 M92 19h13" stroke="#c7d4c3" stroke-width="3" stroke-linecap="round"/></pattern>
+ <filter id="legBlur" x="-70%" y="-50%" width="240%" height="220%"><feGaussianBlur id="legBlurAmount" stdDeviation="0"/></filter>
+ <filter id="spinBlur" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="1.6"/></filter>
+</defs>
+<ellipse cx="528" cy="309" rx="310" ry="230" fill="url(#halo)"/>
+<g fill="none" stroke="#d5dfd0" stroke-width="2" stroke-linecap="round"><path d="M169 347h74m-103 15h38m559-110h71m-40 16h54M260 204h29"/><path d="M771 369l6-11 6 11m-3-8h9M257 406l5-10 5 10"/></g>
+<g fill="#c6d4bf"><circle cx="255" cy="288" r="3"/><circle cx="743" cy="185" r="3"/><path d="M710 322l4-8 4 8-4 8z"/></g>
+<path d="M135 465Q500 443 865 465" fill="none" stroke="#c6d3c0" stroke-width="2"/>
+<path d="M150 467Q500 448 850 467L850 505H150Z" fill="url(#grass)" id="ground"/>
+<ellipse id="shadow" cx="514" cy="461" rx="86" ry="11" fill="#536a4d" opacity=".13"/>
+<g id="streaks" stroke="#aec2a2" stroke-width="3" stroke-linecap="round"></g>
+<g id="dust" fill="#dce5d2"></g>
+<!-- The character is constructed entirely from editable SVG shapes. -->
+<g transform="translate(515 328)"><g id="runner">
+ <!-- flowing back hair -->
+ <g id="hairBack"><path d="M-78-107C-123-58-119 31-160 62Q-128 76-105 56Q-109 84-89 91Q-62 71-48 42L57 16Q91 60 65 90Q102 84 110 52Q118 70 124 66Q154-16 88-110Z" fill="#b8a793"/>
+ <path d="M-79-103Q-129-45-128 10T-161 62Q-125 58-107 18L-91-48M74-105Q123-35 111 19T102 75" fill="none" stroke="#d4c9b3" stroke-width="16" stroke-linecap="round"/></g>
+ <!-- Both legs share the same connected hip / knee / ankle geometry. -->
+ <g id="legTrails" fill="none" stroke-linecap="round" stroke-linejoin="round"></g>
+ <g id="legs" filter="url(#legBlur)">
+  <g id="legFar"><path class="thigh" stroke="#3e3e36" stroke-width="26" stroke-linecap="round"/><path class="shin" stroke="#514c40" stroke-width="22" stroke-linecap="round"/><g class="boot"><path d="M-11-9L10-9 12-2 26 3Q31 12 20 14H-13Q-18 10-14 3Z" fill="#272f2d"/><path d="M-7-3l13 6m-13 2 13-6" stroke="#79766a" stroke-width="2.5"/><path d="M-13 13h37" stroke="#1e2725" stroke-width="3" stroke-linecap="round"/></g></g>
+  <g id="legNear"><path class="thigh" stroke="#514a3c" stroke-width="27" stroke-linecap="round"/><path class="shin" stroke="#5b5343" stroke-width="23" stroke-linecap="round"/><g class="boot"><path d="M-11-9L10-9 12-2 26 3Q31 12 20 14H-13Q-18 10-14 3Z" fill="#2c3230"/><path d="M-7-3l13 6m-13 2 13-6" stroke="#898373" stroke-width="2.5"/><path d="M-13 13h37" stroke="#202a27" stroke-width="3" stroke-linecap="round"/></g></g>
+ </g>
+ <g id="legSpin" opacity="0" aria-hidden="true">
+  <g id="spinHaze" fill="none" stroke="#706b56" stroke-width="14" filter="url(#spinBlur)"></g>
+  <g id="spinArcs" fill="none" stroke-linecap="round"></g>
+  <g id="spinShoes"></g>
+  <g id="spinLines" fill="none" stroke="#8b9e87" stroke-width="2.5" stroke-linecap="round"></g>
+ </g>
+ <!-- Far arm joins the upper handle behind the head. -->
+ <path id="armFar" d="M-25 9Q-64-45-60-126L-2-276" fill="none" stroke="#c9cfbf" stroke-width="28" stroke-linecap="round"/>
+ <path d="M-60-126L-2-276" fill="none" stroke="#ffdbad" stroke-width="18" stroke-linecap="round"/>
+ <!-- visible neck between the face and collar -->
+ <g id="neck" aria-label="脖子"><path d="M-13-30Q0-20 14-30L16-4Q1 8-15-4Z" fill="#f5c69f"/><path d="M-14-7Q0 3 15-7L18 4Q1 15-17 4Z" fill="#f0b88f" opacity=".55"/></g>
+ <!-- shorts and coat -->
+ <path d="M-46 43L44 43 39 76 6 78 0 65-5 78-44 75Z" fill="#303b37"/>
+ <g id="coat"><path d="M-44 2Q-16-9 28-2L46 10 53 64Q16 73-5 62Q-33 72-57 60Z" fill="#fbfcf5" stroke="#d5ddd2" stroke-width="2"/>
+ <path d="M-44-3L-58 11-43 27-21 6M29-5L48 9 39 24 17 6" fill="#77798a"/>
+ <path d="M-39 13L-13 25-9 62M35 13L8 26 2 61" fill="none" stroke="#70b8b4" stroke-width="4"/>
+ <path d="M-30 22L-40 49-20 50M25 25L33 49 14 51" fill="#ecf0e8" stroke="#d2d7ca" stroke-width="3" stroke-linejoin="round"/>
+ <path d="M-4 24L-1 59" stroke="#384741" stroke-width="3"/><path d="M-7 33l10 8-8 5" fill="none" stroke="#37423e" stroke-width="3"/>
+ <path d="M-10 3L-1 14 9 3" fill="#272e37"/><path d="M-9 5L-16 18" stroke="#a9a0d2" stroke-width="4"/>
+ <path d="M-45 54L-45 80" stroke="#343d37" stroke-width="6"/><path d="M-50 73h11m-10 8h9" stroke="#d3b05b" stroke-width="4"/></g>
+ <!-- ears, face and fringe -->
+ <g id="head" transform="translate(0 6)"><path d="M-76-98Q-103-102-98-77Q-94-60-76-65M74-100Q99-105 96-79Q91-62 74-66" fill="#f0bda0"/>
+ <path d="M-83-140Q0-189 81-139L82-78Q74-24 3-24Q-65-25-80-68Z" fill="#ffdfb2"/>
+ <ellipse cx="-52" cy="-61" rx="19" ry="15" fill="#f5bd9e" opacity=".65"/><ellipse cx="55" cy="-61" rx="18" ry="15" fill="#f5bd9e" opacity=".65"/>
+ <g class="blink" fill="#508bc0"><rect x="-49" y="-104" width="24" height="45" rx="12"/><rect x="35" y="-106" width="24" height="45" rx="12"/></g>
+ <path d="M-4-57Q13-63 23-53L22-44Q10-31-2-42Z" fill="#da855e"/><path d="M0-54h18" stroke="#fff7e7" stroke-width="5" stroke-linecap="round"/><path d="M4-41Q12-46 18-41" stroke="#f6b6a0" stroke-width="5" stroke-linecap="round"/>
+ <path d="M-90-89Q-108-132-92-162Q-122-172-116-212Q-112-222-101-213L-62-190Q1-230 64-190L106-216Q126-228 116-187L107-165Q127-147 105-132Q117-115 96-108L87-39Q79-5 65-1L69-108 48-117 42-96Q25-104 22-136L16-99-14-100-31-144-43-103-57-108-62-80Q-66-29-82-18L-93-44Z" fill="#d9cdb7"/>
+ <path d="M-91-127Q-106-65-83-20" fill="none" stroke="#e5dac5" stroke-width="8" stroke-linecap="round"/>
+ <!-- recognizable bird hair clip -->
+ <g transform="translate(-92 -151) rotate(-15)"><path d="M-8 7Q-14 25 1 28Q20 28 19 11" fill="none" stroke="#2f3530" stroke-width="6"/><path d="M-9 13L-10-12Q-8-22-1-12L11 0Q18 16 6 21Q-4 23-9 13Z" fill="#fafbf4"/><path d="M-9-4L-23-2-8 8" fill="#b9c6c4"/><circle cx="2" cy="1" r="3" fill="#303b35"/><circle cx="10" cy="10" r="3" fill="#ddcdb0"/></g>
+ </g>
+ <!-- near arm, raised above the head -->
+ <path d="M43 4Q93-26 112-100L60-193" fill="none" stroke="#dbe1d4" stroke-width="29" stroke-linecap="round"/>
+ <path d="M45 2L74-20 89-42" fill="none" stroke="#fafbf4" stroke-width="24" stroke-linecap="round"/>
+ <path d="M112-100L60-193" fill="none" stroke="#ffdbad" stroke-width="19" stroke-linecap="round"/>
+ <path d="M103-105L120-112" stroke="#525c52" stroke-width="11"/>
+ <!-- overhead chainsaw; bar points backward, opposite the rightward run -->
+ <g id="saw" transform="translate(60 -225) rotate(8) scale(-1 1)">
+ <path d="M4 23L-15 23Q-25 23-25 9L-25-17Q-25-28-14-28L8-28" fill="none" stroke="#354a43" stroke-width="10" stroke-linejoin="round"/>
+ <path d="M60-24H235A24 24 0 0 1 235 24H60Z" fill="#364b44"/>
+ <path id="chain" d="M65-23H235A23 23 0 0 1 235 23H65Z" fill="none" stroke="#52665c" stroke-width="8" stroke-dasharray="5 7" stroke-linejoin="round"/>
+ <path d="M66-17H234A17 17 0 0 1 234 17H66Z" fill="url(#blade)"/>
+ <path d="M91 0H232" stroke="#8ca196" stroke-width="3" stroke-linecap="round"/>
+ <circle cx="233" cy="0" r="7" fill="#b2c1b5"/><circle cx="233" cy="0" r="3" fill="#6f877b"/>
+ <path d="M0-31Q-5-31-5-21L-5 27Q-5 35 6 35H69L78 23 75-23 64-31Z" fill="#70a79b" stroke="#3d6156" stroke-width="3"/>
+ <path d="M5 12H70L68 30H6Z" fill="#3e685b"/>
+ <path d="M13-20H45V5H13Z" fill="#d8e0c6"/>
+ <path d="M18-15v15m8-15v15m8-15v15m8-15v15" stroke="#6d8979" stroke-width="3"/>
+ <circle cx="58" cy="-9" r="7" fill="#e9ca75"/><circle cx="58" cy="-9" r="3" fill="#7c8059"/>
+ <path d="M47-31L45-43Q44-49 52-49H77Q84-49 84-42V8" fill="none" stroke="#2f473f" stroke-width="9" stroke-linecap="round"/>
+ <path d="M74 10L87 8" stroke="#344b43" stroke-width="6"/>
+ <path d="M12 33L18 44H44L48 34" fill="#314f43"/>
+ <!-- hands curled around the two handles -->
+ <path d="M-6 39Q-15 35-15 26L-14 17Q-11 10-6 16L-4 22 4 19Q13 21 10 29L8 39Z" fill="#ffdbad"/>
+ <path d="M65-36Q55-39 57-47Q61-54 68-50L80-44Q86-38 81-32Z" fill="#ffdbad"/>
+ </g>
+</g></g>
+<g transform="translate(737 144) rotate(9)" fill="none" stroke="#89aa88" stroke-width="3" stroke-linecap="round"><path d="M-3 9L4-3M10 16l13-5M12 28l12 3"/></g>
+</svg>
+<span class="motion-note">轻盈的步伐 · 超大的干劲</span>
+</div>
+<section class="controls" aria-label="动画控制">
+<div><div class="label">速度调节</div><div class="sub" id="status" aria-live="polite">正在全速前进</div></div>
+<div class="range"><div class="range-title"><label for="speed">狂奔节奏</label><output for="speed" id="speedValue">1.0×</output></div><input id="speed" type="range" min="0" max="3" step="0.1" value="1" aria-label="狂奔速度"><div class="range-labels"><span>静止</span><span>屈膝奔跑</span><span>旋风腿！</span></div></div>
+<button type="button" id="pause" aria-pressed="false">Ⅱ 暂停</button>
+</section>
+<footer><span>保持可爱，持续狂奔。</span><span>PELICAN / 001</span></footer>
+</main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+const slider=$('speed'),output=$('speedValue'),button=$('pause'),app=$('app');
+const runner=$('runner'),hair=$('hairBack'),saw=$('saw'),coat=$('coat'),shadow=$('shadow'),chain=$('chain');
+const ns='http://www.w3.org/2000/svg';
+function make(parent,tag,attrs={}){const e=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);$(parent).append(e);return e;}
+const dust=Array.from({length:7},()=>make('dust','ellipse'));
+const streaks=Array.from({length:8},()=>make('streaks','path'));
+const legParts=['legFar','legNear'].map(id=>{const e=$(id);return {thigh:e.querySelector('.thigh'),shin:e.querySelector('.shin'),boot:e.querySelector('.boot')};});
+const trails=Array.from({length:6},()=>make('legTrails','path',{'stroke':'#726d58','stroke-width':19}));
+const haze=Array.from({length:3},()=>make('spinHaze','ellipse',{cx:0,cy:106,rx:65,ry:33,opacity:.15}));
+const arcs=Array.from({length:10},(_,i)=>make('spinArcs','path',{stroke:['#514d3f','#998d70','#c5b995','#36433b'][i%4],'stroke-width':i%3===0?7:3}));
+const spinShoes=Array.from({length:3},()=>make('spinShoes','path',{d:'M-13-5Q-9-10 0-7L13-2Q20 5 10 8L-15 5Z',fill:'#38423a'}));
+const spinLines=Array.from({length:6},()=>make('spinLines','path'));
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const smooth=(a,b,v)=>{const x=clamp((v-a)/(b-a),0,1);return x*x*(3-2*x);};
+const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
+let speed=1,velocity=1,paused=motionPreference.matches,hostPaused=false,phase=0,last=0;
+function update(){
+ speed=Number(slider.value);output.value=speed.toFixed(1)+'×';slider.setAttribute('aria-valuetext',speed.toFixed(1)+' 倍速度');
+ button.textContent=hostPaused?'已暂停':paused?'▶ 继续':'Ⅱ 暂停';
+ button.disabled=hostPaused;button.setAttribute('aria-pressed',String(paused||hostPaused));
+ button.setAttribute('aria-label',hostPaused?'已随全站暂停，请在页脚开启动效':paused?'继续狂奔':'暂停狂奔');
+ app.classList.toggle('paused',paused||hostPaused||speed===0);
+ $('status').textContent=hostPaused?'动效已随博客暂停':paused?'暂停一下，蓄力再出发':speed===0?'站稳，准备出发':speed<.8?'轻轻迈步 · 自然屈膝':speed>=2.6?'旋风腿！全速前进':speed>1.65?'加速！双腿逐渐化成残影':'抬腿，加速向前！';
+}
+slider.addEventListener('input',update);button.addEventListener('click',()=>{paused=!paused;update();});
+document.addEventListener('visibilitychange',()=>{last=0;});
+// Forward kinematics: each shin starts at the exact endpoint of its thigh.
+// Positive knee flexion folds the foot backward (left); phase offsets alternate legs.
+function pose(p,side,v){
+ const effort=smooth(0,2.4,v),amp=21+effort*44;
+ const hip=(-Math.cos(p)*amp-5)*Math.PI/180;
+ const knee=(9+(30+effort*91)*Math.pow((1+Math.sin(p))/2,2))*Math.PI/180;
+ const h={x:side? -18:16,y:62};
+ const k={x:h.x-Math.sin(hip)*35,y:h.y+Math.cos(hip)*35};
+ const a={x:k.x-Math.sin(hip+knee)*34,y:k.y+Math.cos(hip+knee)*34};
+ return {h,k,a,foot:clamp((hip+knee)*180/Math.PI*.45,-30,65)};
+}
+const point=p=>`${p.x.toFixed(3)} ${p.y.toFixed(3)}`;
+function arcPath(cx,cy,rx,ry,start,length){const end=start+length;return `M${cx+rx*Math.cos(start)} ${cy+ry*Math.sin(start)}A${rx} ${ry} 0 ${length>Math.PI?1:0} 1 ${cx+rx*Math.cos(end)} ${cy+ry*Math.sin(end)}`;}
+function draw(t){
+ const p=t*Math.PI*2,effort=smooth(0,2.4,velocity),blend=smooth(1.65,2.85,velocity);
+ const bob=-(1-Math.cos(p*2))*.5*(4+effort*9)*(1-blend*.75);
+ runner.setAttribute('transform',`translate(0 ${bob}) rotate(${3+effort*3+Math.sin(p)*1.2*(1-blend)})`);
+ legParts.forEach((leg,i)=>{const q=pose(p+i*Math.PI,i,velocity);leg.thigh.setAttribute('d',`M${point(q.h)}L${point(q.k)}`);leg.shin.setAttribute('d',`M${point(q.k)}L${point(q.a)}`);leg.boot.setAttribute('transform',`translate(${point(q.a)}) rotate(${q.foot})`);});
+ $('legs').setAttribute('opacity',String(1-smooth(.22,1,blend)));
+ $('legBlurAmount').setAttribute('stdDeviation',String(blend*1.5));
+ trails.forEach((e,i)=>{const q=pose(p-(1+Math.floor(i/2))*.19+(i%2)*Math.PI,i%2,velocity);e.setAttribute('d',`M${point(q.h)}L${point(q.k)}L${point(q.a)}`);e.setAttribute('opacity',String(smooth(.9,2,velocity)*(1-blend)*(.16-Math.floor(i/2)*.035)));});
+ $('legSpin').setAttribute('opacity',String(blend));
+ const rx=59+blend*17,ry=29+blend*8,cy=105;
+ haze.forEach((e,i)=>{e.setAttribute('rx',String(rx-i*9));e.setAttribute('ry',String(ry-i*5));e.setAttribute('cy',String(cy));});
+ arcs.forEach((e,i)=>{const angle=p*1.65+i*2.399;e.setAttribute('d',arcPath(-3,cy,rx-(i%3)*7,ry-(i%3)*4,angle,1.2+(i%3)*.42));e.setAttribute('opacity',String(.42+(i%3)*.18));});
+ spinShoes.forEach((e,i)=>{const angle=p*1.65+i*Math.PI*2/3;e.setAttribute('transform',`translate(${-3+rx*Math.cos(angle)} ${cy+ry*Math.sin(angle)}) rotate(${Math.atan2(ry*Math.cos(angle),-rx*Math.sin(angle))*180/Math.PI})`);e.setAttribute('opacity',String(.52+i*.12));});
+ spinLines.forEach((e,i)=>{const f=(t*1.7+i/6)%1,x=-45-f*120,y=83+i*10;e.setAttribute('d',`M${x} ${y}q-16 -3 ${-25-i*3} 0`);e.setAttribute('opacity',String((1-f)*.65));});
+ hair.setAttribute('transform',`rotate(${Math.sin(p-.6)*(2+effort*3)-5-effort*3} 0 -120)`);coat.setAttribute('transform',`rotate(${Math.sin(p+.5)*2} 0 0)`);
+ saw.setAttribute('transform',`translate(60 -225) rotate(8) scale(-1 1)`);chain.setAttribute('stroke-dashoffset',String(-t*260));
+ shadow.setAttribute('rx',String(76+blend*25-Math.abs(Math.sin(p))*8*(1-blend)));shadow.setAttribute('opacity',String(.13-Math.abs(Math.sin(p))*.025));
+ $('grass').setAttribute('patternTransform',`translate(${-t*140%140} 0)`);
+ dust.forEach((e,i)=>{const a=(t*.8+i/7)%1;e.setAttribute('cx',String(443-a*(130+effort*85)));e.setAttribute('cy',String(458-Math.sin(a*Math.PI)*(18+effort*16)));e.setAttribute('rx',String(5+a*14));e.setAttribute('ry',String(4+a*8));e.setAttribute('opacity',String((1-a)*(.2+effort*.35)));});
+ streaks.forEach((e,i)=>{const a=(t*.7+i/8)%1,x=830-a*670,y=252+(i%4)*53;e.setAttribute('d',`M${x} ${y}h${(12+(i%3)*15)*(1+effort)}`);e.setAttribute('opacity',String(Math.sin(a*Math.PI)*(.12+effort*.25)));});
+ // Read-only diagnostics make transition and kinematic checks reproducible.
+ app.dataset.velocity=velocity.toFixed(4);app.dataset.spin=blend.toFixed(4);app.dataset.phase=t.toFixed(4);
+}
+function frame(now){
+ const dt=last?Math.min((now-last)/1000,.05):0;last=now;
+ if(!document.hidden&&!paused&&!hostPaused&&speed>0){
+  // Exponential easing keeps both acceleration and deceleration continuous.
+  velocity+=(speed-velocity)*(1-Math.exp(-dt*4));
+  phase+=dt*(.45+velocity*1.45);
+ }
+ draw(phase);requestAnimationFrame(frame);
+}
+motionPreference.addEventListener('change',event=>{paused=event.matches;last=0;update();});
+// The sandbox has an opaque origin: accept motion messages only from our parent.
+if(window.parent!==window){
+ const notifySize=()=>parent.postMessage({type:'toy:resize',height:Math.ceil(app.getBoundingClientRect().height)},'*');
+ window.addEventListener('message',event=>{
+  if(event.source!==parent||event.data?.type!=='journal:motion'||typeof event.data.paused!=='boolean')return;
+  hostPaused=event.data.paused;last=0;update();
+ });
+ new ResizeObserver(notifySize).observe(app);
+ parent.postMessage({type:'toy:ready'},'*');notifySize();
+}
+update();draw(0);requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

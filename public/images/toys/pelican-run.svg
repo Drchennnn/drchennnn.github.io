@@ -1,0 +1,87 @@
+<svg id="scene" viewBox="0 -30 1000 580" role="img" aria-labelledby="scene-title scene-desc" xmlns="http://www.w3.org/2000/svg" width="1000" height="580">
+<title id="scene-title">鹈鹕的狂奔日</title><desc id="scene-desc">米色长发、蓝眼睛的小鹈鹕把朝后的电锯举过头顶，迈开双腿向前跑，身后扬起轻轻的尘土。</desc>
+<defs>
+ <radialGradient id="halo"><stop stop-color="#e4eddf"/><stop offset="1" stop-color="#faf9f4" stop-opacity="0"/></radialGradient>
+ <linearGradient id="blade" x2="0" y2="1"><stop stop-color="#f4f7ef"/><stop offset="1" stop-color="#aebeb3"/></linearGradient>
+ <pattern id="grass" width="140" height="50" patternUnits="userSpaceOnUse" patternTransform="translate(-52.401999999999994 0)"><path d="M20 37h21 M92 19h13" stroke="#c7d4c3" stroke-width="3" stroke-linecap="round"/></pattern>
+ <filter id="legBlur" x="-70%" y="-50%" width="240%" height="220%"><feGaussianBlur id="legBlurAmount" stdDeviation="0"/></filter>
+ <filter id="spinBlur" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="1.6"/></filter>
+</defs><rect x="0" y="-30" width="1000" height="580" fill="#faf9f4"/>
+<ellipse cx="528" cy="309" rx="310" ry="230" fill="url(#halo)"/>
+<g fill="none" stroke="#d5dfd0" stroke-width="2" stroke-linecap="round"><path d="M169 347h74m-103 15h38m559-110h71m-40 16h54M260 204h29"/><path d="M771 369l6-11 6 11m-3-8h9M257 406l5-10 5 10"/></g>
+<g fill="#c6d4bf"><circle cx="255" cy="288" r="3"/><circle cx="743" cy="185" r="3"/><path d="M710 322l4-8 4 8-4 8z"/></g>
+<path d="M135 465Q500 443 865 465" fill="none" stroke="#c6d3c0" stroke-width="2"/>
+<path d="M150 467Q500 448 850 467L850 505H150Z" fill="url(#grass)" id="ground"/>
+<ellipse id="shadow" cx="514" cy="461" rx="70.31832040047632" ry="11" fill="#536a4d" opacity="0.11224475125148851"/>
+<g id="streaks" stroke="#aec2a2" stroke-width="3" stroke-linecap="round"><path d="M654.4533 252h16.51388888888889" opacity="0.15695007114273526"/><path d="M570.7033 305h37.15625" opacity="0.20069558615912989"/><path d="M486.9533 358h57.798611111111114" opacity="0.21388701749281594"/><path d="M403.2033 411h16.51388888888889" opacity="0.19451608930386252"/><path d="M319.4533 252h37.15625" opacity="0.1455318498111365"/><path d="M235.7033 305h57.798611111111114" opacity="0.07439170543416863"/><path d="M821.9532999999999 358h16.51388888888889" opacity="0.00807390173266248"/><path d="M738.2032999999999 411h37.15625" opacity="0.08931033055079707"/></g>
+<g id="dust" fill="#dce5d2"><ellipse cx="394.4986912037037" cy="438.5934776066526" rx="9.19216" ry="6.395519999999999" opacity="0.2323442916666667"/><ellipse cx="371.3596369708995" cy="434.3750505500409" rx="11.19216" ry="7.538377142857143" opacity="0.18496499272486774"/><ellipse cx="348.22058273809523" cy="434.8358344729844" rx="13.192160000000001" ry="8.681234285714286" opacity="0.13758569378306879"/><ellipse cx="325.08152850529103" cy="439.8845654684001" rx="15.19216" ry="9.824091428571428" opacity="0.09020639484126987"/><ellipse cx="301.94247427248683" cy="448.5212804440237" rx="17.192159999999998" ry="10.96694857142857" opacity="0.04282709589947094"/><ellipse cx="440.77679966931214" cy="456.9646279234251" rx="5.192160000000001" ry="4.109805714285715" opacity="0.32710288955026456"/><ellipse cx="417.63774543650794" cy="446.6556044286447" rx="7.192159999999999" ry="5.252662857142857" opacity="0.27972359060846563"/></g>
+<!-- The character is constructed entirely from editable SVG shapes. -->
+<g transform="translate(515 328)"><g id="runner" transform="translate(0 -3.7251906734692795) rotate(4.980724162150773)">
+ <!-- flowing back hair -->
+ <g id="hairBack" transform="rotate(-3.051106148895981 0 -120)"><path d="M-78-107C-123-58-119 31-160 62Q-128 76-105 56Q-109 84-89 91Q-62 71-48 42L57 16Q91 60 65 90Q102 84 110 52Q118 70 124 66Q154-16 88-110Z" fill="#b8a793"/>
+ <path d="M-79-103Q-129-45-128 10T-161 62Q-125 58-107 18L-91-48M74-105Q123-35 111 19T102 75" fill="none" stroke="#d4c9b3" stroke-width="16" stroke-linecap="round"/></g>
+ <!-- Both legs share the same connected hip / knee / ankle geometry. -->
+ <g id="legTrails" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="#726d58" stroke-width="19" d="M16.000 62.000L6.398 95.657L-26.945 102.307" opacity="0.003726521412471824"/><path stroke="#726d58" stroke-width="19" d="M-18.000 62.000L-2.699 93.478L6.935 126.085" opacity="0.003726521412471824"/><path stroke="#726d58" stroke-width="19" d="M16.000 62.000L10.128 96.504L-23.115 103.635" opacity="0.0029113448534936123"/><path stroke="#726d58" stroke-width="19" d="M-18.000 62.000L-6.226 94.960L0.003 128.385" opacity="0.0029113448534936123"/><path stroke="#726d58" stroke-width="19" d="M16.000 62.000L14.251 96.956L-18.541 105.940" opacity="0.0020961682945154006"/><path stroke="#726d58" stroke-width="19" d="M-18.000 62.000L-10.207 96.121L-7.920 130.044" opacity="0.0020961682945154006"/></g>
+ <g id="legs" filter="url(#legBlur)" opacity="1">
+  <g id="legFar"><path class="thigh" stroke="#3e3e36" stroke-width="26" stroke-linecap="round" d="M16.000 62.000L3.209 94.579"/><path class="shin" stroke="#514c40" stroke-width="22" stroke-linecap="round" d="M3.209 94.579L-29.972 101.995"/><g class="boot" transform="translate(-29.972 101.995) rotate(34.830439663221256)"><path d="M-11-9L10-9 12-2 26 3Q31 12 20 14H-13Q-18 10-14 3Z" fill="#272f2d"/><path d="M-7-3l13 6m-13 2 13-6" stroke="#79766a" stroke-width="2.5"/><path d="M-13 13h37" stroke="#1e2725" stroke-width="3" stroke-linecap="round"/></g></g>
+  <g id="legNear"><path class="thigh" stroke="#514a3c" stroke-width="27" stroke-linecap="round" d="M-18.000 62.000L0.254 91.863"/><path class="shin" stroke="#5b5343" stroke-width="23" stroke-linecap="round" d="M0.254 91.863L12.487 123.586"/><g class="boot" transform="translate(12.487 123.586) rotate(-9.489143670948895)"><path d="M-11-9L10-9 12-2 26 3Q31 12 20 14H-13Q-18 10-14 3Z" fill="#2c3230"/><path d="M-7-3l13 6m-13 2 13-6" stroke="#898373" stroke-width="2.5"/><path d="M-13 13h37" stroke="#202a27" stroke-width="3" stroke-linecap="round"/></g></g>
+ </g>
+ <g id="legSpin" opacity="0" aria-hidden="true">
+  <g id="spinHaze" fill="none" stroke="#706b56" stroke-width="14" filter="url(#spinBlur)"><ellipse cx="0" cy="105" rx="59" ry="29" opacity="0.15"/><ellipse cx="0" cy="105" rx="50" ry="24" opacity="0.15"/><ellipse cx="0" cy="105" rx="41" ry="19" opacity="0.15"/></g>
+  <g id="spinArcs" fill="none" stroke-linecap="round"><path stroke="#514d3f" stroke-width="7" d="M-46.61452517875735 85.46983744184882A59 29 0 0 1 18.229373652622723 77.94236833234523" opacity="0.42"/><path stroke="#998d70" stroke-width="3" d="M48.999639916172114 104.90696327995046A52 25 0 0 1 -5.364258855994628 129.9741465805248" opacity="0.6"/><path stroke="#c5b995" stroke-width="3" d="M-36.038834586773376 119.25768175768083A45 21 0 0 1 -15.310986980339074 84.80115070616083" opacity="0.78"/><path stroke="#36433b" stroke-width="7" d="M1.8260848967954058 76.09718118285534A59 29 0 0 1 53.55479870336705 96.7377698639203" opacity="0.42"/><path stroke="#514d3f" stroke-width="3" d="M28.910951950443426 124.7390236708198A52 25 0 0 1 -45.576982105998596 119.35239567909348" opacity="0.6"/><path stroke="#998d70" stroke-width="3" d="M-47.370204692497644 101.49891328505807A45 21 0 0 1 23.75469076525087 88.11474810759609" opacity="0.78"/><path stroke="#c5b995" stroke-width="7" d="M46.50939075367296 89.22654993908196A59 29 0 0 1 44.850002923227656 121.96565503592458" opacity="0.42"/><path stroke="#36433b" stroke-width="3" d="M-16.021715545144154 129.20344787274638A52 25 0 0 1 -52.64178568480956 97.55671850277143" opacity="0.6"/><path stroke="#514d3f" stroke-width="3" d="M-24.157558097374338 86.46588382559158A45 21 0 0 1 41.990748926572635 104.57420380316366" opacity="0.78"/><path stroke="#998d70" stroke-width="7" d="M52.64761364561093 114.63619385091245A59 29 0 0 1 -1.1079746164060211 133.98508478241456" opacity="0.42"/></g>
+  <g id="spinShoes"><path d="M-13-5Q-9-10 0-7L13-2Q20 5 10 8L-15 5Z" fill="#38423a" transform="translate(-46.61452517875735 85.46983744184882) rotate(-28.348284641939447)" opacity="0.52"/><path d="M-13-5Q-9-10 0-7L13-2Q20 5 10 8L-15 5Z" fill="#38423a" transform="translate(53.21772458967236 96.19953354034341) rotate(57.05884267907456)" opacity="0.64"/><path d="M-13-5Q-9-10 0-7L13-2Q20 5 10 8L-15 5Z" fill="#38423a" transform="translate(-15.603199410914941 133.33062901780775) rotate(-173.8655550055278)" opacity="0.76"/></g>
+  <g id="spinLines" fill="none" stroke="#8b9e87" stroke-width="2.5" stroke-linecap="round"><path d="M-121.35719999999999 83q-16 -3 -25 0" opacity="0.23639850000000004"/><path d="M-141.35719999999998 93q-16 -3 -28 0" opacity="0.12806516666666673"/><path d="M-161.35719999999998 103q-16 -3 -31 0" opacity="0.019731833333333428"/><path d="M-61.35719999999999 113q-16 -3 -34 0" opacity="0.5613985"/><path d="M-81.35719999999998 123q-16 -3 -37 0" opacity="0.4530651666666668"/><path d="M-101.3572 133q-16 -3 -40 0" opacity="0.3447318333333333"/></g>
+ </g>
+ <!-- Far arm joins the upper handle behind the head. -->
+ <path id="armFar" d="M-25 9Q-64-45-60-126L-2-276" fill="none" stroke="#c9cfbf" stroke-width="28" stroke-linecap="round"/>
+ <path d="M-60-126L-2-276" fill="none" stroke="#ffdbad" stroke-width="18" stroke-linecap="round"/>
+ <!-- visible neck between the face and collar -->
+ <g id="neck" aria-label="脖子"><path d="M-13-30Q0-20 14-30L16-4Q1 8-15-4Z" fill="#f5c69f"/><path d="M-14-7Q0 3 15-7L18 4Q1 15-17 4Z" fill="#f0b88f" opacity=".55"/></g>
+ <!-- shorts and coat -->
+ <path d="M-46 43L44 43 39 76 6 78 0 65-5 78-44 75Z" fill="#303b37"/>
+ <g id="coat" transform="rotate(0.5715142282520315 0 0)"><path d="M-44 2Q-16-9 28-2L46 10 53 64Q16 73-5 62Q-33 72-57 60Z" fill="#fbfcf5" stroke="#d5ddd2" stroke-width="2"/>
+ <path d="M-44-3L-58 11-43 27-21 6M29-5L48 9 39 24 17 6" fill="#77798a"/>
+ <path d="M-39 13L-13 25-9 62M35 13L8 26 2 61" fill="none" stroke="#70b8b4" stroke-width="4"/>
+ <path d="M-30 22L-40 49-20 50M25 25L33 49 14 51" fill="#ecf0e8" stroke="#d2d7ca" stroke-width="3" stroke-linejoin="round"/>
+ <path d="M-4 24L-1 59" stroke="#384741" stroke-width="3"/><path d="M-7 33l10 8-8 5" fill="none" stroke="#37423e" stroke-width="3"/>
+ <path d="M-10 3L-1 14 9 3" fill="#272e37"/><path d="M-9 5L-16 18" stroke="#a9a0d2" stroke-width="4"/>
+ <path d="M-45 54L-45 80" stroke="#343d37" stroke-width="6"/><path d="M-50 73h11m-10 8h9" stroke="#d3b05b" stroke-width="4"/></g>
+ <!-- ears, face and fringe -->
+ <g id="head" transform="translate(0 6)"><path d="M-76-98Q-103-102-98-77Q-94-60-76-65M74-100Q99-105 96-79Q91-62 74-66" fill="#f0bda0"/>
+ <path d="M-83-140Q0-189 81-139L82-78Q74-24 3-24Q-65-25-80-68Z" fill="#ffdfb2"/>
+ <ellipse cx="-52" cy="-61" rx="19" ry="15" fill="#f5bd9e" opacity=".65"/><ellipse cx="55" cy="-61" rx="18" ry="15" fill="#f5bd9e" opacity=".65"/>
+ <g class="blink" fill="#508bc0"><rect x="-49" y="-104" width="24" height="45" rx="12"/><rect x="35" y="-106" width="24" height="45" rx="12"/></g>
+ <path d="M-4-57Q13-63 23-53L22-44Q10-31-2-42Z" fill="#da855e"/><path d="M0-54h18" stroke="#fff7e7" stroke-width="5" stroke-linecap="round"/><path d="M4-41Q12-46 18-41" stroke="#f6b6a0" stroke-width="5" stroke-linecap="round"/>
+ <path d="M-90-89Q-108-132-92-162Q-122-172-116-212Q-112-222-101-213L-62-190Q1-230 64-190L106-216Q126-228 116-187L107-165Q127-147 105-132Q117-115 96-108L87-39Q79-5 65-1L69-108 48-117 42-96Q25-104 22-136L16-99-14-100-31-144-43-103-57-108-62-80Q-66-29-82-18L-93-44Z" fill="#d9cdb7"/>
+ <path d="M-91-127Q-106-65-83-20" fill="none" stroke="#e5dac5" stroke-width="8" stroke-linecap="round"/>
+ <!-- recognizable bird hair clip -->
+ <g transform="translate(-92 -151) rotate(-15)"><path d="M-8 7Q-14 25 1 28Q20 28 19 11" fill="none" stroke="#2f3530" stroke-width="6"/><path d="M-9 13L-10-12Q-8-22-1-12L11 0Q18 16 6 21Q-4 23-9 13Z" fill="#fafbf4"/><path d="M-9-4L-23-2-8 8" fill="#b9c6c4"/><circle cx="2" cy="1" r="3" fill="#303b35"/><circle cx="10" cy="10" r="3" fill="#ddcdb0"/></g>
+ </g>
+ <!-- near arm, raised above the head -->
+ <path d="M43 4Q93-26 112-100L60-193" fill="none" stroke="#dbe1d4" stroke-width="29" stroke-linecap="round"/>
+ <path d="M45 2L74-20 89-42" fill="none" stroke="#fafbf4" stroke-width="24" stroke-linecap="round"/>
+ <path d="M112-100L60-193" fill="none" stroke="#ffdbad" stroke-width="19" stroke-linecap="round"/>
+ <path d="M103-105L120-112" stroke="#525c52" stroke-width="11"/>
+ <!-- overhead chainsaw; bar points backward, opposite the rightward run -->
+ <g id="saw" transform="translate(60 -225) rotate(8) scale(-1 1)">
+ <path d="M4 23L-15 23Q-25 23-25 9L-25-17Q-25-28-14-28L8-28" fill="none" stroke="#354a43" stroke-width="10" stroke-linejoin="round"/>
+ <path d="M60-24H235A24 24 0 0 1 235 24H60Z" fill="#364b44"/>
+ <path id="chain" d="M65-23H235A23 23 0 0 1 235 23H65Z" fill="none" stroke="#52665c" stroke-width="8" stroke-dasharray="5 7" stroke-linejoin="round" stroke-dashoffset="-97.318"/>
+ <path d="M66-17H234A17 17 0 0 1 234 17H66Z" fill="url(#blade)"/>
+ <path d="M91 0H232" stroke="#8ca196" stroke-width="3" stroke-linecap="round"/>
+ <circle cx="233" cy="0" r="7" fill="#b2c1b5"/><circle cx="233" cy="0" r="3" fill="#6f877b"/>
+ <path d="M0-31Q-5-31-5-21L-5 27Q-5 35 6 35H69L78 23 75-23 64-31Z" fill="#70a79b" stroke="#3d6156" stroke-width="3"/>
+ <path d="M5 12H70L68 30H6Z" fill="#3e685b"/>
+ <path d="M13-20H45V5H13Z" fill="#d8e0c6"/>
+ <path d="M18-15v15m8-15v15m8-15v15m8-15v15" stroke="#6d8979" stroke-width="3"/>
+ <circle cx="58" cy="-9" r="7" fill="#e9ca75"/><circle cx="58" cy="-9" r="3" fill="#7c8059"/>
+ <path d="M47-31L45-43Q44-49 52-49H77Q84-49 84-42V8" fill="none" stroke="#2f473f" stroke-width="9" stroke-linecap="round"/>
+ <path d="M74 10L87 8" stroke="#344b43" stroke-width="6"/>
+ <path d="M12 33L18 44H44L48 34" fill="#314f43"/>
+ <!-- hands curled around the two handles -->
+ <path d="M-6 39Q-15 35-15 26L-14 17Q-11 10-6 16L-4 22 4 19Q13 21 10 29L8 39Z" fill="#ffdbad"/>
+ <path d="M65-36Q55-39 57-47Q61-54 68-50L80-44Q86-38 81-32Z" fill="#ffdbad"/>
+ </g>
+</g></g>
+<g transform="translate(737 144) rotate(9)" fill="none" stroke="#89aa88" stroke-width="3" stroke-linecap="round"><path d="M-3 9L4-3M10 16l13-5M12 28l12 3"/></g>
+</svg>
