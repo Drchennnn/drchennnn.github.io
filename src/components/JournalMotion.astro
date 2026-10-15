@@ -3,14 +3,67 @@
   const root = document.documentElement;
   const motionButton = document.querySelector<HTMLButtonElement>('.motion-toggle');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const wideScreen = window.matchMedia('(min-width: 1100px)');
+  const hero = document.querySelector<HTMLElement>('.journal-intro');
+  const gardenLayers = [...document.querySelectorAll<SVGGElement>('.garden-layer')];
+  const margin = document.querySelector<HTMLElement>('.margin-parallax');
+  const marginLayers = [...document.querySelectorAll<SVGGElement>('.margin-layer')];
+  const chapters = [...document.querySelectorAll<HTMLElement>('[data-garden-scene]')];
+  const topButton = document.querySelector<HTMLButtonElement>('.back-top');
+  const chime = document.querySelector<HTMLButtonElement>('.wind-chime');
   let paused = root.dataset.motion === 'off';
+  let pointer = { x: 0, y: 0 };
+  let frame = 0;
+  let chapterPositions: { top: number; scene: string }[] = [];
+  let scrollRange = 1;
+
+  function renderGarden() {
+    frame = 0;
+    const enabled = root.dataset.motion !== 'off';
+    if (topButton) topButton.hidden = window.scrollY < 450;
+    gardenLayers.forEach(layer => {
+      const depth = Number(layer.dataset.depth);
+      layer.style.transform = enabled && finePointer.matches
+        ? `translate(${(pointer.x * depth * 18).toFixed(2)}px, ${(pointer.y * depth * 12).toFixed(2)}px)`
+        : 'none';
+    });
+    if (!margin) return;
+    const active = enabled && wideScreen.matches;
+    const progress = active ? Math.min(1, Math.max(0, window.scrollY / scrollRange)) : 0;
+    // Chapters trigger the atmosphere; continuous scroll controls the SVG scale.
+    const readingLine = window.scrollY + window.innerHeight * .65;
+    const chapter = chapterPositions.filter(section => section.top <= readingLine).at(-1);
+    margin.dataset.scene = active && window.scrollY > 2 ? chapter?.scene || 'mist' : 'mist';
+    marginLayers.forEach(layer => {
+      const amount = Number(layer.dataset.scale);
+      layer.style.transform = active ? `scale(${(1 + (progress - .5) * amount).toFixed(4)})` : 'none';
+    });
+  }
+  function scheduleGarden() {
+    if (!frame) frame = requestAnimationFrame(renderGarden);
+  }
+  function measureGarden() {
+    scrollRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    chapterPositions = chapters.map(section => ({
+      top: section.getBoundingClientRect().top + window.scrollY,
+      scene: section.dataset.gardenScene || 'mist',
+    }));
+    scheduleGarden();
+  }
+  function resetPointer() {
+    pointer = { x: 0, y: 0 };
+    scheduleGarden();
+  }
   function updateMotion() {
     root.dataset.motion = paused || reduced.matches ? 'off' : 'on';
+    if (root.dataset.motion === 'off') chime?.classList.remove('is-ringing');
     if (motionButton) {
       motionButton.disabled = reduced.matches;
       motionButton.setAttribute('aria-pressed', String(paused || reduced.matches));
       motionButton.textContent = reduced.matches ? '静态模式' : paused ? '开启动效' : '暂停动效';
     }
+    resetPointer();
   }
   updateMotion();
   reduced.addEventListener('change', updateMotion);
@@ -19,15 +72,28 @@
     try { localStorage.setItem('journal-motion', paused ? 'off' : 'on'); } catch {}
     updateMotion();
   });
-  const chime = document.querySelector<HTMLButtonElement>('.wind-chime');
   chime?.addEventListener('click', () => {
     if (root.dataset.motion === 'off' || chime.classList.contains('is-ringing')) return;
     chime.classList.add('is-ringing');
   });
   chime?.querySelector('.chime-swing')?.addEventListener('animationend', () => chime.classList.remove('is-ringing'));
-  const topButton = document.querySelector<HTMLButtonElement>('.back-top');
-  const updateTop = () => { if (topButton) topButton.hidden = window.scrollY < 450; };
-  window.addEventListener('scroll', updateTop, { passive: true });
-  updateTop();
+  hero?.addEventListener('pointermove', event => {
+    if (root.dataset.motion === 'off' || !finePointer.matches || event.pointerType === 'touch') return;
+    const bounds = hero.getBoundingClientRect();
+    pointer = {
+      x: Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width - .5) * 2)),
+      y: Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height - .5) * 2)),
+    };
+    scheduleGarden();
+  });
+  hero?.addEventListener('pointerleave', resetPointer);
+  window.addEventListener('blur', resetPointer);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) resetPointer(); });
+  finePointer.addEventListener('change', resetPointer);
+  wideScreen.addEventListener('change', measureGarden);
+  window.addEventListener('scroll', scheduleGarden, { passive: true });
+  window.addEventListener('resize', measureGarden, { passive: true });
+  if (margin) new ResizeObserver(measureGarden).observe(document.querySelector('.shell')!);
+  measureGarden();
   topButton?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: root.dataset.motion === 'off' ? 'instant' : 'smooth' }));
 </script>

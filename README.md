@@ -1,6 +1,6 @@
 # 日常手帖
 
-Drchennnn 的简洁个人博客，基于 Astro，发布于 https://drchennnn.github.io/ 。
+Link 的简洁个人博客，基于 Astro，发布于 https://drchennnn.github.io/ 。
 
 ## 分组与搜索
 
@@ -41,6 +41,16 @@ draft: false
 - `src/pages/index.astro`：首页介绍和列表
 - `src/layouts/Base.astro`：网站名称、导航和页脚
 - `src/styles/global.css`：颜色与排版
+
+## 庭院动效
+
+首页圆窗庭院采用四层 SVG，鼠标移动时产生轻微景深；风铃的吊线与铃身共同摆动，点击可再借一阵风。
+宽屏两侧随阅读区块切换晨雾、苔庭、薄暮背景，松枝与石灯随滚动缩放。小屏把庭院放到介绍下方，隐藏两侧装饰；触摸操作不触发鼠标视差。
+页脚“暂停动效”会记住当前选择；系统开启“减少动态效果”时自动使用静态画面。
+
+- `src/components/HeroGarden.astro`、`MarginParallax.astro`：手绘 SVG
+- `src/components/JournalMotion.astro`：鼠标、滚动与暂停逻辑
+- `src/styles/garden.css`：庭院布局和背景过渡
 
 ## 本地开发
 

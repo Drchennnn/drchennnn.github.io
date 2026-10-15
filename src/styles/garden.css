@@ -1,0 +1,67 @@
+/* The garden lives around the journal; the paper stays clear for reading. */
+.has-garden { isolation: isolate; }
+.has-garden > .shell { position: relative; z-index: 1; }
+.has-garden .journal-intro { grid-template-columns: minmax(0, 1fr) minmax(0, 430px); gap: 12px; padding-top: 52px; }
+.garden-stage { position: relative; height: 460px; min-width: 0; }
+.hero-garden { position: absolute; inset: 0; pointer-events: none; }
+.hero-garden svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.garden-layer { transition: transform 700ms cubic-bezier(.2, .65, .3, 1); }
+.garden-stage .wind-corner { position: absolute; top: -12px; right: 5px; width: 106px; height: 205px; padding: 0; margin: 0; justify-content: flex-start; }
+.garden-stage .wind-chime { width: 98px; margin: 0; }
+.garden-stage .wind-chime svg { height: 165px; }
+.garden-stage .wind-note { top: 30px; right: -5px; font-size: 10px; }
+.garden-stage .wind-caption { display: none; }
+.garden-stage .chime-hint { font-size: 9px; margin-top: 2px; }
+.garden-caption { position: absolute; bottom: 10px; left: 32px; font: 11px/1.8 'Songti SC', serif; letter-spacing: .22em; color: var(--muted); }
+
+.margin-parallax { --garden-ink: #9da995; --garden-fill: #c5cebb; --garden-rose: #ceb4a6; position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; transition: color 1.2s; }
+.garden-atmosphere { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease; }
+.atmosphere-mist { background: linear-gradient(90deg, #dfe5db90, transparent calc(50% - 390px), transparent calc(50% + 390px), #e4e8df90); }
+.atmosphere-moss { background: linear-gradient(90deg, #c2cfb6a8, transparent calc(50% - 390px), transparent calc(50% + 390px), #d3dbc4b8); }
+.atmosphere-dusk { background: linear-gradient(90deg, #e0bfa7a0, transparent calc(50% - 390px), transparent calc(50% + 390px), #d5b9afb0); }
+[data-scene='mist'] .atmosphere-mist, [data-scene='moss'] .atmosphere-moss, [data-scene='dusk'] .atmosphere-dusk { opacity: 1; }
+.margin-parallax[data-scene='moss'] { --garden-ink: #879776; --garden-fill: #aebd99; --garden-rose: #b6a68f; }
+.margin-parallax[data-scene='dusk'] { --garden-ink: #a18c7c; --garden-fill: #c8b9a0; --garden-rose: #c28e7d; }
+.margin-scene { position: absolute; bottom: 6vh; width: clamp(64px, calc((100vw - 1040px) / 2 - 24px), 145px); height: min(66vh, 600px); overflow: visible; color: var(--garden-ink); transition: color 1.4s; }
+.margin-scene-left { left: max(12px, calc((100vw - 1370px) / 4)); }
+.margin-scene-right { right: max(12px, calc((100vw - 1370px) / 4)); }
+.margin-layer { transform-box: view-box; transform-origin: 50% 100%; }
+.margin-scene path { stroke-linecap: round; stroke-linejoin: round; }
+.margin-mist { stroke: currentColor; stroke-width: .6; opacity: .38; }
+.margin-sun { fill: var(--garden-rose); opacity: .38; transition: fill 1.4s; }
+.margin-leaf { fill: currentColor; opacity: .7; }
+.margin-stone { fill: var(--garden-fill); opacity: .48; transition: fill 1.4s; }
+.margin-petal { fill: var(--garden-rose); opacity: .6; transition: fill 1.4s; }
+.garden-time { position: absolute; top: 20vh; left: 30px; writing-mode: vertical-rl; font: 9px/1.5 monospace; letter-spacing: .16em; color: var(--muted); }
+.garden-time span { position: absolute; white-space: nowrap; opacity: 0; transition: opacity .8s; }
+[data-scene='mist'] .time-mist, [data-scene='moss'] .time-moss, [data-scene='dusk'] .time-dusk { opacity: .7; }
+
+/* Narrow screens keep the illustration in the flow instead of crowding text. */
+@media (max-width: 1099px) { .margin-parallax { display: none; } }
+@media (max-width: 900px) {
+  .has-garden .journal-intro { grid-template-columns: minmax(0, 1fr) minmax(0, 330px); }
+  .has-garden .journal-intro h1 { font-size: 37px; }
+  .garden-stage { height: 400px; }
+  .garden-stage .wind-corner { right: 0; top: -5px; }
+}
+@media (max-width: 760px) {
+  .has-garden .journal-intro { grid-template-columns: 1fr; padding-top: 46px; gap: 0; }
+  .has-garden .journal-intro h1 { font-size: 39px; }
+  .garden-stage { width: min(100%, 430px); height: 385px; justify-self: center; margin-top: 12px; }
+  .garden-stage .wind-corner { right: 14px; top: 0; }
+  .garden-stage .chime-hint { display: none; }
+  .garden-caption { left: 28px; bottom: 0; }
+  .intro-bottom-note { margin-top: 34px; }
+}
+@media (max-width: 400px) {
+  .has-garden .journal-intro h1 { font-size: 32px; }
+  .garden-stage { height: 330px; }
+  .garden-stage .wind-corner { width: 80px; right: -2px; }
+  .garden-stage .wind-chime { width: 68px; }
+  .garden-stage .wind-chime svg { height: 115px; }
+  .garden-stage .wind-note { right: 0; top: 20px; }
+}
+[data-motion='off'] .garden-layer, [data-motion='off'] .margin-layer { transform: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .garden-layer, .margin-layer { transform: none !important; }
+}
