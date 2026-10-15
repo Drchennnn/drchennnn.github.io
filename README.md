@@ -7,8 +7,43 @@ Link 的简洁个人博客，基于 Astro，发布于 https://drchennnn.github.i
 - **日々小记**：日常、短文和零碎想法。文章 `category: daily`；旧文章没有此字段时也属于这里。
 - **学び手帖**：学习心得。文章 `category: study`。
 - **光影拾遗**：照片记录。后台选择同名集合，新建记录，上传 1–50 张照片；每张可填照片小字和无障碍图片描述，另可填写补充正文。
-- 导航进入各分组；搜索覆盖已发布文章正文和照片说明。隐藏草稿不进入站点搜索索引。
+- **玩心造物**：自己做的动画、交互实验和好玩的小玩意。列表使用封面卡片，点击进入带有内嵌演示的作品详情页。
+- 导航进入各分组；搜索覆盖已发布文章正文、照片说明和作品信息。隐藏草稿不进入站点搜索索引。
 - 照片记录保存在 `src/content/photos/`，图片上传至 `public/images/`。删除照片记录不会自动删除媒体库图片，以免影响其他文章；媒体库图片需另行管理。
+
+## 添加小玩意
+
+每件作品由一份 Markdown 元数据、一个独立 HTML 演示和一张封面组成。作品文件名就是详情页地址中的 slug，只使用小写英文字母、数字和连字符，例如 `pelican-ride.md` 对应 `/play/pelican-ride/`。
+
+作品元数据保存在 `src/content/toys/`：
+
+```markdown
+---
+title: "作品标题"
+date: 2026-10-15
+description: "一句话介绍这个小玩意，可留空。"
+draft: false
+cover: /images/toys/pelican-ride.svg
+demo: /toys/pelican-ride/index.html
+tags:
+  - SVG
+  - 动画
+---
+这里写创作说明、操作方法或实现笔记。
+```
+
+本地新增作品：
+
+1. 把可独立运行的 HTML 及其资源放入 `public/toys/<slug>/`，入口必须是 `index.html`。
+2. 把封面放入 `public/images/`（可以按作品继续分目录），在 `cover` 中填写以 `/images/` 开头的地址；也支持 `http(s)` 图片地址。
+3. 在 `src/content/toys/` 新建同名 Markdown，`demo` 必须填写 `/toys/<slug>/index.html`，并确保 slug 只含小写字母、数字和连字符。
+4. 本地运行 `npm run dev` 检查卡片、详情和演示，再提交到 Git。部署后公开作品也会进入站内搜索。
+
+在线后台可以新建和编辑作品的标题、日期、摘要、封面、演示地址、标签、正文与草稿状态。HTML 演示不通过 CMS 上传或编辑，仍需在本地或 GitHub 中放入 `public/toys/<slug>/` 后提交。删除作品元数据不会自动删除 HTML 演示与封面资源。
+
+鹈鹕动画已接入页脚“暂停动效”和系统“减少动态效果”设置。以后新增动画可参照 `public/toys/pelican-ride/index.html`：只接受来自 `parent` 的 `journal:motion` 消息，用 `paused` 布尔值控制播放；向父页发送 `toy:ready`，并用 `toy:resize` 的 `height` 字段报告内容高度，让详情页自动适配。未接入消息协议的独立 HTML 仍可嵌入，但需自行处理暂停与高度。
+
+作品演示使用仅允许脚本的 iframe 沙箱。`draft: true` 隐藏作品列表、详情与搜索，不会隐藏 `public/` 下的 HTML 或封面。
 
 ## 写文章（也可直接通过 GitHub 管理）
 
@@ -63,7 +98,7 @@ npm run build
 npm test
 ```
 
-`npm test` 临时添加文章验证发布、详情页、草稿和删除，结束后移除测试文件。不要和正在写作或构建的另一个进程同时运行。
+`npm test` 临时添加文章、照片与作品，验证发布、详情页、搜索、草稿、作品 iframe 沙箱、删除和站内链接，结束后移除测试文件。不要和正在写作或构建的另一个进程同时运行。
 
 ## 部署
 
@@ -76,6 +111,7 @@ Pages 的 Source 选择 GitHub Actions。每次推送 main，由 `.github/workfl
 
 打开 https://drchennnn.github.io/admin/ ，使用 Drchennnn 的 GitHub 账号登录。
 - 新建/编辑：填写标题、日期、文章分组、摘要和正文，支持可视化编辑及 Markdown，保存后等待 GitHub Actions 发布。
+- 作品：后台可维护“玩心造物”的元数据和说明；HTML 演示仍需通过本地或 Git 提交到 `public/toys/<slug>/`。
 - 导入：顶部“导入 Markdown”读取 .md 的 frontmatter 与正文，先预览再进入编辑器；最多 500 KB。本地图片须另外上传。
 - 图片：正文图片按钮或媒体库上传至 public/images。
 - 删除：打开文章后使用删除操作并确认；Git 历史保留，可恢复。

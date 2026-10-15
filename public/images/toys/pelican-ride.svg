@@ -1,0 +1,68 @@
+<svg id="ride" viewBox="0 0 1000 580" role="img" aria-labelledby="art-title art-desc" xmlns="http://www.w3.org/2000/svg">
+<title id="art-title">鹈鹕骑自行车</title><desc id="art-desc">参考上传图片绘制的米色长发、蓝眼睛 Q 版角色，穿白色外套骑着绿色自行车。脚踏、车轮和田野随速度滑块一起变化。</desc>
+<defs>
+<linearGradient id="sky" x2="0" y2="1"><stop stop-color="#e9f1e7"/><stop offset="1" stop-color="#f6f4df"/></linearGradient>
+<linearGradient id="hairShade" x2="0.7" y2="1"><stop stop-color="#dcd0b9"/><stop offset="1" stop-color="#c5b39d"/></linearGradient>
+<linearGradient id="face" x2="0" y2="1"><stop stop-color="#ffe5bd"/><stop offset="1" stop-color="#ffdbaf"/></linearGradient>
+<pattern id="roadMarks" width="190" height="32" patternUnits="userSpaceOnUse"><path d="M18 18h44 M112 3h11" stroke="#d4d9bb" stroke-width="3" stroke-linecap="round"/></pattern>
+<g id="cloud" fill="#fffdf3"><path d="M0 16C0 6 13 3 20 7C24-7 48-7 54 9C64 0 82 7 82 18H0Z"/></g>
+<g id="grass" fill="none" stroke="#a7ba8a" stroke-width="2.5" stroke-linecap="round"><path d="M0 0l-4-10M0 0l6-15M0 0l11-5"/></g>
+<g id="flower"><path d="M0 0v-17m0 11l-6-4" stroke="#94ae83" stroke-width="2" fill="none"/><g fill="#fff9db"><circle cy="-21" r="4"/><circle cx="-4" cy="-17" r="4"/><circle cx="4" cy="-17" r="4"/><circle cy="-13" r="4"/></g><circle cy="-17" r="3" fill="#d8b15c"/></g>
+<g id="wheel"><circle r="82" fill="#f8f6e8" fill-opacity=".5" stroke="#405451" stroke-width="9"/><circle r="74" fill="none" stroke="#e6e7d6" stroke-width="3"/><circle r="8" fill="#526e62"/><circle r="3" fill="#d5decf"/></g>
+</defs>
+<path fill="url(#sky)" d="M0 0h1000v580H0z"/>
+<circle cx="795" cy="112" r="43" fill="#f9e5ab"/><circle cx="795" cy="112" r="57" fill="#f9e5ab" opacity=".15"/>
+<g id="clouds" opacity=".85"><use href="#cloud" x="113" y="111"/><use href="#cloud" x="699" y="184" transform="scale(.8)"/><use href="#cloud" x="940" y="85"/><g transform="translate(1100 0)"><use href="#cloud" x="113" y="111"/><use href="#cloud" x="699" y="184" transform="scale(.8)"/><use href="#cloud" x="940" y="85"/></g></g>
+<path d="M0 354Q119 270 258 337T515 328T772 313T1000 334V500H0Z" fill="#d8e4c9"/>
+<path d="M0 402Q159 321 316 391T651 376T1000 387V520H0Z" fill="#c5d8b5"/>
+<g fill="none" stroke="#b6cba6" stroke-width="2" opacity=".65"><path d="M52 399q85-49 173-29m498 32q91-46 208-27M746 411q93-37 187-23"/></g>
+<path d="M0 463Q220 441 469 463T1000 454V580H0Z" fill="#e8e7cd"/>
+<path d="M0 501Q215 479 494 498T1000 490V580H0Z" fill="#f0edda"/>
+<g id="verge"><use href="#grass" x="100" y="472"/><use href="#grass" x="280" y="485"/><use href="#grass" x="750" y="470"/><use href="#grass" x="965" y="482"/><use href="#flower" x="181" y="470"/><use href="#flower" x="840" y="476"/><use href="#grass" x="1110" y="472"/><use href="#grass" x="1290" y="485"/><use href="#grass" x="1760" y="470"/><use href="#flower" x="1191" y="470"/><use href="#flower" x="1850" y="476"/></g>
+<path d="M0 540h1000v40H0z" fill="url(#roadMarks)" id="road"/>
+<ellipse cx="510" cy="542" rx="227" ry="12" fill="#83967a" opacity=".13"/>
+<g id="cycle">
+<!-- Wheels and the far leg sit behind the frame. -->
+<g transform="translate(360 451)"><use href="#wheel"/><g id="rearSpin" stroke="#9aaea0" stroke-width="1.7"><path d="M0 0 L74.00 0.00"/><path d="M0 0 L64.09 37.00"/><path d="M0 0 L37.00 64.09"/><path d="M0 0 L0.00 74.00"/><path d="M0 0 L-37.00 64.09"/><path d="M0 0 L-64.09 37.00"/><path d="M0 0 L-74.00 0.00"/><path d="M0 0 L-64.09 -37.00"/><path d="M0 0 L-37.00 -64.09"/><path d="M0 0 L-0.00 -74.00"/><path d="M0 0 L37.00 -64.09"/><path d="M0 0 L64.09 -37.00"/><path d="M-7-69H7" stroke="#e9c477" stroke-width="5"/></g></g>
+<g transform="translate(665 451)"><use href="#wheel"/><g id="frontSpin" stroke="#9aaea0" stroke-width="1.7"><path d="M0 0 L74.00 0.00"/><path d="M0 0 L64.09 37.00"/><path d="M0 0 L37.00 64.09"/><path d="M0 0 L0.00 74.00"/><path d="M0 0 L-37.00 64.09"/><path d="M0 0 L-64.09 37.00"/><path d="M0 0 L-74.00 0.00"/><path d="M0 0 L-64.09 -37.00"/><path d="M0 0 L-37.00 -64.09"/><path d="M0 0 L-0.00 -74.00"/><path d="M0 0 L37.00 -64.09"/><path d="M0 0 L64.09 -37.00"/><path d="M-7-69H7" stroke="#e9c477" stroke-width="5"/></g></g>
+<path id="farLeg" d="M484 370Q554 395 524 451" stroke="#514e43" stroke-width="22" stroke-linecap="round" fill="none"/>
+<g id="farFoot" transform="translate(539 438)"><path d="M-13-7h23l13 10q1 8-10 8h-30Z" fill="#333c37"/><path d="M-14 12h36" stroke="#9b9a7f" stroke-width="3" stroke-linecap="round"/></g>
+<path d="M360 451L446 354L509 451H360L422 384H619L509 451M619 351L665 451" stroke="#366f62" stroke-width="12" stroke-linejoin="round" fill="none"/>
+<path d="M360 447L446 351M426 380H616M620 352L663 447" stroke="#83b5a0" stroke-width="3" stroke-linecap="round" fill="none"/>
+<path d="M443 355l-9-27M619 354l-13-43q0-14 17-14h20" stroke="#6b7d6f" stroke-width="7" stroke-linecap="round" fill="none"/>
+<path d="M414 326q-7-9 9-10h33q11 2 7 12h-42Z" fill="#4b5750"/><path d="M631 297h20" stroke="#3e5149" stroke-width="10" stroke-linecap="round"/>
+<path d="M638 303q24 18 10 51" stroke="#526c60" stroke-width="2" fill="none"/>
+<path d="M507 438L362 442q-13 12 0 20l145 3" stroke="#829081" stroke-width="3" fill="none"/>
+<circle cx="509" cy="451" r="22" fill="#d6ddd0" stroke="#7e9586" stroke-width="3"/><circle cx="509" cy="451" r="15" fill="#afc5b2"/><g id="crank" transform="translate(509 451)"><path d="M-30 0H30" stroke="#667f6e" stroke-width="5" stroke-linecap="round"/><circle r="5" fill="#526b5d"/></g>
+<!-- Long, wind-swept hair, coat and the reference character's silhouette. -->
+<g id="rider">
+<g id="backHair"><path d="M404 195Q376 227 380 294Q375 329 340 356Q360 371 385 352Q375 374 393 380Q413 379 429 354Q428 382 448 378L484 330L541 371Q562 380 561 355Q583 379 591 362Q595 344 570 316Q582 270 569 218Z" fill="url(#hairShade)"/><path d="M403 243Q403 318 375 347M550 244Q552 320 574 347" fill="none" stroke="#e5dbc9" stroke-width="8" stroke-linecap="round"/></g>
+<path d="M459 341q-10 20-6 38l56 6 17-30Z" fill="#414843"/>
+<path d="M460 302Q484 285 509 301L535 349Q516 370 454 356L446 326Z" fill="#fbfaf3" stroke="#d5d8ce" stroke-width="2"/>
+<path d="M455 309l-13 19 16 12 14-25M507 304l17 7 9 22-20 7-14-25" fill="#8a8697"/>
+<path d="M465 310l17 17 22-20" stroke="#5fa8a3" stroke-width="5" fill="none"/><path d="M481 327l8 31" stroke="#6bada5" stroke-width="3"/><path d="M487 325l7 22" stroke="#424b48" stroke-width="3"/><path d="M481 350l11 3-2 6" stroke="#424b48" stroke-width="3" fill="none"/>
+<path d="M454 331l18-3 4 15-19 3Z" fill="#e6e8df"/><path d="M455 332l18-3" stroke="#c4cbbf" stroke-width="3"/>
+<path d="M470 299l10-12h17l12 16-17 11Z" fill="#fffdf5"/><path d="M481 295l8 5-4 12-8-8Z" fill="#53525d"/><path d="M490 299l10-6 3 12-10 4Z" fill="#353f3c"/><path d="M477 307l-5 9" stroke="#9784b5" stroke-width="4"/>
+<path d="M519 321Q543 340 560 335L603 310" stroke="#e0e3d9" stroke-width="23" fill="none" stroke-linecap="round"/>
+<path d="M521 317Q544 333 559 329L592 311" stroke="#fafbf4" stroke-width="15" fill="none" stroke-linecap="round"/>
+<path d="M590 310l14-8" stroke="#83b6ae" stroke-width="17"/>
+<path d="M600 307l16-7q12-1 13 5l-5 9-21 4Z" fill="#ffdcad"/><path d="M616 301q9-6 15 2l-2 8-16 3" fill="#454b42"/>
+<!-- Face and fluffy ear-like hair tufts. -->
+<path d="M417 180Q420 141 477 145Q546 136 565 189L563 247Q560 285 509 292L460 285Q419 279 414 246Z" fill="url(#face)"/>
+<ellipse cx="563" cy="235" rx="15" ry="20" fill="#efba9e"/><path d="M564 229q10-2 4 10" stroke="#d89a89" stroke-width="3" fill="none" stroke-linecap="round"/>
+<g id="eyes"><path d="M448 213v25q0 13 10 13t11-13v-25Z" fill="#518cc3"/><path d="M514 211v26q0 13 11 13t11-13v-26Z" fill="#518cc3"/><path d="M451 215v6M517 213v6" stroke="#78add5" stroke-width="4" stroke-linecap="round"/></g>
+<ellipse cx="439" cy="258" rx="16" ry="11" fill="#f4bc99" opacity=".55"/><ellipse cx="542" cy="256" rx="15" ry="11" fill="#f4bc99" opacity=".55"/>
+<path d="M482 260q12-8 21 1l-2 13q-10 8-18-1Z" fill="#e3906c"/><path d="M485 271q7-4 15 1" stroke="#f8bd95" stroke-width="5" stroke-linecap="round"/><path d="M485 258h13" stroke="#f8f2db" stroke-width="4" stroke-linecap="round"/>
+<path d="M410 204Q392 193 397 167Q374 164 381 145Q364 126 365 103Q364 88 379 99L422 123Q454 103 493 111Q534 107 554 124L601 96Q616 84 612 108Q609 131 596 147Q611 163 590 174Q607 189 584 199L580 266Q579 291 558 310L562 211L546 218L533 182L529 221L500 223L478 181L465 218L448 213L438 189L425 239Q417 269 430 305Q402 295 401 270Z" fill="#dfd4c0"/>
+<path d="M385 112l25 24M586 113l-21 24" stroke="#e9e0cf" stroke-width="5" stroke-linecap="round"/>
+<!-- White bird hair clip and black ring from the reference. -->
+<path d="M398 180q-9 19 6 23q19 5 21-15" stroke="#343d39" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M395 168l-7-15q-3-9 5-7l17 16q13 6 8 20-3 13-14 11-11-2-9-25" fill="#f6f6ed"/><path d="M396 165l-15-4 14 17" fill="#b8c1be"/><circle cx="407" cy="167" r="3" fill="#d9cbb0"/><path d="M392 157v7" stroke="#35453e" stroke-width="4" stroke-linecap="round"/>
+</g>
+<path id="nearLeg" d="M482 370Q457 414 494 451" stroke="#645b4b" stroke-width="23" stroke-linecap="round" fill="none"/>
+<path id="sockSeam" d="M0 0L0 0" stroke="#a3997f" stroke-width="2" fill="none"/>
+<g id="nearFoot" transform="translate(479 438)"><path d="M-14-9h22l16 12q4 9-8 10h-31Z" fill="#353d37"/><path d="M-14 13h37" stroke="#929581" stroke-width="3" stroke-linecap="round"/><path d="M-5-2l10 8m0-8L-5 6" stroke="#666e5e" stroke-width="2"/></g>
+<g id="nearPedal" transform="translate(479 453)"><path d="M-15 0H15" stroke="#4c6357" stroke-width="6" stroke-linecap="round"/><path d="M-8 0H8" stroke="#d4bd73" stroke-width="2"/></g>
+<circle cx="509" cy="451" r="5" fill="#506c5f"/>
+</g>
+<g id="breeze" fill="none" stroke="#fffef0" stroke-width="3" stroke-linecap="round" opacity=".8"><path d="M278 237h34m-58 19h40m435 73h32m-17-16h27"/></g>
+</svg>

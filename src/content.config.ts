@@ -18,4 +18,13 @@ const photos = defineCollection({
     images: z.array(z.object({ image: safeImage, caption: z.string().default(''), alt: z.string().default('') })).min(1).max(50),
   }),
 });
-export const collections = { posts, photos };
+const toys = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/toys' }),
+  schema: z.object({
+    title: z.string().min(1), date: z.coerce.date(), description: z.string().default(''), draft: z.boolean().default(false),
+    cover: safeImage,
+    demo: z.string().regex(/^\/toys\/[a-z0-9]+(?:-[a-z0-9]+)*\/index\.html$/, '作品地址须为 /toys/作品名/index.html'),
+    tags: z.array(z.string().min(1)).max(6).default([]),
+  }),
+});
+export const collections = { posts, photos, toys };

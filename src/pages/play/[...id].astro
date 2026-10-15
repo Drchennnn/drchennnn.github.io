@@ -1,0 +1,39 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import '../../styles/play.css';
+export async function getStaticPaths() {
+  const toys = await getCollection('toys', ({ data }) => !data.draft);
+  return toys.map(toy => ({ params: { id: toy.id }, props: { toy } }));
+}
+const { toy } = Astro.props;
+const { Content } = await render(toy);
+---
+<Base title={toy.data.title} description={toy.data.description}>
+  <article class="toy-detail">
+    <a class="back" href="/play/">← 返回玩心造物</a>
+    <div class="toy-heading"><p class="eyebrow">PLAY / {toy.data.tags.join(' · ') || '小小创作'}</p><h1>{toy.data.title}</h1><p class="lede">{toy.data.description}</p><time datetime={toy.data.date.toISOString()}>{toy.data.date.toISOString().slice(0,10).replaceAll('-', '.')}</time></div>
+    <div class="toy-stage"><iframe class="toy-frame" src={`${toy.data.demo}?embed=1`} title={`${toy.data.title} · 交互体验`} sandbox="allow-scripts" loading="eager" referrerpolicy="no-referrer"></iframe></div>
+    <div class="toy-toolbar"><span>给自己留一点玩的时间。</span><div><a href={toy.data.demo} target="_blank" rel="noopener">独立窗口 ↗</a><a href={toy.data.demo} download={`${toy.id}.html`}>下载 HTML ↓</a></div></div>
+    <div class="prose toy-notes"><Content /></div>
+    <div class="article-end"><span>让好奇心，再多待一会儿。</span><a href="/play/">查看全部作品 →</a></div>
+  </article>
+</Base>
+<script>
+  const frame = document.querySelector<HTMLIFrameElement>('.toy-frame');
+  if (frame) {
+    const sendMotion = () => frame.contentWindow?.postMessage({ type: 'journal:motion', paused: document.documentElement.dataset.motion === 'off' || document.hidden }, '*');
+    // The sandbox has an opaque origin; match the exact window before using its messages.
+    window.addEventListener('message', event => {
+      if (event.source !== frame.contentWindow) return;
+      if (event.data?.type === 'toy:ready') sendMotion();
+      if (event.data?.type === 'toy:resize' && Number.isFinite(event.data.height) && event.data.height >= 200 && event.data.height <= 2000) {
+        frame.style.height = `${Math.ceil(event.data.height)}px`;
+      }
+    });
+    frame.addEventListener('load', sendMotion);
+    new MutationObserver(sendMotion).observe(document.documentElement, { attributes: true, attributeFilter: ['data-motion'] });
+    document.addEventListener('visibilitychange', sendMotion);
+    sendMotion();
+  }
+</script>

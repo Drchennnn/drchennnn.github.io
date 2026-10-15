@@ -62,6 +62,16 @@ CMS.init({ config: {
       ] },
       { label: '补充文字', name: 'body', widget: 'markdown', required: false },
     ] },
+    { name: 'toys', label: '玩心造物', label_singular: '小作品', folder: 'src/content/toys', create: true, delete: true, extension: 'md', format: 'frontmatter', slug: '{{slug}}', preview_path: 'play/{{slug}}/', summary: '{{title}} · {{date}}', sortable_fields: ['date', 'title'], fields: [
+      { label: '作品标题', name: 'title', widget: 'string' },
+      { label: '日期', name: 'date', widget: 'string', default: new Date().toLocaleDateString('sv-SE'), hint: 'YYYY-MM-DD' },
+      { label: '一句话介绍', name: 'description', widget: 'text', required: false, default: '' },
+      { label: '隐藏作品（草稿）', name: 'draft', widget: 'boolean', default: false, hint: '只隐藏列表与详情；公开仓库源码和静态资源仍可读取。' },
+      { label: '卡片封面', name: 'cover', widget: 'image', allow_multiple: false },
+      { label: '作品 HTML 地址', name: 'demo', widget: 'string', pattern: ['^/toys/[a-z0-9]+(?:-[a-z0-9]+)*/index\\.html$', '例如 /toys/pelican-ride/index.html'], hint: '先把独立 HTML 上传到仓库 public/toys/作品名/index.html，再填写 /toys/作品名/index.html。' },
+      { label: '标签', name: 'tags', widget: 'list', required: false, default: [], max: 6, field: { label: '标签', name: 'tag', widget: 'string' } },
+      { label: '制作小记', name: 'body', widget: 'markdown', required: false },
+    ] },
   ],
 }});
 if (imported) CMS.registerEventListener({ name: 'postSave', handler: () => {
