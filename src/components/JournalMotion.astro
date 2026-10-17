@@ -6,12 +6,15 @@
   const rainButton = document.querySelector<HTMLButtonElement>('[data-scene-rain]')!;
   const topButton = document.querySelector<HTMLButtonElement>('.back-top')!;
   const scene = document.querySelector<HTMLElement>('[data-cafe-scene]');
+  const transition = document.querySelector<HTMLElement>('[data-cafe-transition]');
   const layers = [...document.querySelectorAll<SVGGElement>('.scene-layer')];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
   const get = (key: string) => { try { return localStorage.getItem(key); } catch { return null; } };
   const set = (key: string, value: string) => { try { localStorage.setItem(key,value); } catch {} };
   let paused = get('journal-motion') === 'off';
+  let requestedMode: 'day' | 'night' | null = null;
+  let transitionTimers: ReturnType<typeof setTimeout>[] = [];
   function syncScene() {
     const night=root.dataset.mode==='night', rain=root.dataset.weather==='rain';
     timeButton.setAttribute('aria-pressed',String(night));
@@ -21,7 +24,41 @@
     const status=document.querySelector('[data-scene-status]');
     if(status) status.textContent=`${night?'夜晚':'白昼'} · ${rain?'雨天':'晴天'}`;
   }
-  timeButton.addEventListener('click',()=>{root.dataset.mode=root.dataset.mode==='night'?'day':'night';set('leblanc-mode',root.dataset.mode);syncScene();});
+  function applyMode(mode: 'day' | 'night') {
+    root.dataset.mode=mode;set('leblanc-mode',mode);syncScene();
+  }
+  function finishTransition() {
+    transitionTimers.forEach(clearTimeout);transitionTimers=[];
+    if(requestedMode) applyMode(requestedMode);
+    requestedMode=null;
+    if(transition) transition.hidden=true;
+    timeButton.removeAttribute('aria-busy');
+  }
+  function startTransition() {
+    if(!transition) return;
+    // A queued reversal can be cancelled before its next frame begins.
+    if(!requestedMode || requestedMode===root.dataset.mode) { finishTransition(); return; }
+    transition.hidden=false;
+    timeButton.setAttribute('aria-busy','true');
+    // Change the light while the two pedestrian streams overlap.
+    transitionTimers.push(setTimeout(()=>{if(requestedMode) applyMode(requestedMode);},1100));
+    transitionTimers.push(setTimeout(()=>{
+      transition.hidden=true;
+      transitionTimers=[];
+      timeButton.removeAttribute('aria-busy');
+      if(requestedMode && requestedMode!==root.dataset.mode) {
+        // A late click gets a fresh passage; never jump the light after people exit.
+        transitionTimers.push(setTimeout(startTransition,32));
+      } else requestedMode=null;
+    },2800));
+  }
+  timeButton.addEventListener('click',()=>{
+    const target=(requestedMode??root.dataset.mode)==='night'?'day':'night';
+    requestedMode=target;
+    // Other pages keep the original immediate switch. Paused motion does too.
+    if(!transition || root.dataset.motion==='off' || document.hidden) finishTransition();
+    else if(transitionTimers.length===0) startTransition();
+  });
   rainButton.addEventListener('click',()=>{root.dataset.weather=root.dataset.weather==='rain'?'dry':'rain';set('leblanc-weather',root.dataset.weather);syncScene();});
   let frame=0, pointerX=0, pointerY=0;
   function render() {
@@ -33,12 +70,12 @@
   }
   const schedule=()=>{if(!frame)frame=requestAnimationFrame(render);};
   function reset(){pointerX=0;pointerY=0;schedule();}
-  function syncMotion(){root.dataset.motion=paused||reduced.matches?'off':'on';motionButton.setAttribute('aria-pressed',String(root.dataset.motion==='off'));motionButton.disabled=reduced.matches;motionButton.textContent=reduced.matches?'已遵循系统减动':paused?'开启动效':'暂停动效';reset();}
+  function syncMotion(){root.dataset.motion=paused||reduced.matches?'off':'on';if(root.dataset.motion==='off')finishTransition();motionButton.setAttribute('aria-pressed',String(root.dataset.motion==='off'));motionButton.disabled=reduced.matches;motionButton.textContent=reduced.matches?'已遵循系统减动':paused?'开启动效':'暂停动效';reset();}
   motionButton.addEventListener('click',()=>{paused=!paused;set('journal-motion',paused?'off':'on');syncMotion();});
   reduced.addEventListener('change',syncMotion);finePointer.addEventListener('change',reset);
   scene?.addEventListener('pointermove',event=>{if(event.pointerType!=='mouse'||!finePointer.matches||root.dataset.motion==='off')return;const box=scene.getBoundingClientRect();pointerX=Math.max(-1,Math.min(1,(event.clientX-box.left)/box.width*2-1));pointerY=Math.max(-1,Math.min(1,(event.clientY-box.top)/box.height*2-1));schedule();});
   scene?.addEventListener('pointerleave',reset);window.addEventListener('blur',reset);
-  document.addEventListener('visibilitychange',reset);window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule,{passive:true});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)finishTransition();reset();});window.addEventListener('pagehide',finishTransition);window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule,{passive:true});
   topButton.addEventListener('click',()=>window.scrollTo({top:0,behavior:root.dataset.motion==='off'?'instant':'smooth'}));
   syncScene();syncMotion();
 </script>

@@ -64,6 +64,15 @@ const beans = [{x:197,h:89},{x:285,h:75},{x:373,h:96}];
     </g>
     <!-- Rigid still life: tabletop, contact shadows and props always move together. -->
     <g class="scene-layer counter-still-life" data-depth="1">
+      <!-- Staff stands behind the counter; the tabletop occludes the lower body. -->
+      <g class="cafe-person cafe-person--staff" data-cafe-person="staff">
+        <path d="M584 393Q596 385 613 393Q629 403 630 431L636 491H573L576 420Z"/>
+        <path class="person-apron" d="M591 402L607 400L619 420L623 486H583L586 423Z"/>
+        <g class="person-head"><path d="M588 381L587 396Q599 404 607 393L607 379Z"/><path d="M580 361Q581 342 599 341Q619 342 619 364L623 372L617 375Q614 391 600 391Q582 389 580 373Z"/><path class="person-rim" d="M584 350Q596 339 610 350"/></g>
+        <path d="M582 407Q571 413 581 437L602 448" fill="none" stroke="#191713" stroke-width="13" stroke-linecap="round"/>
+        <g class="person-wipe"><path d="M619 408L630 428L612 442" fill="none" stroke="#191713" stroke-width="13" stroke-linecap="round"/><path class="person-cup" d="M600 430H615L613 446H603Z"/><path d="M615 433Q625 432 620 441H614" class="person-rim"/><path d="M599 435L612 440L607 448L596 442Z" fill="#766a53"/></g>
+        <path class="person-rim" d="M580 407L578 426M612 397L619 410"/>
+      </g>
       <path d="M72 487L911 463L956 506L37 536Z" fill="#795039"/>
       <path d="M37 536L956 506L945 611L53 650Z" fill="url(#cafe-wood)"/>
       <path d="M51 551L948 523M53 601L946 572" stroke="#bc8c60" stroke-opacity=".16" stroke-width="2"/>
@@ -102,7 +111,20 @@ const beans = [{x:197,h:89},{x:285,h:75},{x:373,h:96}];
       <path d="M37 533L956 503" stroke="#bb9064" stroke-width="7"/><path d="M37 539L956 509" stroke="#2b1c16" stroke-width="5"/>
     </g>
   </g>
-  <g class="scene-stool" transform="translate(804 584)"><path d="M-31 13L-40 85M31 13L40 85M-36 56H36" stroke="#302924" stroke-width="7"/><ellipse cy="8" rx="52" ry="16" fill="#291b17"/><ellipse rx="52" ry="14" fill="#853d32"/><path d="M-41 -3Q0 -15 41 -3" fill="none" stroke="#c17c58" stroke-opacity=".4"/></g>
+  <g class="scene-layer" data-depth="1">
+    <g class="scene-stool" transform="translate(804 584)"><path d="M-31 13L-40 85M31 13L40 85M-36 56H36" stroke="#302924" stroke-width="7"/><ellipse cy="8" rx="52" ry="16" fill="#291b17"/><ellipse rx="52" ry="14" fill="#853d32"/><path d="M-41 -3Q0 -15 41 -3" fill="none" stroke="#c17c58" stroke-opacity=".4"/></g>
+    <!-- Seated profile faces the bar; hips meet the existing stool at y=584. -->
+    <g class="cafe-person cafe-person--guest" data-cafe-person="guest">
+      <ellipse cx="804" cy="584" rx="29" ry="6" fill="#120e0b" opacity=".45"/>
+      <path d="M801 566Q815 565 821 578Q822 590 807 596L777 606L786 640L800 645Q804 651 796 653H775L758 607Q754 596 766 589Z"/>
+      <path d="M814 579Q826 583 818 599L797 620L806 650L818 656Q822 662 814 663H797L779 622Q776 616 782 608L793 591Z"/>
+      <path d="M797 495Q809 488 822 499Q838 521 833 552L824 582Q803 590 783 577L786 546L782 519Z"/>
+      <path class="person-rim" d="M822 506Q832 525 825 547L818 565"/>
+      <g class="guest-head"><path d="M796 483L795 504L813 509L816 483Z"/><path d="M785 467Q784 447 803 447Q825 447 826 467L822 488Q810 501 794 489L790 480L782 476Z"/><path class="person-rim" d="M789 459Q800 446 815 455"/></g>
+      <path d="M796 512L776 542L752 529" fill="none" stroke="#191713" stroke-width="12" stroke-linecap="round"/>
+      <g class="person-sip"><path d="M815 515L791 538L766 513" fill="none" stroke="#191713" stroke-width="13" stroke-linecap="round"/><path class="person-cup" d="M749 498H771L769 516Q758 522 751 514Z"/><path d="M771 501Q783 498 778 511L770 513" fill="none" stroke="#c4ac86" stroke-width="3"/><ellipse cx="760" cy="499" rx="10" ry="2" fill="#493327"/></g>
+    </g>
+  </g>
 </svg>
 <span class="scene-signature">COFFEE &amp; CURRY / 四轩茶屋</span>
 </div>

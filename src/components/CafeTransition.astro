@@ -1,0 +1,77 @@
+---
+// Original side profiles: clothing and posture distinguish each passer-by.
+const walkers = [
+  { side: 'left', height: '110%', delay: '0ms', duration: '2400ms', stride: '-140ms', kind: 'office' },
+  { side: 'right', height: '100%', delay: '80ms', duration: '2300ms', stride: '-490ms', kind: 'coat' },
+  { side: 'left', height: '94%', delay: '320ms', duration: '2200ms', stride: '-280ms', kind: 'student' },
+  { side: 'right', height: '116%', delay: '240ms', duration: '2500ms', stride: '-70ms', kind: 'casual' },
+  { side: 'left', height: '104%', delay: '160ms', duration: '2500ms', stride: '-420ms', kind: 'coat' },
+  { side: 'right', height: '98%', delay: '400ms', duration: '2100ms', stride: '-210ms', kind: 'office' },
+];
+---
+<div class="hero-switch" data-cafe-transition aria-hidden="true" hidden>
+  {walkers.map(({side,height,delay,duration,stride,kind}) => <div class:list={['commuter', `commuter--${side}`, `commuter--${kind}`]} style={`--height:${height};--delay:${delay};--duration:${duration};--stride:${stride}`}>
+    <svg viewBox="0 0 240 520" focusable="false" xmlns="http://www.w3.org/2000/svg">
+      <g class="commuter-facing"><g class="commuter-gait">
+        <g transform="translate(107 112)"><g class="commuter-arm commuter-arm--far">
+          <path d="M-12 -4Q-22 4-17 26L-10 68L9 71L13 17Q13-5-1-10Z"/>
+          <g transform="translate(0 65)"><g class="commuter-forearm"><path d="M-10 -5L-8 47L-4 69Q0 76 5 72L11 67L7 48L11 0Z"/></g></g>
+        </g></g>
+        <g transform="translate(112 251)"><g class="commuter-thigh commuter-thigh--far">
+          <path d="M-17 -10L21 -8L20 33L9 124L-11 125L-17 57Z"/>
+          <g transform="translate(0 119)"><g class="commuter-shin commuter-shin--far"><path d="M-11 -5L10 -5L8 53L6 108L-10 110L-14 57Z"/><path d="M-11 103L6 102L12 111L30 116Q38 119 36 125H-13L-15 117Z"/></g></g>
+        </g></g>
+        <g transform="translate(132 255)"><g class="commuter-thigh commuter-thigh--near">
+          <path d="M-19 -12L21 -8L19 45L9 122L-12 124L-18 57Z"/>
+          <path class="commuter-fold" d="M8 21L0 83L-4 104"/>
+          <g transform="translate(0 119)"><g class="commuter-shin commuter-shin--near"><path d="M-12 -5L10 -4L7 55L8 108L-11 109L-15 58Z"/><path d="M-12 102L8 102L14 111L34 118Q40 120 38 125H-13L-16 116Z"/><path class="commuter-fold" d="M1 25L-3 83"/></g></g>
+        </g></g>
+        {kind === 'office' && <g>
+          <path d="M103 91L128 87L151 99Q163 110 162 137L155 201L162 249L138 262L121 245L100 259L88 246L94 183L89 130Q87 102 103 91Z"/>
+          <path class="commuter-panel" d="M115 98L129 96L137 120L123 167L112 122Z"/>
+          <path d="M124 102L130 111L125 146L119 127Z"/>
+          <path class="commuter-fold" d="M106 97L100 119L114 128L108 140L121 171L119 231M151 174L137 217L155 215"/>
+        </g>}
+        {kind === 'coat' && <g>
+          <path d="M104 93L130 91L149 103Q160 113 158 139L150 201L171 292L138 303L124 291L95 299L76 285L95 199L89 142Q86 108 104 93Z"/>
+          <path class="commuter-panel" d="M111 98L127 97L137 118L122 156L106 119Z"/>
+          <path class="commuter-fold" d="M105 101L96 120L110 132L103 146L120 170L119 235M103 218L97 267M142 224L151 277M104 199L146 198"/>
+          <path d="M110 199L149 198L148 205L109 205Z" class="commuter-panel"/>
+        </g>}
+        {kind === 'student' && <g>
+          <path d="M105 94L132 90L151 104Q158 116 156 144L148 198L153 252L131 263L113 250L91 256L89 235L95 178L91 126Q90 103 105 94Z"/>
+          <path class="commuter-panel" d="M112 98L129 97L132 123L117 142L110 117Z"/>
+          <path class="commuter-fold" d="M101 104L112 125L108 137L120 159M143 190L130 225L150 223"/>
+          <path d="M87 116Q72 118 70 140L68 188Q78 203 95 194L101 151Z"/>
+          <path class="commuter-fold" d="M84 124Q81 153 82 182M105 101Q90 130 99 179"/>
+        </g>}
+        {kind === 'casual' && <g>
+          <path d="M100 93L132 93Q154 104 159 127L164 178L153 188L153 226L159 256Q121 269 88 254L94 198L86 151Q83 110 100 93Z"/>
+          <path class="commuter-fold" d="M107 99L116 112L130 104M116 113L124 150M95 192L105 218L99 242M140 235L151 239M91 249Q120 260 151 251"/>
+        </g>}
+        <path d="M114 74L112 98L122 108L138 96L133 73Z"/>
+        {kind === 'coat' ? <g>
+          <path d="M107 37C109 22 119 19 131 21C145 22 151 33 150 46L148 54Q148 57 153 61Q155 64 149 65L148 72Q149 78 143 81L133 85Q120 81 114 67Z"/>
+          <path d="M108 34C98 45 98 61 103 74L100 94Q109 94 117 87L123 78L119 57Q122 44 133 40L150 49C154 34 146 20 133 18Q115 15 108 34Z"/>
+        </g> : kind === 'casual' ? <g>
+          <path d="M103 39C102 25 110 19 123 19C139 18 148 28 148 41L146 51Q148 56 152 59Q154 62 149 64L148 73Q148 79 141 82L134 86L119 81Q111 77 109 66L105 55Z"/>
+          <path d="M104 43C98 35 100 25 107 20C117 12 130 16 140 23Q146 29 148 39L135 34Q124 31 117 39L113 52Z"/>
+        </g> : <g>
+          <path d="M109 37C111 25 122 20 132 23C145 25 150 35 149 46L147 54Q148 58 152 61Q154 64 149 66L147 74Q148 78 142 81L134 86L122 81Q113 77 112 66L108 51Z"/>
+          <path d={kind === 'student' ? 'M106 49Q99 43 104 32L101 27L112 25L118 18L125 21L137 19L136 25Q149 29 150 45L137 40L125 46L118 43L113 58Z' : 'M106 48C101 38 104 27 113 22Q126 14 139 23Q149 28 149 41L137 37Q125 31 116 43L114 57Z'}/>
+          <path class="commuter-fold" d="M113 30Q126 22 139 30"/>
+        </g>}
+        <g transform="translate(144 116)"><g class="commuter-arm commuter-arm--near">
+          <path d="M-10 -12Q7 -16 13 4L18 57L10 76L-8 70L-13 27Q-20 3-10-12Z"/>
+          <path class="commuter-fold" d="M2 4L7 47L2 60"/>
+          <g transform="translate(6 66)"><g class="commuter-forearm">
+            <path d="M-12 -5L12 -3L7 49L10 64L5 75L-2 78L-8 71L-8 56L-13 40Z"/>
+            <path class="commuter-fold" d="M-8 43L7 45"/>
+            {kind === 'office' && <g><path d="M-3 70L17 72L21 84L15 86L12 78L0 77L-3 85L-9 83Z"/><path d="M-16 82L30 86L27 119L-19 115Z"/><path class="commuter-fold" d="M-12 89L23 92"/></g>}
+            {kind === 'coat' && <g><path d="M-4 70Q-24 84-11 105M1 72Q15 89 4 106" class="commuter-bag-strap"/><path d="M-20 97L15 100L19 135Q-2 145-25 132Z"/><path class="commuter-fold" d="M-16 105L-20 128M10 106L13 129"/></g>}
+          </g></g>
+        </g></g>
+      </g></g>
+    </svg>
+  </div>)}
+</div>

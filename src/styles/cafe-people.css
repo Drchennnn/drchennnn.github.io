@@ -1,0 +1,64 @@
+/* All foreground traffic is clipped by the home Hero, never by the viewport. */
+.hero-switch {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  overflow: hidden;
+  pointer-events: none;
+  container-type: inline-size;
+}
+.hero-switch[hidden] { display: none; }
+.commuter {
+  position: absolute;
+  bottom: -22%;
+  left: 0;
+  height: var(--height);
+  aspect-ratio: 240 / 520;
+  color: #121110;
+  transform: translateX(-110%);
+  animation: cafe-cross-left var(--duration) linear var(--delay) both;
+  will-change: transform;
+}
+.commuter--right { animation-name: cafe-cross-right; }
+.commuter > svg { display: block; width: 100%; height: 100%; fill: currentColor; overflow: visible; }
+.commuter--right .commuter-facing { transform: translateX(240px) scaleX(-1); }
+.commuter-panel { fill: #38352f; }
+.commuter-fold { fill: none; stroke: #787064; stroke-opacity: .55; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+.commuter-bag-strap { fill: none; stroke: currentColor; stroke-width: 5; }
+.commuter-gait { animation: cafe-walk-bob .7s ease-in-out var(--stride) infinite; }
+.commuter-arm { transform-origin: 0 0; animation: cafe-arm .7s ease-in-out var(--stride) infinite; }
+.commuter-thigh { transform-origin: 0 0; animation: cafe-stride .7s ease-in-out var(--stride) infinite; }
+.commuter-shin { transform-origin: 0 0; animation: cafe-knee .7s ease-in-out var(--stride) infinite; }
+.commuter-forearm { transform-origin: 0 0; animation: cafe-elbow .7s ease-in-out var(--stride) infinite; }
+.commuter-arm--far, .commuter-thigh--near, .commuter-shin--near { animation-delay: calc(var(--stride) - .35s); }
+@keyframes cafe-cross-left { from { transform: translateX(-110%); } to { transform: translateX(calc(100cqw + 10%)); } }
+@keyframes cafe-cross-right { from { transform: translateX(calc(100cqw + 10%)); } to { transform: translateX(-110%); } }
+@keyframes cafe-stride { 0%, 100% { transform: rotate(-19deg); } 50% { transform: rotate(21deg); } }
+@keyframes cafe-arm { 0%, 100% { transform: rotate(-14deg); } 50% { transform: rotate(18deg); } }
+@keyframes cafe-knee { 0%, 15%, 100% { transform: rotate(4deg); } 45% { transform: rotate(9deg); } 70% { transform: rotate(38deg); } }
+@keyframes cafe-elbow { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(-23deg); } }
+@keyframes cafe-walk-bob { 0%, 50%, 100% { transform: translateY(0); } 25%, 75% { transform: translateY(-2px); } }
+@media (max-width: 700px) {
+  .hero-switch { top: 44%; }
+}
+
+/* Actor and furniture wrappers share the same parallax coordinates. */
+.cafe-person {
+  fill: #191713;
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity .5s ease, transform .7s ease;
+}
+[data-mode='night'] .cafe-person { opacity: 1; transform: translateX(0); }
+.person-rim { fill: none; stroke: #c89961; stroke-opacity: .25; stroke-width: 1.5; }
+.person-apron { fill: #342c23; }
+.person-cup { fill: #c4ac86; }
+.person-head { transform-origin: 598px 389px; animation: cafe-nod 9s ease-in-out infinite; }
+.person-wipe { transform-origin: 613px 427px; animation: cafe-wipe 3.8s ease-in-out infinite; }
+.person-sip { transform-origin: 810px 522px; animation: cafe-sip 8s ease-in-out infinite; }
+.guest-head { transform-origin: 808px 497px; animation: cafe-guest-nod 8s ease-in-out infinite; }
+[data-mode='day'] :is(.person-head, .person-wipe, .person-sip, .guest-head) { animation-play-state: paused; }
+@keyframes cafe-nod { 0%, 40%, 65%, 100% { transform: rotate(0); } 49%, 57% { transform: rotate(5deg); } }
+@keyframes cafe-wipe { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(7deg); } }
+@keyframes cafe-sip { 0%, 18%, 70%, 100% { transform: rotate(0); } 32%, 53% { transform: rotate(24deg); } }
+@keyframes cafe-guest-nod { 0%, 18%, 70%, 100% { transform: rotate(0); } 32%, 53% { transform: rotate(-5deg); } }
