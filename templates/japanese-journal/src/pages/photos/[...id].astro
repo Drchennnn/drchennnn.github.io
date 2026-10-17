@@ -1,0 +1,11 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+export async function getStaticPaths() {
+  const photos = await getCollection('photos', ({ data }) => !data.draft);
+  return photos.map(photo => ({ params: { id: photo.id }, props: { photo } }));
+}
+const { photo } = Astro.props;
+const { Content } = await render(photo);
+---
+<Base title={photo.data.title} description={photo.data.description}><article class="photo-detail"><a class="back" href="/photos/">← 返回光影拾遗</a><div class="photo-heading"><time datetime={photo.data.date.toISOString()}>{photo.data.date.toISOString().slice(0,10).replaceAll('-', '.')}</time><h1>{photo.data.title}</h1>{photo.data.description && <p class="lede">{photo.data.description}</p>}</div><div class="photo-story">{photo.data.images.map((image: any) => <figure><img src={image.image} alt={image.alt || image.caption || photo.data.title} loading="lazy"/>{image.caption && <figcaption>{image.caption}</figcaption>}</figure>)}</div><div class="prose photo-notes"><Content /></div><div class="article-end"><span>— 完 —</span><a href="/photos/">查看全部照片 →</a></div></article></Base>

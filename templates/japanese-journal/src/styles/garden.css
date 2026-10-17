@@ -1,0 +1,57 @@
+/* The garden lives around the journal; the paper stays clear for reading. */
+.has-margin-parallax { isolation: isolate; }
+.has-margin-parallax > .shell { position: relative; z-index: 1; }
+.has-garden .journal-intro { grid-template-columns: minmax(0, 1fr) minmax(0, 430px); gap: 12px; padding-top: 52px; }
+.garden-stage { position: relative; height: 460px; min-width: 0; }
+.hero-garden { position: absolute; inset: 0; pointer-events: none; }
+.hero-garden svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.garden-layer { transition: transform 700ms cubic-bezier(.2, .65, .3, 1); }
+.garden-stage .wind-corner { position: absolute; top: -12px; right: 5px; width: 106px; height: 205px; padding: 0; margin: 0; justify-content: flex-start; }
+.garden-stage .wind-chime { width: 98px; margin: 0; }
+.garden-stage .wind-chime svg { height: 165px; }
+.garden-stage .wind-note { top: 30px; right: -5px; font-size: 10px; }
+.garden-stage .wind-caption { display: none; }
+.garden-stage .chime-hint { font-size: 9px; margin-top: 2px; }
+.garden-caption { position: absolute; bottom: 10px; left: 32px; font: 11px/1.8 'Songti SC', serif; letter-spacing: .22em; color: var(--muted); }
+
+.margin-parallax { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.garden-atmosphere { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease; }
+.atmosphere-mist { background: linear-gradient(90deg, #dfe5db30, transparent calc(50% - 390px), transparent calc(50% + 390px), #e4e8df30); }
+.atmosphere-moss { background: linear-gradient(90deg, #c2cfb630, transparent calc(50% - 390px), transparent calc(50% + 390px), #d3dbc430); }
+.atmosphere-dusk { background: linear-gradient(90deg, #e0bfa730, transparent calc(50% - 390px), transparent calc(50% + 390px), #d5b9af30); }
+[data-scene='mist'] .atmosphere-mist, [data-scene='moss'] .atmosphere-moss, [data-scene='dusk'] .atmosphere-dusk { opacity: 1; }
+.petal-field { position: absolute; inset-block: 0; width: max(72px, calc((100vw - 1040px) / 2)); }
+.petal-field-left { left: 0; }
+.petal-field-right { right: 0; }
+.drifting-petal { position: absolute; color: #cc9c98; opacity: .46; }
+.margin-layer { display: block; width: 100%; overflow: visible; transform-origin: center; transition: transform 350ms ease-out; }
+
+/* Narrow screens keep the illustration in the flow instead of crowding text. */
+@media (max-width: 1099px) { .margin-parallax { display: none; } }
+@media (max-width: 900px) {
+  .has-garden .journal-intro { grid-template-columns: minmax(0, 1fr) minmax(0, 330px); }
+  .has-garden .journal-intro h1 { font-size: 37px; }
+  .garden-stage { height: 400px; }
+  .garden-stage .wind-corner { right: 0; top: -5px; }
+}
+@media (max-width: 760px) {
+  .has-garden .journal-intro { grid-template-columns: 1fr; padding-top: 46px; gap: 0; }
+  .has-garden .journal-intro h1 { font-size: 39px; }
+  .garden-stage { width: min(100%, 430px); height: 385px; justify-self: center; margin-top: 12px; }
+  .garden-stage .wind-corner { right: 14px; top: 0; }
+  .garden-stage .chime-hint { display: none; }
+  .garden-caption { left: 28px; bottom: 0; }
+  .intro-bottom-note { margin-top: 34px; }
+}
+@media (max-width: 400px) {
+  .has-garden .journal-intro h1 { font-size: 32px; }
+  .garden-stage { height: 330px; }
+  .garden-stage .wind-corner { width: 80px; right: -2px; }
+  .garden-stage .wind-chime { width: 68px; }
+  .garden-stage .wind-chime svg { height: 115px; }
+  .garden-stage .wind-note { right: 0; top: 20px; }
+}
+[data-motion='off'] .garden-layer, [data-motion='off'] .margin-layer { transform: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .garden-layer, .margin-layer { transform: none !important; }
+}

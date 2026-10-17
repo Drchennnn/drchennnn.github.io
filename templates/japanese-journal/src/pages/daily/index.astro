@@ -1,0 +1,7 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PostList from '../../components/PostList.astro';
+const posts = (await getCollection('posts', ({ data }) => !data.draft && data.category === 'daily')).sort((a,b) => b.data.date.valueOf()-a.data.date.valueOf() || a.id.localeCompare(b.id));
+---
+<Base title="日々小记"><section class="collection-head"><p class="eyebrow">DAILY / 日常与短文</p><h1>日々小记</h1><p class="lede">随手记下生活里的细碎声响，也收留篇幅不长的念头。</p></section><section class="entries" aria-labelledby="list-title"><div class="section-label"><h2 id="list-title">全部记录</h2><span>{String(posts.length).padStart(2, '0')} 篇</span></div><PostList {posts} empty="这里还没有小记。等一个值得写下的日常。" /></section></Base>

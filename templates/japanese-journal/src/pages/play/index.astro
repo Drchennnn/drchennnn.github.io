@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import '../../styles/play.css';
+const toys = (await getCollection('toys', ({ data }) => !data.draft)).sort((a,b) => b.data.date.valueOf()-a.data.date.valueOf() || a.id.localeCompare(b.id));
+---
+<Base title="玩心造物" description="收藏一点灵感，动手做些好玩的小东西。Link 的交互小作品与创作记录。">
+  <section class="collection-head"><p class="eyebrow">PLAY / 灵感小玩意</p><h1>玩心造物</h1><p class="lede">不一定有什么用，但一定有点喜欢。<br/>把偶然冒出的灵感，做成可以点一点、玩一会儿的小东西。</p></section>
+  <section class="play-collection" aria-labelledby="play-title">
+    <div class="section-label"><h2 id="play-title">小小作品集</h2><span>{String(toys.length).padStart(2, '0')} 件作品</span></div>
+    {toys.length ? <div class="toy-grid">{toys.map(toy => <a class="toy-card" href={`/play/${toy.id}/`}>
+      <div class="toy-cover"><img src={toy.data.cover} alt={`${toy.data.title}的作品预览`} width="1000" height="580" loading="lazy"/><span class="toy-invitation" aria-hidden="true">进去玩一会儿 ↗</span></div>
+      <div class="toy-caption"><div class="toy-meta"><span>{toy.data.tags.join(' / ') || '小小创作'}</span><time datetime={toy.data.date.toISOString()}>{toy.data.date.toISOString().slice(0,10).replaceAll('-', '.')}</time></div><h2>{toy.data.title}</h2><p>{toy.data.description}</p><span class="toy-open">看看这个小玩意 <span aria-hidden="true">↗</span></span></div>
+    </a>)}</div> : <div class="empty">这里留给下一次突发奇想。第一件小玩意正在路上。</div>}
+  </section>
+</Base>

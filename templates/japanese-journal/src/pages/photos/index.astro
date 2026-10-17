@@ -1,0 +1,8 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+const photos = (await getCollection('photos', ({ data }) => !data.draft)).sort((a,b) => b.data.date.valueOf()-a.data.date.valueOf() || a.id.localeCompare(b.id));
+---
+<Base title="光影拾遗"><section class="collection-head"><p class="eyebrow">PHOTO / 照片小记</p><h1>光影拾遗</h1><p class="lede">拾起偶然遇见的光、颜色与表情，在照片下面留一行小字。</p></section>
+  {photos.length ? <div class="photo-grid">{photos.map(photo => <a class="photo-card" href={`/photos/${photo.id}/`}><figure><img src={photo.data.images[0].image} alt={photo.data.images[0].alt || photo.data.images[0].caption || photo.data.title} loading="lazy" width="720" height="540"/><figcaption><time datetime={photo.data.date.toISOString()}>{photo.data.date.toISOString().slice(0,10).replaceAll('-', '.')}</time><h2>{photo.data.title}</h2>{photo.data.description && <p>{photo.data.description}</p>}</figcaption></figure></a>)}</div> : <div class="photo-empty"><span aria-hidden="true">写 真</span><h2>光还在路上。</h2><p>这里会收下有趣的照片和它们的一句话。</p></div>}
+</Base>

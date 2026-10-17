@@ -4,8 +4,8 @@ import Base from '../../layouts/Base.astro';
 import '../../styles/play.css';
 const toys = (await getCollection('toys', ({ data }) => !data.draft)).sort((a,b) => b.data.date.valueOf()-a.data.date.valueOf() || a.id.localeCompare(b.id));
 ---
-<Base title="玩心造物" description="收藏一点灵感，动手做些好玩的小东西。Link 的交互小作品与创作记录。">
-  <section class="collection-head"><p class="eyebrow">PLAY / 灵感小玩意</p><h1>玩心造物</h1><p class="lede">不一定有什么用，但一定有点喜欢。<br/>把偶然冒出的灵感，做成可以点一点、玩一会儿的小东西。</p></section>
+<Base title="桌边小物" description="收藏一点灵感，动手做些好玩的小东西。Link 的交互小作品与创作记录。">
+  <section class="collection-head"><p class="eyebrow">PLAY / 灵感小玩意</p><h1>桌边小物</h1><p class="lede">不一定有什么用，但一定有点喜欢。<br/>把偶然冒出的灵感，做成可以点一点、玩一会儿的小东西。</p></section>
   <section class="play-collection" aria-labelledby="play-title">
     <div class="section-label"><h2 id="play-title">小小作品集</h2><span>{String(toys.length).padStart(2, '0')} 件作品</span></div>
     {toys.length ? <div class="toy-grid">{toys.map(toy => <a class="toy-card" href={`/play/${toy.id}/`}>

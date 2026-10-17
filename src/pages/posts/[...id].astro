@@ -9,5 +9,5 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 <Base title={post.data.title} description={post.data.description} category={post.data.category}>
-  <article class="article"><a class="back" href={`/${post.data.category}/`}>← 返回{post.data.category === 'study' ? '学び手帖' : '日々小记'}</a><div class="article-heading"><time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0,10).replaceAll('-', '.')}</time><h1>{post.data.title}</h1>{post.data.description && <p class="lede">{post.data.description}</p>}</div><div class="prose"><Content /></div><div class="article-end"><span>— 完 —</span><a href={`/${post.data.category}/`}>查看同组文章 →</a></div></article>
+  <article class="article"><a class="back" href={`/${post.data.category}/`}>← 返回{post.data.category === 'study' ? '研磨笔记' : '吧台手记'}</a><div class="article-heading"><time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0,10).replaceAll('-', '.')}</time><h1>{post.data.title}</h1>{post.data.description && <p class="lede">{post.data.description}</p>}</div><div class="prose"><Content /></div><div class="article-end"><span>— 完 —</span><a href={`/${post.data.category}/`}>查看同组文章 →</a></div></article>
 </Base>

@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import TitleOrnament from '../components/TitleOrnament.astro';
+import WindChime from '../components/WindChime.astro';
+import HeroGarden from '../components/HeroGarden.astro';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a,b) => b.data.date.valueOf()-a.data.date.valueOf() || a.id.localeCompare(b.id));
+const photos = (await getCollection('photos', ({ data }) => !data.draft)).sort((a,b) => b.data.date.valueOf()-a.data.date.valueOf() || a.id.localeCompare(b.id));
+const toys = await getCollection('toys', ({ data }) => !data.draft);
+const date = (d: Date) => d.toISOString().slice(0,10).replaceAll('-', '.');
+---
+<Base>
+  <section class="intro journal-intro" data-garden-scene="mist">
+    <div class="intro-copy">
+      <p class="eyebrow"><span class="small-sun" aria-hidden="true">✳</span> 日々の記録 / LINK'S JOURNAL</p>
+      <h1>把日子写轻，<br/><span class="title-phrase">把小事珍藏。<TitleOrnament /></span></h1>
+      <p class="lede">你好，我是 Link。<br/>收集日常里的小事、学习途中的发现，<br class="desktop-break"/>以及偶然遇见的光。</p>
+      <a class="author-note" href="/about/"><span class="avatar-frame"><img src="/images/link-avatar.webp" alt="Link 的头像" width="64" height="64" fetchpriority="high" /></span><span><strong>Link</strong><small>一半日常，一半好奇。</small></span><span class="author-arrow" aria-hidden="true">↗</span></a>
+    </div>
+    <div class="garden-stage"><HeroGarden /><WindChime /><span class="garden-caption" aria-hidden="true">一庭清风，半日闲。</span></div>
+    <span class="intro-bottom-note" aria-hidden="true">小さなことを、少しずつ。<span>SCROLL TO EXPLORE ↓</span></span>
+  </section>
+  <section class="shelves" aria-label="内容分组" data-garden-scene="moss">
+    <a class="shelf" href="/daily/"><span>01 / DAILY</span><h2>日々小记</h2><p>日常随笔，细碎见闻。</p><b>{String(posts.filter(post => post.data.category === 'daily').length).padStart(2, '0')}</b></a>
+    <a class="shelf" href="/study/"><span>02 / STUDY</span><h2>学び手帖</h2><p>学习所得，思考留痕。</p><b>{String(posts.filter(post => post.data.category === 'study').length).padStart(2, '0')}</b></a>
+    <a class="shelf" href="/photos/"><span>03 / PHOTO</span><h2>光影拾遗</h2><p>有趣照片，一句小记。</p><b>{String(photos.length).padStart(2, '0')}</b></a>
+    <a class="shelf" href="/play/"><span>04 / PLAY</span><h2>玩心造物</h2><p>小小灵感，动手成趣。</p><b>{String(toys.length).padStart(2, '0')}</b></a>
+  </section>
+  <section class="entries" aria-labelledby="list-title" data-garden-scene="dusk"><div class="section-label"><h2 id="list-title">最近记录</h2><span>{String(posts.length).padStart(2, '0')} 篇文章</span></div>
+    {posts.length ? <ol>{posts.slice(0, 6).map(post => <li><a class="entry" href={`/posts/${post.id}/`}><time datetime={post.data.date.toISOString()}>{date(post.data.date)}</time><div><p class="entry-kind">{post.data.category === 'study' ? '学び手帖' : '日々小记'}</p><h3>{post.data.title}</h3>{post.data.description && <p>{post.data.description}</p>}</div><span class="arrow" aria-hidden="true">↗</span></a></li>)}</ol> : <div class="empty">这里还没有文章。留一页空白，等待下一次记录。</div>}
+  </section>
+</Base>

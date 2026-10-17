@@ -10,7 +10,8 @@
     "prebuild": "node scripts/prepare-admin.mjs",
     "predev": "node scripts/prepare-admin.mjs",
     "test:oauth": "node scripts/test-oauth.mjs",
-    "test:admin": "node scripts/test-admin.mjs"
+    "test:admin": "node scripts/test-admin.mjs",
+    "test:cafe": "node scripts/test-cafe.mjs"
   },
   "dependencies": {
     "astro": "7.3.8",

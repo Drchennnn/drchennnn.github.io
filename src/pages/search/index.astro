@@ -5,12 +5,12 @@ const posts = await getCollection('posts', ({ data }) => !data.draft);
 const photos = await getCollection('photos', ({ data }) => !data.draft);
 const toys = await getCollection('toys', ({ data }) => !data.draft);
 const items = [
-  ...posts.map(post => ({ title: post.data.title, description: post.data.description, kind: post.data.category === 'study' ? '学び手帖' : '日々小记', date: post.data.date, href: `/posts/${post.id}/`, search: `${post.data.title} ${post.data.description} ${post.body}` })),
-  ...photos.map(photo => ({ title: photo.data.title, description: photo.data.description, kind: '光影拾遗', date: photo.data.date, href: `/photos/${photo.id}/`, search: `${photo.data.title} ${photo.data.description} ${photo.body} ${photo.data.images.map(image => `${image.caption} ${image.alt}`).join(' ')}` })),
-  ...toys.map(toy => ({ title: toy.data.title, description: toy.data.description, kind: '玩心造物', date: toy.data.date, href: `/play/${toy.id}/`, search: `${toy.data.title} ${toy.data.description} ${toy.body} ${toy.data.tags.join(' ')}` })),
+  ...posts.map(post => ({ title: post.data.title, description: post.data.description, kind: post.data.category === 'study' ? '研磨笔记' : '吧台手记', date: post.data.date, href: `/posts/${post.id}/`, search: `${post.data.title} ${post.data.description} ${post.body}` })),
+  ...photos.map(photo => ({ title: photo.data.title, description: photo.data.description, kind: '窗边相册', date: photo.data.date, href: `/photos/${photo.id}/`, search: `${photo.data.title} ${photo.data.description} ${photo.body} ${photo.data.images.map(image => `${image.caption} ${image.alt}`).join(' ')}` })),
+  ...toys.map(toy => ({ title: toy.data.title, description: toy.data.description, kind: '桌边小物', date: toy.data.date, href: `/play/${toy.id}/`, search: `${toy.data.title} ${toy.data.description} ${toy.body} ${toy.data.tags.join(' ')}` })),
 ].sort((a,b) => b.date.valueOf()-a.date.valueOf());
 ---
-<Base title="搜索"><section class="search-page"><p class="eyebrow">SEARCH / 寻找记录</p><h1>搜索</h1><label for="site-search">输入标题、正文、照片小字或作品标签</label><input id="site-search" type="search" autocomplete="off" placeholder="例如：读书、散步、夜晚"/><p id="search-status" class="search-status" aria-live="polite">输入关键词，寻找 {items.length} 条公开记录。</p><ol id="search-results" class="search-results"></ol>
+<Base title="寻一页"><section class="search-page"><p class="eyebrow">SEARCH / 寻一页</p><h1>想找哪一页？</h1><label for="site-search">输入标题、正文、照片小字或作品标签</label><input id="site-search" type="search" autocomplete="off" placeholder="例如：读书、散步、夜晚"/><p id="search-status" class="search-status" aria-live="polite">输入关键词，寻找 {items.length} 条公开记录。</p><ol id="search-results" class="search-results"></ol>
   <div id="search-index" hidden>{items.map(item => <i data-title={item.title} data-description={item.description} data-kind={item.kind} data-date={item.date.toISOString()} data-href={item.href} data-search={item.search}></i>)}</div></section>
   <script>
     const input = document.querySelector<HTMLInputElement>('#site-search')!;

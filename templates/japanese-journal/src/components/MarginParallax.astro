@@ -1,0 +1,27 @@
+---
+const petals = [
+  { side: 'left', x: 36, y: 22, size: 15, angle: -30, drift: 18, fall: 90, turn: 65 },
+  { side: 'left', x: 66, y: 48, size: 11, angle: 40, drift: -14, fall: 130, turn: -85 },
+  { side: 'left', x: 28, y: 73, size: 17, angle: -55, drift: 22, fall: 65, turn: 100 },
+  { side: 'right', x: 55, y: 16, size: 12, angle: 55, drift: -20, fall: 120, turn: -70 },
+  { side: 'right', x: 24, y: 41, size: 17, angle: -20, drift: 16, fall: 95, turn: 85 },
+  { side: 'right', x: 68, y: 68, size: 13, angle: 25, drift: -18, fall: 80, turn: -100 },
+];
+---
+<div class="margin-parallax" data-scene="mist" aria-hidden="true">
+  <div class="garden-atmosphere atmosphere-mist"></div>
+  <div class="garden-atmosphere atmosphere-moss"></div>
+  <div class="garden-atmosphere atmosphere-dusk"></div>
+  {['left', 'right'].map(side => <div class={`petal-field petal-field-${side}`}>
+    {petals.filter(petal => petal.side === side).map(petal =>
+      <span class="drifting-petal" style={`left:${petal.x}%;top:${petal.y}%;width:${petal.size}px`}>
+        <svg class="margin-layer" viewBox="0 0 24 24" fill="none" data-drift={petal.drift} data-fall={petal.fall} data-turn={petal.turn}>
+          <g transform={`rotate(${petal.angle} 12 12)`}>
+            <path d="M12 22C5 18 2 11 5 5c2-4 5-4 7-1 2-3 5-3 7 1 3 6 0 13-7 17Z" fill="currentColor" />
+            <path d="M12 20c1-5-1-9 0-13" stroke="#f8f7f3" stroke-width=".7" opacity=".6" />
+          </g>
+        </svg>
+      </span>
+    )}
+  </div>)}
+</div>

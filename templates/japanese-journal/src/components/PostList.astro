@@ -1,0 +1,5 @@
+---
+const { posts, empty = '这里还没有记录。' } = Astro.props;
+const date = (value: Date) => value.toISOString().slice(0, 10).replaceAll('-', '.');
+---
+{posts.length ? <ol>{posts.map((post: any) => <li><a class="entry" href={`/posts/${post.id}/`}><time datetime={post.data.date.toISOString()}>{date(post.data.date)}</time><div><h3>{post.data.title}</h3>{post.data.description && <p>{post.data.description}</p>}</div><span class="arrow" aria-hidden="true">↗</span></a></li>)}</ol> : <div class="empty">{empty}</div>}

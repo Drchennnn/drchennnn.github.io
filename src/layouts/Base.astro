@@ -1,31 +1,39 @@
 ---
 import '../styles/global.css';
-import '../styles/journal.css';
-import '../styles/garden.css';
+import '../styles/cafe.css';
 import JournalMotion from '../components/JournalMotion.astro';
-import MarginParallax from '../components/MarginParallax.astro';
+import CafeControls from '../components/CafeControls.astro';
 interface Props { title?: string; description?: string; category?: 'daily' | 'study'; }
-const { title = '日常手帖', description = 'Link 的个人手帖，收集日常里的小事、学习途中的发现，以及偶然遇见的光。' } = Astro.props;
+const { title = '雨歇之前', description = 'Link 的个人博客。在卢布朗的咖啡香里，写下日常、学习和一点好奇。' } = Astro.props;
 const path = Astro.url.pathname;
+const nav = [
+  ['/daily/', '吧台手记'], ['/study/', '研磨笔记'], ['/photos/', '窗边相册'],
+  ['/play/', '桌边小物'], ['/search/', '寻一页'], ['/about/', '店主便笺']
+];
 ---
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-mode="day" data-weather="dry" data-motion="on">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title} · Link</title><meta name="description" content={description} />
+  <meta name="theme-color" content="#211b17" />
   <link rel="canonical" href={new URL(path, Astro.site)} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <script is:inline>try { document.documentElement.dataset.motion = localStorage.getItem('journal-motion') === 'off' ? 'off' : 'on'; } catch {}</script>
+  <script is:inline>
+    try { const r=document.documentElement; r.dataset.mode=localStorage.getItem('leblanc-mode')==='night'?'night':'day'; r.dataset.weather=localStorage.getItem('leblanc-weather')==='rain'?'rain':'dry'; r.dataset.motion=localStorage.getItem('journal-motion')==='off'||matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on'; } catch {}
+  </script>
 </head>
-<body class:list={{ 'has-margin-parallax': true, 'has-garden': path === '/' }}>
+<body>
   <a class="skip" href="#main">跳至正文</a>
-  <MarginParallax />
-  <div class="shell">
-    <header class="site-header"><a class="brand" href="/"><span class="seal" aria-hidden="true">日<br/>常</span><span>日常手帖<small>LINK / A LITTLE JOURNAL</small></span></a>
-      <nav aria-label="主导航"><a href="/daily/" aria-current={path === '/daily/' || (path.startsWith('/posts/') && Astro.props.category === 'daily') ? 'page' : undefined}>日々小记</a><a href="/study/" aria-current={path === '/study/' || (path.startsWith('/posts/') && Astro.props.category === 'study') ? 'page' : undefined}>学び手帖</a><a href="/photos/" aria-current={path.startsWith('/photos/') ? 'page' : undefined}>光影拾遗</a><a href="/play/" aria-current={path.startsWith('/play/') ? 'page' : undefined}>玩心造物</a><a href="/search/" aria-current={path === '/search/' ? 'page' : undefined}>搜索</a><a href="/about/" aria-current={path === '/about/' ? 'page' : undefined}>关于</a></nav>
+  <div class="site">
+    <div class="topline" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="雨歇之前，返回店内"><span class="crest" aria-hidden="true">L</span><span>雨歇之前<small>LINK / CAFÉ LEBLANC</small></span></a>
+      <nav aria-label="主导航">{nav.map(([href,label]) => <a href={href} aria-current={path.startsWith(href) || (path.startsWith('/posts/') && href === `/${Astro.props.category}/`) ? 'page' : undefined}>{label}</a>)}</nav>
     </header>
-    <main id="main"><slot /></main>
-    <footer><span>© {new Date().getFullYear()} Link<span class="footer-note">慢慢记录，好好生活。</span></span><span class="footer-links"><button class="motion-toggle" type="button" aria-pressed="false">暂停动效</button><a href="https://github.com/Drchennnn" target="_blank" rel="noreferrer">GitHub ↗</a><a href="/admin/">管理登录</a></span></footer>
+    <div class="atmosphere-bar"><a href="/">COFFEE &amp; CURRY <span>一杯咖啡，一页日常。</span></a><CafeControls /></div>
+    <main id="main" class:list={{ 'home-main': path === '/' }}><slot /></main>
+    <footer><div>© {new Date().getFullYear()} Link <span class="footer-note">慢慢写，坐一会儿。</span><small>受 Café Leblanc 启发的个人博客</small></div><div class="footer-links"><button class="motion-toggle" type="button" aria-pressed="false">暂停动效</button><a href="https://github.com/Drchennnn" target="_blank" rel="noreferrer">GitHub ↗</a><a href="/admin/">管理登录</a><span class="music-note">♫ 音乐留座 · 暂未载入</span></div></footer>
   </div>
   <JournalMotion />
 </body>

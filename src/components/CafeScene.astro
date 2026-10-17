@@ -1,0 +1,108 @@
+---
+const beans = [{x:197,h:89},{x:285,h:75},{x:373,h:96}];
+---
+<div class="cafe-scene" data-cafe-scene aria-hidden="true">
+<svg viewBox="0 0 1000 680" xmlns="http://www.w3.org/2000/svg" focusable="false">
+  <defs>
+    <linearGradient id="cafe-wall" x2="0" y2="1"><stop class="wall-light"/><stop offset="1" class="wall-dark"/></linearGradient>
+    <linearGradient id="cafe-sky" x2="0" y2="1"><stop class="sky-light"/><stop offset="1" class="sky-dark"/></linearGradient>
+    <linearGradient id="cafe-wood" x2="0" y2="1"><stop stop-color="#aa7953"/><stop offset=".18" stop-color="#805337"/><stop offset=".25" stop-color="#35231c"/><stop offset="1" stop-color="#5c3c2b"/></linearGradient>
+    <linearGradient id="cafe-ceramic"><stop stop-color="#c6ae8c"/><stop offset=".38" stop-color="#fff0d3"/><stop offset=".7" stop-color="#eee0c2"/><stop offset="1" stop-color="#ad9372"/></linearGradient>
+    <linearGradient id="cafe-glass"><stop stop-color="#d8e9df" stop-opacity=".34"/><stop offset=".45" stop-color="#d8e9df" stop-opacity=".08"/><stop offset="1" stop-color="#b8d9cf" stop-opacity=".3"/></linearGradient>
+    <radialGradient id="cafe-glow"><stop stop-color="#ffc976" stop-opacity=".6"/><stop offset="1" stop-color="#ffc976" stop-opacity="0"/></radialGradient>
+    <linearGradient id="cafe-metal"><stop stop-color="#68726c"/><stop offset=".4" stop-color="#e3e9dc"/><stop offset=".6" stop-color="#9da99f"/><stop offset="1" stop-color="#4d5751"/></linearGradient>
+    <pattern id="cafe-panels" width="170" height="82" patternUnits="userSpaceOnUse"><path d="M0 0H170V82" fill="none" stroke="#c1a17b" stroke-opacity=".12" stroke-width="2"/></pattern>
+    <!-- One vertical tile becomes a diagonal repeat vector (-37.5, 150).
+         The animation moves by exactly this vector, so its reset has identical pixels. -->
+    <pattern id="cafe-rain" width="68" height="150" patternUnits="userSpaceOnUse" patternTransform="matrix(1 0 -.25 1 0 0)"><path d="M18 8V76M55 87V150M55 0V5M39 41V66" stroke="#e0e7dd" stroke-width="1.6" opacity=".5"/></pattern>
+    <clipPath id="cafe-window"><path d="M505 87L879 94L889 408L497 408Z"/></clipPath>
+    <clipPath id="cafe-room"><path d="M55 79L925 35L974 590L24 658Z"/></clipPath>
+  </defs>
+  <g clip-path="url(#cafe-room)">
+    <path d="M55 79L925 35L974 590L24 658Z" fill="url(#cafe-wall)"/>
+    <path d="M55 79L925 35L974 590L24 658Z" fill="url(#cafe-panels)"/>
+    <!-- Back shelves and all their jars share one coordinate group and support line. -->
+    <g class="scene-layer" data-depth=".3">
+      <path d="M94 210H471V220H94Z M89 303H477V314H89Z" fill="#291d16"/>
+      <path d="M94 210H471M89 303H477" stroke="#b28a60" stroke-width="6"/>
+      {beans.map(({x,h}) => <g data-support="shelf" data-base-y="207">
+        <ellipse cx={x+22} cy="207" rx="24" ry="4" fill="#17100c" opacity=".4"/>
+        <rect x={x} y={207-h} width="44" height={h} rx="9" fill="url(#cafe-glass)" stroke="#c4a57a" stroke-width="1.5"/>
+        <rect x={x+4} y={202-h} width="36" height="12" rx="3" fill="#a68a60"/>
+        <path d={`M${x+8} ${223-h}V197`} stroke="#ead3a4" stroke-opacity=".25" stroke-width="3"/>
+        <rect x={x+7} y="176" width="30" height="21" rx="1" fill="#dbcaab"/>
+        <text x={x+22} y="190" text-anchor="middle" font-size="7" fill="#493326" font-family="monospace">BLEND</text>
+      </g>)}
+      <g transform="translate(95 88) rotate(-3)"><path d="M4 4H78V101H4Z" fill="#1a1410"/><path d="M0 0H74V97H0Z" fill="#e7d8bb"/><path d="M5 5H69V92H5Z" fill="none" stroke="#a99675"/><text x="37" y="33" text-anchor="middle" fill="#362a20" font-size="21" font-family="serif">珈琲</text><text x="37" y="54" text-anchor="middle" fill="#362a20" font-size="8" font-family="monospace">BLEND / 01</text><text x="37" y="70" text-anchor="middle" fill="#362a20" font-size="7">焙煎 ・ 手入</text></g>
+      <text x="193" y="269" fill="#d4bb95" font-size="8" font-family="monospace" letter-spacing="3">COFFEE BEANS</text>
+    </g>
+    <!-- Weather is clipped to the same window in every lighting state. -->
+    <g class="scene-layer" data-depth=".6">
+      <path d="M485 70L900 77L909 423L478 424Z" fill="#241b16"/>
+      <g clip-path="url(#cafe-window)">
+        <path d="M490 76H900V420H490Z" fill="url(#cafe-sky)"/>
+        <circle class="scene-sun" cx="602" cy="173" r="38" fill="#ffe3a0"/>
+        <circle class="scene-moon" cx="809" cy="139" r="20" fill="#e5e1ca"/>
+        <path d="M490 306H518V260H554V289H581V242H629V310H663V277H707V254H743V298H776V266H826V292H853V248H896V420H490Z" class="scene-city"/>
+        <path d="M490 368L900 353V423H490Z" fill="#293332" opacity=".6"/>
+        <g class="street-light"><ellipse cx="832" cy="319" rx="62" ry="73" fill="url(#cafe-glow)"/><path d="M829 302H835V397H829Z" fill="#302820"/><path d="M818 276H846L849 307H816Z" fill="#efca8c" stroke="#392b20" stroke-width="4"/></g>
+        <ellipse class="scene-reflection" cx="813" cy="410" rx="66" ry="7" fill="#d2ab73" opacity=".45"/>
+        <g class="scene-rain"><rect x="440" y="-100" width="540" height="700" fill="url(#cafe-rain)"/></g>
+        <path d="M535 88L501 327M556 87L531 251M861 88L812 407" stroke="#eee8d1" stroke-width="5" opacity=".1"/>
+      </g>
+      <path d="M695 89V411M499 270H895" stroke="#332b22" stroke-width="6"/>
+      <path d="M481 70L515 72L505 232L519 422L478 424Z" fill="#5b3d2d"/><path d="M899 77L873 76L886 249L874 424L909 423Z" fill="#523827"/>
+      <path d="M490 79L500 80L493 240L501 411" fill="none" stroke="#9d7350" stroke-opacity=".3" stroke-width="5"/>
+      <g transform="translate(656 111) rotate(-4)"><path d="M4 5H96V59H4Z" fill="#151b19" opacity=".5"/><path d="M0 0H92V54H0Z" fill="#e9ddc3"/><text x="46" y="21" text-anchor="middle" fill="#a4392e" font-size="13" font-weight="bold" font-family="Georgia,serif">LEBLANC</text><text x="46" y="34" text-anchor="middle" fill="#352a20" font-size="9" font-family="monospace" letter-spacing="1">COFFEE &amp;</text><text x="46" y="46" text-anchor="middle" fill="#352a20" font-size="9" font-family="monospace" letter-spacing="1">CURRY</text></g>
+    </g>
+    <g class="scene-layer" data-depth=".2">
+      <g transform="translate(124 358) rotate(-2)"><path d="M5 4H201V85H5Z" fill="#1a110d"/><path d="M0 0H196V81H0Z" fill="#251c17" stroke="#b49870"/><text x="98" y="35" fill="#e0c099" text-anchor="middle" font-size="25" font-style="italic" font-family="Georgia,serif" letter-spacing="4">LeBlanc</text><text x="98" y="63" fill="#ca7855" text-anchor="middle" font-size="8" font-family="monospace" letter-spacing="2">COFFEE ・ CURRY</text></g>
+      <path d="M793 36V168" stroke="#c5a773" stroke-width="1.5"/>
+      <ellipse class="pendant-glow" cx="793" cy="252" rx="185" ry="185" fill="url(#cafe-glow)"/>
+      <path d="M746 184C746 147 840 147 840 184V195Q840 203 830 203H756Q746 203 746 195Z" fill="#dfaa58"/>
+      <ellipse cx="793" cy="202" rx="39" ry="4" fill="#f9d797"/>
+    </g>
+    <!-- Rigid still life: tabletop, contact shadows and props always move together. -->
+    <g class="scene-layer counter-still-life" data-depth="1">
+      <path d="M72 487L911 463L956 506L37 536Z" fill="#795039"/>
+      <path d="M37 536L956 506L945 611L53 650Z" fill="url(#cafe-wood)"/>
+      <path d="M51 551L948 523M53 601L946 572" stroke="#bc8c60" stroke-opacity=".16" stroke-width="2"/>
+      <g transform="translate(103 417) rotate(3)"><path d="M0 0H140V77H0Z" fill="#211c16" stroke="#aa8f6e" stroke-width="2"/><text x="70" y="22" text-anchor="middle" fill="#dac7a8" font-family="Georgia,serif" font-size="10" font-style="italic">TODAY'S MENU</text><text x="70" y="45" text-anchor="middle" fill="#d7a663" font-family="Georgia,serif" font-size="13" letter-spacing="2">COFFEE &amp;</text><text x="70" y="64" text-anchor="middle" fill="#d7a663" font-family="Georgia,serif" font-size="13" letter-spacing="2">CURRY</text></g>
+      <g data-support="counter" data-base-y="492">
+        <ellipse cx="336" cy="496" rx="70" ry="10" fill="#20140e" opacity=".45"/>
+        <ellipse cx="329" cy="490" rx="66" ry="9" fill="#c7b392"/>
+        <ellipse cx="327" cy="487" rx="61" ry="7" fill="#eddfbf"/>
+        <path d="M372 433C429 415 427 483 373 474" fill="none" stroke="#dbc7a6" stroke-width="10"/>
+        <path d="M277 426H380L375 458Q372 486 329 487Q285 484 282 457Z" fill="url(#cafe-ceramic)"/>
+        <path d="M283 443H377M286 453H375" stroke="#8d3930" stroke-width="3" opacity=".85"/>
+        <ellipse cx="328" cy="426" rx="51" ry="10" fill="#e7d6b5"/><ellipse cx="328" cy="426" rx="44" ry="6" fill="#35231b"/>
+        <g class="coffee-steam" fill="none" stroke="#f3e2c1" stroke-width="1.5" opacity=".35"><path d="M315 409C301 394 330 389 315 373M336 407C324 391 348 387 336 370"/></g>
+      </g>
+      <g data-support="counter" data-base-y="483">
+        <ellipse cx="501" cy="486" rx="52" ry="7" fill="#20140e" opacity=".4"/>
+        <rect x="453" y="466" width="96" height="17" rx="4" fill="#251d16"/><path d="M454 481H548" stroke="#ae956f" stroke-width="2"/>
+        <ellipse cx="502" cy="455" rx="36" ry="11" fill="#c9b592"/><path d="M466 451Q470 406 502 405Q536 407 538 451Q537 466 502 468Q467 465 466 451" fill="url(#cafe-ceramic)"/><path d="M475 446Q501 457 530 445" fill="none" stroke="#dbccae" stroke-width="2"/>
+      </g>
+      <g data-support="counter" data-base-y="478">
+        <ellipse cx="728" cy="483" rx="60" ry="8" fill="#20140e" opacity=".4"/>
+        <path d="M742 331H765V472M706 472H785" fill="none" stroke="url(#cafe-metal)" stroke-width="8" stroke-linecap="round"/>
+        <ellipse cx="713" cy="331" rx="30" ry="33" fill="url(#cafe-glass)" stroke="#b6c9bd" stroke-width="3"/>
+        <path d="M713 326V395" stroke="url(#cafe-metal)" stroke-width="8"/>
+        <path d="M684 385H738Q746 385 746 397V426Q744 452 713 454Q682 453 680 426V397Q680 385 684 385" fill="url(#cafe-glass)" stroke="#acbeb2" stroke-width="3"/>
+        <path d="M683 417H743V427Q742 450 713 451Q685 448 683 427Z" fill="#78492e" opacity=".9"/>
+        <path d="M689 397V413" stroke="#ecedda" stroke-opacity=".45" stroke-width="3" stroke-linecap="round"/>
+        <rect x="703" y="463" width="21" height="13" rx="3" fill="#9e8661"/><path d="M708 461Q714 447 719 461" fill="#e0b56c"/>
+      </g>
+      <g data-support="counter" data-base-y="474">
+        <ellipse cx="856" cy="477" rx="29" ry="5" fill="#20140e" opacity=".4"/>
+        <rect x="832" y="419" width="47" height="55" rx="7" fill="#69432c" stroke="#ad8c65"/>
+        <path d="M840 430V461" stroke="#c9aa7a" stroke-opacity=".2" stroke-width="5"/>
+        <rect x="839" y="411" width="33" height="12" rx="4" fill="#a18155"/><rect x="842" y="438" width="27" height="19" fill="#d3bc91"/><text x="855" y="451" text-anchor="middle" font-size="7" font-family="monospace" fill="#4d3425">01</text>
+      </g>
+      <path d="M37 533L956 503" stroke="#bb9064" stroke-width="7"/><path d="M37 539L956 509" stroke="#2b1c16" stroke-width="5"/>
+    </g>
+  </g>
+  <g class="scene-stool" transform="translate(804 584)"><path d="M-31 13L-40 85M31 13L40 85M-36 56H36" stroke="#302924" stroke-width="7"/><ellipse cy="8" rx="52" ry="16" fill="#291b17"/><ellipse rx="52" ry="14" fill="#853d32"/><path d="M-41 -3Q0 -15 41 -3" fill="none" stroke="#c17c58" stroke-opacity=".4"/></g>
+</svg>
+<span class="scene-signature">COFFEE &amp; CURRY / 四轩茶屋</span>
+</div>
