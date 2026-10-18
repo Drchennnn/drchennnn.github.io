@@ -50,7 +50,7 @@
         // A late click gets a fresh passage; never jump the light after people exit.
         transitionTimers.push(setTimeout(startTransition,32));
       } else requestedMode=null;
-    },2800));
+    },3500));
   }
   timeButton.addEventListener('click',()=>{
     const target=(requestedMode??root.dataset.mode)==='night'?'day':'night';
