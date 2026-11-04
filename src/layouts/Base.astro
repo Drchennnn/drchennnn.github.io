@@ -1,26 +1,26 @@
 ---
 import '../styles/global.css';
-import '../styles/cafe.css';
-import JournalMotion from '../components/JournalMotion.astro';
-import CafeControls from '../components/CafeControls.astro';
+import '../styles/p3r.css';
+import '../styles/p3r-menu.css';
+import ReloadMotion from '../components/ReloadMotion.astro';
 interface Props { title?: string; description?: string; category?: 'daily' | 'study'; }
-const { title = '雨歇之前', description = 'Link 的个人博客。在卢布朗的咖啡香里，写下日常、学习和一点好奇。' } = Astro.props;
+const { title = 'LINK RELOAD · 青蓝档案', description = 'Link 的个人档案：日常记录、学习档案、光影片段与交互实验。' } = Astro.props;
 const path = Astro.url.pathname;
 const nav = [
-  ['/daily/', '吧台手记'], ['/study/', '研磨笔记'], ['/photos/', '窗边相册'],
-  ['/play/', '桌边小物'], ['/search/', '寻一页'], ['/about/', '店主便笺']
+  ['/daily/', 'LOG', '日常记录'], ['/study/', 'STUDY', '学习档案'], ['/photos/', 'GALLERY', '光影片段'],
+  ['/play/', 'LAB', '交互实验'], ['/search/', 'SEARCH', '记录检索'], ['/about/', 'PROFILE', '关于 Link']
 ];
 ---
 <!doctype html>
-<html lang="zh-CN" data-mode="day" data-weather="dry" data-motion="on">
+<html lang="zh-CN" data-theme-version="P3R-RELOAD-1" data-motion="on">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title} · Link</title><meta name="description" content={description} />
-  <meta name="theme-color" content="#211b17" />
+  <meta name="theme-color" content="#0649bd" />
   <link rel="canonical" href={new URL(path, Astro.site)} />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/brand-reload.svg" type="image/svg+xml" />
   <script is:inline>
-    try { const r=document.documentElement; r.dataset.mode=localStorage.getItem('leblanc-mode')==='night'?'night':'day'; r.dataset.weather=localStorage.getItem('leblanc-weather')==='rain'?'rain':'dry'; r.dataset.motion=localStorage.getItem('journal-motion')==='off'||matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on'; } catch {}
+    try { const r=document.documentElement; r.dataset.motion=localStorage.getItem('journal-motion')==='off'||matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on'; } catch { if(matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.dataset.motion='off'; }
   </script>
 </head>
 <body>
@@ -28,13 +28,14 @@ const nav = [
   <div class="site">
     <div class="topline" aria-hidden="true"></div>
     <header class="site-header">
-      <a class="brand" href="/" aria-label="雨歇之前，返回店内"><span class="crest" aria-hidden="true">L</span><span>雨歇之前<small>LINK / CAFÉ LEBLANC</small></span></a>
-      <nav aria-label="主导航">{nav.map(([href,label]) => <a href={href} aria-current={path.startsWith(href) || (path.startsWith('/posts/') && href === `/${Astro.props.category}/`) ? 'page' : undefined}>{label}</a>)}</nav>
+      <a class="brand" href="/" aria-label="LINK RELOAD，返回首页"><img class="brand-symbol" src="/brand-reload.svg" alt="" width="64" height="64"/><span class="brand-wordmark">LINK<span class="brand-reload">RELOAD</span><small>青蓝档案 / PERSONAL RECORDS</small></span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">MENU <span aria-hidden="true">＋</span></button>
+      <nav id="main-nav" aria-label="主导航">{nav.map(([href,en,label],index) => <a href={href} aria-current={path.startsWith(href) || (path.startsWith('/posts/') && href === `/${Astro.props.category}/`) ? 'page' : undefined}><small aria-hidden="true">0{index+1}</small><span class="nav-en" aria-hidden="true">{en}</span><span class="nav-zh">{label}</span></a>)}</nav>
     </header>
-    <div class="atmosphere-bar"><a href="/">COFFEE &amp; CURRY <span>一杯咖啡，一页日常。</span></a><CafeControls /></div>
+    <div class="atmosphere-bar"><a href="/">EVERY DAY, A NEW CHAPTER <span>日常 · 探索 · 未完待续</span></a><span class="build-label">LINK / PERSONAL ARCHIVE</span></div>
     <main id="main" class:list={{ 'home-main': path === '/' }}><slot /></main>
-    <footer><div>© {new Date().getFullYear()} Link <span class="footer-note">慢慢写，坐一会儿。</span><small>受 Café Leblanc 启发的个人博客</small></div><div class="footer-links"><button class="motion-toggle" type="button" aria-pressed="false">暂停动效</button><a href="https://github.com/Drchennnn" target="_blank" rel="noreferrer">GitHub ↗</a><a href="/admin/">管理登录</a><span class="music-note">♫ 音乐留座 · 暂未载入</span></div></footer>
+    <footer><div>© {new Date().getFullYear()} Link <span class="footer-note">RECORD. EXPLORE. RELOAD.</span><small>P3R-inspired personal archive · 第三方参考素材 ©ATLUS ©SEGA</small></div><div class="footer-links"><button class="motion-toggle" type="button" aria-pressed="false">暂停动效</button><a href="https://github.com/Drchennnn" target="_blank" rel="noreferrer">GitHub ↗</a><a href="/admin/">管理登录</a></div></footer>
   </div>
-  <JournalMotion />
+  <ReloadMotion />
 </body>
 </html>

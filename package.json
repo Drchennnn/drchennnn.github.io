@@ -11,7 +11,8 @@
     "predev": "node scripts/prepare-admin.mjs",
     "test:oauth": "node scripts/test-oauth.mjs",
     "test:admin": "node scripts/test-admin.mjs",
-    "test:cafe": "node scripts/test-cafe.mjs"
+    "test:cafe": "npm run test:p3r",
+    "test:p3r": "node scripts/test-p3r.mjs && node scripts/test-p3r.mjs --compiled"
   },
   "dependencies": {
     "astro": "7.3.8",

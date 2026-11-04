@@ -1,0 +1,35 @@
+{
+  "notice": "©ATLUS ©SEGA. Third-party reference media used in a noncommercial personal fan site. No redistribution license established. Original presentation code does not license third-party artwork.",
+  "assets": [
+    {
+      "file": "public/p3r/chapter-1.webp",
+      "source": "https://asia.sega.com/p3r/cht/resources/img/top/character1_badbd990dcbabe1f25c22de113f772a0.webp",
+      "sha256": "697af56904fa69930f50d93c49c410583e6fa1ddef0c4ee9e2b050374c034a5a"
+    },
+    {
+      "file": "public/p3r/chapter-2.webp",
+      "source": "https://asia.sega.com/p3r/cht/resources/img/top/character2_35a3dc87ea1a02e2e3d6397d46e1cbf9.webp",
+      "sha256": "cf683e8e8fd14b64cf027966b2510c8dedc661537979fe2649108b8eecac9c68"
+    },
+    {
+      "file": "public/p3r/chapter-3.webp",
+      "source": "https://asia.sega.com/p3r/cht/resources/img/top/character3_cd155bb1faff87558813a0054f0f9436.webp",
+      "sha256": "530c8c02cf80d34c202bcad7384e1f7d3570235fb672dd454ebefee7c12be730"
+    },
+    {
+      "file": "public/p3r/chapter-4.webp",
+      "source": "https://asia.sega.com/p3r/cht/resources/img/top/character4_b11ad41cb7a01fef1d40aeb65d002471.webp",
+      "sha256": "e0114c71651bf6690bc0783769c9cc70519689e7c44edd73b63a6fbcf6b4939a"
+    },
+    {
+      "file": "public/p3r/hero-loop.mp4",
+      "source": "https://asia.sega.com/p3r/cht/resources/img/top/fv_movie2_1aaf21a0de60678450744da0dbaf9ef4.mp4",
+      "sha256": "e53d34807c08e64f6f6f050e89ef9ac520d9b662eed31f28dd5be048b27e4fe0"
+    },
+    {
+      "file": "public/p3r/hero-poster.webp",
+      "source": "https://asia.sega.com/p3r/cht/resources/img/top/fv_movie2_1aaf21a0de60678450744da0dbaf9ef4.mp4",
+      "derivation": "ffmpeg at second 1, width 1600 WebP"
+    }
+  ]
+}

@@ -1,8 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import CafeScene from '../components/CafeScene.astro';
-import CafeTransition from '../components/CafeTransition.astro';
-import '../styles/cafe-people.css';
 import { getCollection } from 'astro:content';
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a,b) => b.data.date.valueOf()-a.data.date.valueOf() || a.id.localeCompare(b.id));
 const photos = await getCollection('photos', ({ data }) => !data.draft);
@@ -10,21 +7,151 @@ const toys = await getCollection('toys', ({ data }) => !data.draft);
 const date = (d: Date) => d.toISOString().slice(0,10).replaceAll('-', '.');
 ---
 <Base>
-  <section class="cafe-hero" aria-labelledby="welcome-title">
-    <div class="hero-copy"><p class="eyebrow">WELCOME TO THE COUNTER</p><h1 id="welcome-title">雨歇之前，<br/><em>坐一会儿。</em></h1><p class="lede">街角的灯还亮着，咖啡刚好温热。<br/>把日常、学习和一点好奇，<br/>慢慢写在这里。</p><a class="author-note" href="/about/"><img src="/images/link-avatar.webp" alt="Link 的头像" width="48" height="48" fetchpriority="high"/><span><strong>Link</strong><small>一半日常，一半好奇。</small></span><span aria-hidden="true">↗</span></a><a class="open-note" href="#recent"><i aria-hidden="true"></i>OPEN FOR A LITTLE WHILE <span aria-hidden="true">↓</span></a></div>
-    <CafeScene />
-    <p class="scene-caption"><span data-scene-status>白昼 · 晴天</span><span>同一扇窗，不同的光。</span></p>
-    <CafeTransition />
-  </section>
-  <div class="home-content">
-    <section class="entries" id="recent" aria-labelledby="list-title"><div class="section-label"><div><p class="eyebrow">FRESH FROM THE COUNTER</p><h2 id="list-title">新近手记</h2></div><span>{String(posts.length).padStart(2, '0')} 篇文章</span></div>
-      {posts.length ? <ol>{posts.slice(0, 6).map(post => <li><a class="entry" href={`/posts/${post.id}/`}><time datetime={post.data.date.toISOString()}>{date(post.data.date)}</time><div><p class="entry-kind">{post.data.category === 'study' ? 'STUDY / 研磨笔记' : 'DAILY / 吧台手记'}</p><h3>{post.data.title}</h3>{post.data.description && <p>{post.data.description}</p>}</div><span class="arrow" aria-hidden="true">↗</span></a></li>)}</ol> : <div class="empty">这里留一页空白，等下一次值得写下的日常。</div>}
-    </section>
-    <section aria-labelledby="menu-title"><div class="section-label"><div><p class="eyebrow">ON THE MENU</p><h2 id="menu-title">柜台菜单</h2></div><span>随意翻翻</span></div><div class="shelves">
-      <a class="shelf" href="/daily/"><span>01 / DAILY</span><h3>吧台手记</h3><p>日常随笔，细碎见闻。</p><b>{String(posts.filter(post => post.data.category === 'daily').length).padStart(2, '0')}</b></a>
-      <a class="shelf" href="/study/"><span>02 / STUDY</span><h3>研磨笔记</h3><p>学习所得，思考留痕。</p><b>{String(posts.filter(post => post.data.category === 'study').length).padStart(2, '0')}</b></a>
-      <a class="shelf" href="/photos/"><span>03 / PHOTO</span><h3>窗边相册</h3><p>把偶遇的光留在窗边。</p><b>{String(photos.length).padStart(2, '0')}</b></a>
-      <a class="shelf" href="/play/"><span>04 / PLAY</span><h3>桌边小物</h3><p>有一点想法，就动手试试。</p><b>{String(toys.length).padStart(2, '0')}</b></a>
-    </div></section>
-  </div>
+<section class="reload-hero" aria-labelledby="welcome-title">
+<img class="hero-poster" src="/p3r/hero-poster.webp" alt="" width="1600" height="900" fetchpriority="high">
+<video class="hero-film" data-hero-video data-src="/p3r/hero-loop.mp4" autoplay muted loop playsinline preload="none" poster="/p3r/hero-poster.webp" aria-hidden="true" tabindex="-1">
+</video>
+<div class="hero-shade" aria-hidden="true">
+</div>
+<div class="hero-coordinate" aria-hidden="true">THE DAYS ARE OURS.<br>01 — PERSONAL ARCHIVE</div>
+<div class="reload-title">
+<p class="hero-kicker">LINK / PERSONAL RECORDS — 01</p>
+<p class="hero-display" aria-hidden="true">
+<span>RELOAD</span>
+<br/>
+<em>YOUR DAYS.</em>
+</p>
+<h1 id="welcome-title">每一天，都是新的记录。</h1>
+<p class="hero-intro">日常、学习，和一点不愿放下的好奇。<br>这是 Link 的个人记录。</p>
+<a class="reload-cta" href="#recent">START / 开始探索 <span aria-hidden="true">↗</span>
+</a>
+</div>
+<div class="hero-bottom">
+<span>PERSONAL ARCHIVE / LINK</span>
+<a href="#recent">SCROLL TO EXPLORE <span aria-hidden="true">↓</span>
+</a>
+</div>
+<svg class="reload-waves" viewBox="0 0 1440 200" preserveAspectRatio="none" aria-hidden="true">
+<defs>
+<path id="reload-wave" d="M-1440 100Q-1080-20-720 100T0 100T720 100T1440 100T2160 100T2880 100V220H-1440Z">
+</path>
+</defs>
+<use href="#reload-wave" class="wave-back">
+</use>
+<use href="#reload-wave" class="wave-front">
+</use>
+</svg>
+</section>
+<div class="home-content">
+<section class="entries reload-entries" id="recent" aria-labelledby="list-title">
+<div class="editorial-heading" data-reveal>
+<p class="section-index">01 / THE LATEST</p>
+<h2 id="list-title">
+<span aria-hidden="true">LATEST<br/>
+<i>RECORDS.</i>
+</span>
+<b>最新记录</b>
+</h2>
+<p>一些经历，一些发现。<br>把走过的路，写成下一页。</p>
+</div>
+<div class="entry-column" data-reveal style="--reveal-delay:120ms">
+<div class="entry-count">
+<span>RECENT UPDATES</span>
+<span>{String(posts.length).padStart(2, '0')} RECORDS</span>
+</div>
+<ol>{posts.slice(0, 6).map((post, index) => <li>
+<a class="entry" href={`/posts/${post.id}/`}>
+<span class="entry-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+<div>
+<p class="entry-kind">{post.data.category === 'study' ? 'STUDY / 学习档案' : 'LOG / 日常记录'}<time datetime={post.data.date.toISOString()}>{date(post.data.date)}</time>
+</p>
+<h3>{post.data.title}</h3>{post.data.description && <p>{post.data.description}</p>}</div>
+<span class="arrow" aria-hidden="true">↗</span>
+</a>
+</li>)}</ol>
+<a href="/search/" class="archive-link">探索全部记录 <span aria-hidden="true">→</span>
+</a>
+</div>
+</section>
+</div>
+<section class="chapter-section" aria-labelledby="chapters-title">
+<div class="chapter-top" data-reveal>
+<div>
+<p class="section-index">02 / CHOOSE YOUR CHAPTER</p>
+<h2 id="chapters-title">ARCHIVE<span>选择你的下一段记录</span>
+</h2>
+</div>
+<div class="chapter-controls">
+<button type="button" data-gallery-prev aria-label="上一组分类">←</button>
+<button type="button" data-gallery-next aria-label="下一组分类">→</button>
+</div>
+</div>
+<div class="chapter-gallery" tabindex="0" aria-label="分类画廊，可左右滚动">
+<a href="/daily/" class="chapter-card" data-chapter="1">
+<img src="/p3r/chapter-1.webp" alt="" width="570" height="760" loading="lazy">
+<span class="chapter-id">01 / {String(posts.filter(post => post.data.category === 'daily').length).padStart(2, '0')} RECORDS</span>
+<div class="chapter-copy">
+<p>LOG</p>
+<h3>日常记录<span aria-hidden="true">↗</span>
+</h3>
+<small>在普通的日子里，捕捉不普通的瞬间。</small>
+</div>
+</a>
+<a href="/study/" class="chapter-card" data-chapter="2">
+<img src="/p3r/chapter-2.webp" alt="" width="570" height="760" loading="lazy">
+<span class="chapter-id">02 / {String(posts.filter(post => post.data.category === 'study').length).padStart(2, '0')} RECORDS</span>
+<div class="chapter-copy">
+<p>STUDY</p>
+<h3>学习档案<span aria-hidden="true">↗</span>
+</h3>
+<small>让每一次好奇，生长出新的答案。</small>
+</div>
+</a>
+<a href="/photos/" class="chapter-card" data-chapter="3">
+<img src="/p3r/chapter-3.webp" alt="" width="570" height="760" loading="lazy">
+<span class="chapter-id">03 / {String(photos.length).padStart(2, '0')} RECORDS</span>
+<div class="chapter-copy">
+<p>GALLERY</p>
+<h3>光影片段<span aria-hidden="true">↗</span>
+</h3>
+<small>一些光，一些影，一些不想忘记的画面。</small>
+</div>
+</a>
+<a href="/play/" class="chapter-card" data-chapter="4">
+<img src="/p3r/chapter-4.webp" alt="" width="570" height="760" loading="lazy">
+<span class="chapter-id">04 / {String(toys.length).padStart(2, '0')} RECORDS</span>
+<div class="chapter-copy">
+<p>LAB</p>
+<h3>交互实验<span aria-hidden="true">↗</span>
+</h3>
+<small>把一闪而过的念头，变成可以触碰的东西。</small>
+</div>
+</a>
+</div>
+<p class="gallery-hint">四个入口，同一本未完的记录。<span>DRAG / SCROLL TO DISCOVER →</span>
+</p>
+</section>
+<section class="reload-about" aria-labelledby="about-title">
+<div class="about-water" aria-hidden="true">
+<span>STAY<br/>
+<i>CURIOUS.</i>
+</span>
+<svg viewBox="0 0 420 420">
+<circle cx="210" cy="210" r="175">
+</circle>
+<circle cx="210" cy="210" r="135">
+</circle>
+<path d="M20 210H400M210 20V400">
+</path>
+</svg>
+</div>
+<div class="about-copy" data-reveal>
+<p class="section-index">03 / BEHIND THE PAGES</p>
+<img src="/images/link-avatar.webp" alt="Link 的头像" width="72" height="72" loading="lazy">
+<h2 id="about-title">你好，我是 Link。</h2>
+<p>一半日常，一半好奇。<br>学习、记录、动手尝试，在这里留下自己的轨迹。<br>不必每一次探索都有结论，下一页总有新的可能。</p>
+<a class="archive-link" href="/about/">关于我 <span aria-hidden="true">↗</span>
+</a>
+</div>
+</section>
 </Base>
