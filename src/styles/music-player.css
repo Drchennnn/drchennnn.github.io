@@ -26,8 +26,6 @@
 .player-rim { z-index: 1; position: absolute; display: grid; grid-template-columns: repeat(5, minmax(44px, 1fr)); left: 69px; right: 14px; top: 0; gap: 3px; height: 47px; }
 .player-rim button { display: grid; place-items: center; min-width: 0; min-height: 44px; padding: 0 0 5px; border: 1px solid #7a8b95; border-bottom: 0; border-radius: 3px 3px 0 0; background: linear-gradient(#edf4f7, #b2bec5 45%, #80909a 75%, #c5ced4); box-shadow: 0 1px 0 #fff inset; font: bold 19px/1 Arial, sans-serif; color: #163e55; text-shadow: 0 1px #fff8; }
 .player-rim button:first-child { font-size: 11px; letter-spacing: .04em; }
-.player-rim .player-skip { grid-template-rows: 16px 12px; align-content: center; gap: 1px; }
-.player-skip span { font: 700 9px/1 Arial, 'PingFang SC', sans-serif; letter-spacing: .03em; }
 .player-rim button:hover { color: #005ad3; background: linear-gradient(#edfbff, #b8e1eb 45%, #89b9ca 75%, #c4e3ec); }
 .player-lcd { z-index: 3; position: absolute; top: 47px; left: 71px; width: calc(100% - 124px); height: 46px; padding: 5px 8px; color: var(--lcd-ink); background: repeating-linear-gradient(0deg, transparent, transparent 2px, #1d434308 2px, #1d434308 3px), linear-gradient(#88c5c8, var(--lcd) 38%, #abdedc); border: 1px solid #41686c; border-radius: 2px; box-shadow: 1px 2px 2px #22383f7a inset; font-family: 'Courier New', monospace; font-weight: bold; }
 .player-song { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 28px; font-size: clamp(10px, .85vw, 13px); line-height: 16px; letter-spacing: .025em; }
