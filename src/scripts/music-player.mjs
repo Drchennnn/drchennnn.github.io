@@ -8,7 +8,7 @@ const formatTime = seconds => {
   return `${Math.floor(whole / 60).toString().padStart(2, '0')}:${(whole % 60).toString().padStart(2, '0')}`;
 };
 
-/** A user-activated, Web Audio loop player. It never requests audio before interaction. */
+/** A Web Audio loop player with optional, policy-aware autoplay. */
 export function initMusicPlayer(doc = document, win = window) {
   const root = doc.querySelector('[data-music-player]');
   if (!root || root.dataset.playerInitialized === 'true') return null;
@@ -62,6 +62,9 @@ export function initMusicPlayer(doc = document, win = window) {
   let sourceVersion = 0;
   let commandVersion = 0;
   let staticBarsApplied = false;
+  let autoplayInFlight = false;
+  let autoplayCancelled = false;
+  let gestureArmed = false;
 
   const setStatus = message => { if (status) status.textContent = message; };
   const setTitle = () => {
@@ -178,10 +181,30 @@ export function initMusicPlayer(doc = document, win = window) {
     setPlayLabel();
   };
 
-  const ensureAudio = async () => {
+  const resumeContext = async timeout => {
+    if (context.state === 'running') return;
+    let timeoutTimer;
+    let resume;
+    try { resume = Promise.resolve(context.resume()); }
+    catch { throw new Error('audio-context-blocked'); }
+    try {
+      if (timeout) await Promise.race([
+        resume,
+        new Promise((_, reject) => { timeoutTimer = later(() => reject(new Error('audio-context-timeout')), timeout); })
+      ]);
+      else await resume;
+    } catch (error) {
+      if (error?.message === 'audio-context-timeout') throw error;
+      throw new Error('audio-context-blocked');
+    } finally {
+      if (timeoutTimer != null) cancelLater(timeoutTimer);
+    }
+    if (context.state !== 'running') throw new Error('audio-context-blocked');
+  };
+
+  const ensureAudio = async ({ command, resumeTimeout = 0 } = {}) => {
     if (buffer) {
-      if (context.state !== 'running') await context.resume();
-      if (context.state !== 'running') throw new Error('audio-context-suspended');
+      await resumeContext(resumeTimeout);
       return buffer;
     }
     if (loadPromise) return loadPromise;
@@ -206,8 +229,8 @@ export function initMusicPlayer(doc = document, win = window) {
         }
       });
     }
-    if (context.state !== 'running') await context.resume();
-    if (context.state !== 'running') throw new Error('audio-context-suspended');
+    await resumeContext(resumeTimeout);
+    if (command !== commandVersion || !desiredPlaying || disposed) throw new Error('audio-start-cancelled');
     root.dataset.state = 'loading';
     setStatus('正在载入音乐…');
     setPlayLabel();
@@ -230,13 +253,21 @@ export function initMusicPlayer(doc = document, win = window) {
     return loadPromise;
   };
 
-  const begin = async ({ restart = false } = {}) => {
+  const begin = async ({ restart = false, autoplay = false } = {}) => {
     const command = ++commandVersion;
+    if (autoplay) {
+      autoplayInFlight = true;
+      gestureArmed = true;
+    }
     desiredPlaying = true;
     if (restart) offset = 0;
+    if (autoplay) {
+      root.dataset.state = 'loading';
+      setStatus('正在尝试播放音乐…');
+    }
     setPlayLabel();
     try {
-      const decoded = await ensureAudio();
+      const decoded = await ensureAudio({ command, resumeTimeout: autoplay ? 800 : 0 });
       if (command !== commandVersion || !desiredPlaying || disposed) {
         if (command !== commandVersion) return;
         root.dataset.state = 'paused';
@@ -265,20 +296,38 @@ export function initMusicPlayer(doc = document, win = window) {
       next.onended = () => { if (version === sourceVersion && playing) stopSource(); };
       next.start(0, offset % decoded.duration);
       playing = true;
+      if (autoplay) {
+        autoplayInFlight = false;
+        gestureArmed = false;
+      }
       root.dataset.state = 'playing';
       setStatus('正在播放 Color Your Night');
       setPlayLabel();
       startTimer();
     } catch (error) {
       if (disposed || command !== commandVersion) return;
+      if (autoplay) {
+        autoplayInFlight = false;
+        gestureArmed = false;
+      }
       desiredPlaying = false;
       stopSource();
+      if (autoplay && !autoplayCancelled && ['audio-context-blocked', 'audio-context-timeout'].includes(error?.message)) {
+        gestureArmed = true;
+        root.dataset.state = 'idle';
+        setStatus('点击或按键开启音乐');
+        setPlayLabel();
+        return;
+      }
       root.dataset.state = 'error';
-      setStatus(error?.message === 'audio-context-unavailable' ? '此浏览器不支持网页音频' : error?.message === 'audio-context-suspended' ? '浏览器阻止了播放，请再次点击' : '音乐载入失败，点击重试');
+      setStatus(error?.message === 'audio-context-unavailable' ? '此浏览器不支持网页音频' : ['audio-context-blocked', 'audio-context-timeout'].includes(error?.message) ? '浏览器阻止了播放，请再次点击' : '音乐载入失败，点击重试');
     }
   };
 
   const pause = () => {
+    autoplayCancelled = true;
+    autoplayInFlight = false;
+    gestureArmed = false;
     commandVersion++;
     desiredPlaying = false;
     stopSource();
@@ -287,9 +336,17 @@ export function initMusicPlayer(doc = document, win = window) {
   };
   playButton?.addEventListener('click', () => {
     if (desiredPlaying || playing) pause();
-    else begin();
+    else {
+      autoplayCancelled = true;
+      gestureArmed = false;
+      begin();
+    }
   });
   restartButton?.addEventListener('click', () => {
+    autoplayCancelled = true;
+    autoplayInFlight = false;
+    gestureArmed = false;
+    commandVersion++;
     stopSource({ preserve: false });
     offset = 0;
     shownSecond = -1;
@@ -308,11 +365,29 @@ export function initMusicPlayer(doc = document, win = window) {
     setCollapsed(false);
     playButton?.focus?.();
   });
+  const isPlaybackControl = target => target === playButton || target === restartButton || playButton?.contains?.(target) || restartButton?.contains?.(target);
+  const activateFromGesture = event => {
+    if (!gestureArmed || autoplayCancelled || disposed || playing || isPlaybackControl(event.target)) return;
+    if (desiredPlaying && !autoplayInFlight) return;
+    gestureArmed = false;
+    if (autoplayInFlight) {
+      commandVersion++;
+      autoplayInFlight = false;
+      desiredPlaying = false;
+    }
+    begin({ restart: true });
+  };
+  doc.addEventListener('pointerdown', activateFromGesture);
+  doc.addEventListener('keydown', activateFromGesture);
+  doc.addEventListener('click', activateFromGesture);
   reduced.addEventListener?.('change', refreshMeters);
   doc.addEventListener('visibilitychange', refreshMeters);
   doc.addEventListener('astro:page-load', placePlayer);
   win.addEventListener('pagehide', event => {
     disposed = !event.persisted;
+    autoplayCancelled = true;
+    autoplayInFlight = false;
+    gestureArmed = false;
     commandVersion++;
     desiredPlaying = false;
     stopSource();
@@ -326,5 +401,6 @@ export function initMusicPlayer(doc = document, win = window) {
   setStaticBars();
   setStatus('点击播放音乐');
   placePlayer();
+  if (root.dataset.autoplay === 'true') begin({ restart: true, autoplay: true });
   return { get state() { return root.dataset.state; } };
 }

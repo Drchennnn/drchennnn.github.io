@@ -14,6 +14,7 @@ class Element {
   getAttribute(key) { return this.attrs[key] ?? null; }
   focus() { this.focused = true; }
   append(child) { child.parentNode = this; this.appended = child; }
+  contains(node) { return node === this || [...this.children.values()].some(child => child === node || child.contains?.(node)); }
   querySelector(selector) { return this.children.get(selector) ?? null; }
   querySelectorAll(selector) { return selector === '[data-player-bar]' ? this.bars : []; }
 }
@@ -24,22 +25,27 @@ class Clock {
   tickOne() { const entry = this.timers.entries().next().value; if (entry) { this.timers.delete(entry[0]); entry[1].fn(); } }
 }
 
-function mount({ mobile = false, reduce = false, saved = {}, noAudioContext = false, decodeRejects = 0, resumeState = 'running', resumeStates, fetchPending = false, loopStart = '6', docked = true } = {}) {
-  const root = new Element(); root.dataset.audioSrc = '/music/color-your-night-loop.mp3'; root.dataset.loopStart = loopStart;
+function mount({ mobile = false, reduce = false, saved = {}, noAudioContext = false, decodeRejects = 0, resumeState = 'running', resumeStates, fetchPending = false, loopStart = '6', docked = true, autoplay = false } = {}) {
+  const root = new Element(); root.dataset.audioSrc = '/music/color-your-night-loop.mp3'; root.dataset.loopStart = loopStart; if (autoplay) root.dataset.autoplay = 'true';
   const selectors = ['[data-player-play]','[data-player-restart]','[data-player-info]','[data-player-volume-down]','[data-player-volume-up]','[data-player-volume]','[data-player-collapse]','[data-player-show]','[data-player-title]','[data-player-elapsed]','[data-player-status]'];
   for (const selector of selectors) root.children.set(selector, new Element());
   root.bars = Array.from({ length: 5 }, () => new Element());
   const doc = new Element(); doc.hidden = false; doc.documentElement = new Element(); doc.documentElement.dataset.motion = 'on';
   doc.body = new Element(); doc.dock = docked ? new Element() : null; doc.body.append(root);
   doc.querySelector = selector => selector === '[data-music-player]' ? root : selector === '[data-player-dock]' ? doc.dock : null;
-  const clock = new Clock(), prefs = { ...saved }, requests = [], contexts = [], pendingFetches = [];
+  const clock = new Clock(), prefs = { ...saved }, requests = [], contexts = [], pendingFetches = [], pendingResumes = [];
   const resumeQueue = resumeStates ? [...resumeStates] : null;
   const reduced = new Element(); reduced.matches = reduce;
   class AudioContext {
     constructor() { this.state = resumeState === 'reject' ? 'suspended' : 'suspended'; this.currentTime = 0; this.destination = {}; this.handlers = {}; this.sources = []; contexts.push(this); }
     addEventListener(type, fn) { (this.handlers[type] ??= []).push(fn); }
     emit(type) { for (const fn of this.handlers[type] ?? []) fn(); }
-    async resume() { const next = resumeQueue?.shift() ?? resumeState; if (next === 'reject') throw Error('not allowed'); this.state = next; }
+    resume() {
+      const next = resumeQueue?.shift() ?? resumeState;
+      if (next === 'reject') return Promise.reject(Error('not allowed'));
+      if (next === 'pending') return new Promise((resolve, reject) => pendingResumes.push({ resolve: () => { this.state = 'running'; resolve(); }, reject }));
+      this.state = next; return Promise.resolve();
+    }
     close() { this.state = 'closed'; this.closed = true; }
     createGain() { return this.gainNode = { gain: { value: 1, setValueAtTime(value) { this.value = value; } }, connect() {} }; }
     createAnalyser() { return this.analyser = { frequencyBinCount: 10, reads: 0, connect() {}, getByteFrequencyData(data) { this.reads++; data.fill(128); } }; }
@@ -60,7 +66,7 @@ function mount({ mobile = false, reduce = false, saved = {}, noAudioContext = fa
     return Promise.resolve({ ok: true, arrayBuffer: async () => new ArrayBuffer(8) });
   };
   initMusicPlayer(doc, win);
-  return { root, doc, win, clock, prefs, requests, contexts, pendingFetches, node: selector => root.querySelector(selector), reduced };
+  return { root, doc, win, clock, prefs, requests, contexts, pendingFetches, pendingResumes, node: selector => root.querySelector(selector), reduced };
 }
 
 // No autoplay, no eager request, and responsive collapse has a stable default.
@@ -84,6 +90,88 @@ assert.equal(nonHome.root.dataset.placement, 'floating');
 assert.equal(nonHome.root.parentNode, nonHome.doc.body);
 assert.equal(nonHome.root.dataset.collapsed, 'true');
 assert.equal(nonHome.prefs['p3r-player-collapsed'], undefined, 'automatic floating collapse does not overwrite the home preference');
+
+// Optional autoplay succeeds from the true beginning when browser policy allows it.
+const autoAllowed = mount({ autoplay: true });
+assert.equal(autoAllowed.root.dataset.state, 'loading');
+assert.equal(autoAllowed.node('[data-player-play]').getAttribute('aria-pressed'), 'true');
+await flush();
+assert.equal(autoAllowed.root.dataset.state, 'playing');
+assert.deepEqual(autoAllowed.contexts[0].sources[0].started, { when: 0, offset: 0 });
+assert.equal(autoAllowed.requests.length, 1);
+const autoSource = autoAllowed.contexts[0].sources[0];
+autoAllowed.doc.emit('astro:page-load');
+assert.equal(autoAllowed.contexts[0].sources[0], autoSource);
+assert.equal(autoAllowed.requests.length, 1, 'Astro navigation does not re-run autoplay');
+
+// Rejected autoplay waits for a real gesture and never fetches before permission.
+const autoBlocked = mount({ autoplay: true, resumeStates: ['reject', 'running'] });
+await flush();
+assert.equal(autoBlocked.root.dataset.state, 'idle');
+assert.equal(autoBlocked.node('[data-player-status]').textContent, '点击或按键开启音乐');
+assert.equal(autoBlocked.requests.length, 0);
+autoBlocked.doc.emit('click', { target: autoBlocked.doc.body });
+await flush();
+assert.equal(autoBlocked.root.dataset.state, 'playing');
+assert.equal(autoBlocked.requests.length, 1);
+assert.deepEqual(autoBlocked.contexts[0].sources[0].started, { when: 0, offset: 0 });
+
+// A gesture arriving inside the 800 ms window immediately supersedes autoplay resume.
+const autoEarlyGesture = mount({ autoplay: true, resumeStates: ['pending', 'running'] });
+assert.equal(autoEarlyGesture.root.dataset.state, 'loading');
+autoEarlyGesture.doc.emit('pointerdown', { target: autoEarlyGesture.doc.body });
+await flush();
+assert.equal(autoEarlyGesture.root.dataset.state, 'playing');
+assert.equal(autoEarlyGesture.requests.length, 1);
+assert.deepEqual(autoEarlyGesture.contexts[0].sources[0].started, { when: 0, offset: 0 });
+autoEarlyGesture.pendingResumes[0].reject(Error('late obsolete resume')); await flush();
+assert.equal(autoEarlyGesture.root.dataset.state, 'playing');
+assert.equal(autoEarlyGesture.contexts[0].sources.length, 1);
+
+// A pending policy response is bounded; keyboard activation can then resume it.
+const autoPending = mount({ autoplay: true, resumeStates: ['pending', 'running'] });
+assert.equal(autoPending.root.dataset.state, 'loading');
+assert.equal(autoPending.requests.length, 0);
+assert.equal([...autoPending.clock.timers.values()][0].delay, 800);
+autoPending.clock.tickOne(); await flush();
+assert.equal(autoPending.root.dataset.state, 'idle');
+assert.equal(autoPending.node('[data-player-status]').textContent, '点击或按键开启音乐');
+autoPending.doc.emit('keydown', { target: autoPending.doc.body, key: 'Enter' });
+await flush();
+assert.equal(autoPending.root.dataset.state, 'playing');
+assert.equal(autoPending.requests.length, 1);
+
+// Player controls own their click and are not double-toggled by document fallbacks.
+const autoButton = mount({ autoplay: true, resumeStates: ['reject', 'running'] });
+await flush();
+const autoPlayButton = autoButton.node('[data-player-play]');
+autoButton.doc.emit('pointerdown', { target: autoPlayButton });
+autoPlayButton.emit('click');
+autoButton.doc.emit('click', { target: autoPlayButton });
+await flush();
+assert.equal(autoButton.root.dataset.state, 'playing');
+assert.equal(autoButton.requests.length, 1);
+
+// Explicit cancellation defeats timeout, late resume and later fallback gestures.
+const autoCancelled = mount({ autoplay: true, resumeStates: ['pending'] });
+autoCancelled.node('[data-player-play]').emit('click');
+assert.equal(autoCancelled.root.dataset.state, 'paused');
+autoCancelled.clock.tickOne(); await flush();
+autoCancelled.pendingResumes[0].resolve(); await flush();
+autoCancelled.doc.emit('pointerdown', { target: autoCancelled.doc.body });
+await flush();
+assert.equal(autoCancelled.root.dataset.state, 'paused');
+assert.equal(autoCancelled.requests.length, 0);
+assert.equal(autoCancelled.contexts[0].sources.length, 0);
+
+// An obsolete autoplay resume failure cannot overwrite later manual playback.
+const oldResume = mount({ autoplay: true, resumeStates: ['pending', 'running'] });
+oldResume.clock.tickOne(); await flush();
+oldResume.doc.emit('pointerdown', { target: oldResume.doc.body });
+await flush();
+assert.equal(oldResume.root.dataset.state, 'playing');
+oldResume.pendingResumes[0].reject(Error('obsolete resume failure')); await flush();
+assert.equal(oldResume.root.dataset.state, 'playing');
 
 // First user action loads, decodes and starts a true AudioBuffer loop.
 idle.node('[data-player-play]').emit('click');
