@@ -1,0 +1,48 @@
+---
+import type { MarkdownHeading } from 'astro';
+import '../styles/reading-tools.css';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+const showChapters = headings.length >= 2;
+---
+
+<div class="reading-tools" data-reading-tools data-chapter-count={headings.length}>
+  <div class="reading-progress" data-reading-progress hidden aria-hidden="true">
+    <span data-reading-progress-bar></span>
+  </div>
+  {showChapters && (
+    <>
+      <nav class="reading-chapters reading-chapters--desktop" aria-label="本页目录">
+        <p class="reading-chapters__label"><span>CONTENTS</span> 本页目录</p>
+        <ol class="reading-chapters__list">
+          {headings.map(({ depth, slug, text }) => (
+            <li class:list={["reading-chapters__item", { "reading-chapters__item--nested": depth === 3 }]}>
+              <a href={`#${slug}`}>{text}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+      <details class="reading-chapters reading-chapters--inline">
+        <summary>本页目录 <span aria-hidden="true">＋</span></summary>
+        <nav aria-label="本页目录">
+          <ol class="reading-chapters__list">
+            {headings.map(({ depth, slug, text }) => (
+              <li class:list={["reading-chapters__item", { "reading-chapters__item--nested": depth === 3 }]}>
+                <a href={`#${slug}`}>{text}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      </details>
+    </>
+  )}
+</div>
+
+<script>
+  import { installReadingToolsLifecycle } from '../scripts/reading-tools.mjs';
+  installReadingToolsLifecycle();
+</script>

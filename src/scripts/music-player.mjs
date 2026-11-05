@@ -93,16 +93,22 @@ export function initMusicPlayer(doc = document, win = window) {
     }
     if (playing) refreshMeters();
   };
-  const placePlayer = () => {
+  const placePlayer = event => {
+    const restoredCollapsed = typeof event?.detail?.collapsed === 'boolean' ? event.detail.collapsed : null;
+    if (root.dataset.playerDetached === 'true') {
+      if (doc.body && root.parentNode !== doc.body) doc.body.append(root);
+      root.dataset.placement = 'floating';
+      return;
+    }
     const dock = doc.querySelector('[data-player-dock]');
     if (dock) {
       if (root.parentNode !== dock) dock.append(root);
       root.dataset.placement = 'docked';
-      setCollapsed(preferredCollapsed, { save: false });
+      setCollapsed(restoredCollapsed ?? preferredCollapsed, { save: false });
     } else {
       if (doc.body && root.parentNode !== doc.body) doc.body.append(root);
       root.dataset.placement = 'floating';
-      setCollapsed(true, { save: false });
+      setCollapsed(restoredCollapsed ?? true, { save: false });
     }
   };
   const setStaticBars = () => {
@@ -383,6 +389,7 @@ export function initMusicPlayer(doc = document, win = window) {
   reduced.addEventListener?.('change', refreshMeters);
   doc.addEventListener('visibilitychange', refreshMeters);
   doc.addEventListener('astro:page-load', placePlayer);
+  root.addEventListener('player:place-default', placePlayer);
   win.addEventListener('pagehide', event => {
     disposed = !event.persisted;
     autoplayCancelled = true;

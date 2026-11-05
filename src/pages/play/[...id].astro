@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import TitleReveal from '../../components/TitleReveal.astro';
 import '../../styles/play.css';
 export async function getStaticPaths() {
   const toys = await getCollection('toys', ({ data }) => !data.draft);
@@ -12,7 +13,7 @@ const { Content } = await render(toy);
 <Base title={toy.data.title} description={toy.data.description}>
   <article class="toy-detail">
     <a class="back" href="/play/">← 返回交互实验</a>
-    <div class="toy-heading"><p class="eyebrow">PLAY / {toy.data.tags.join(' · ') || '小小创作'}</p><h1>{toy.data.title}</h1><p class="lede">{toy.data.description}</p><time datetime={toy.data.date.toISOString()}>{toy.data.date.toISOString().slice(0,10).replaceAll('-', '.')}</time></div>
+    <div class="toy-heading"><p class="eyebrow">PLAY / {toy.data.tags.join(' · ') || '小小创作'}</p><h1><TitleReveal>{toy.data.title}</TitleReveal></h1><p class="lede">{toy.data.description}</p><time datetime={toy.data.date.toISOString()}>{toy.data.date.toISOString().slice(0,10).replaceAll('-', '.')}</time></div>
     <div class="toy-stage"><iframe class="toy-frame" src={`${toy.data.demo}?embed=1`} title={`${toy.data.title} · 交互体验`} sandbox="allow-scripts" loading="eager" referrerpolicy="no-referrer"></iframe></div>
     <div class="toy-toolbar"><span>给自己留一点玩的时间。</span><div><a href={toy.data.demo} target="_blank" rel="noopener">独立窗口 ↗</a><a href={toy.data.demo} download={`${toy.id}.html`}>下载 HTML ↓</a></div></div>
     <div class="prose toy-notes"><Content /></div>

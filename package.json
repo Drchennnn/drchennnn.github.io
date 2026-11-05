@@ -12,6 +12,8 @@
     "test:oauth": "node scripts/test-oauth.mjs",
     "test:admin": "node scripts/test-admin.mjs",
     "test:music": "node scripts/test-music-player.mjs",
+    "test:drag": "node scripts/test-player-drag.mjs",
+    "test:reading": "node scripts/test-reading-tools.mjs",
     "test:cafe": "npm run test:p3r",
     "test:p3r": "node scripts/test-p3r.mjs && node scripts/test-p3r.mjs --compiled"
   },

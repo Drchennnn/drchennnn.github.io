@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import RevealText from '../components/RevealText.astro';
+import TitleReveal from '../components/TitleReveal.astro';
 import { getCollection } from 'astro:content';
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a,b) => b.data.date.valueOf()-a.data.date.valueOf() || a.id.localeCompare(b.id));
 const photos = await getCollection('photos', ({ data }) => !data.draft);
@@ -52,7 +53,7 @@ const date = (d: Date) => d.toISOString().slice(0,10).replaceAll('-', '.');
 <span aria-hidden="true"><RevealText text="LATEST"/><br/>
 <i><RevealText text="RECORDS." delay={100}/></i>
 </span>
-<b data-reveal style="--reveal-delay:180ms">最新记录</b>
+<b><TitleReveal delay={180}>最新记录</TitleReveal></b>
 </h2>
 <p class="reveal-lines"><span data-reveal>一些经历，一些发现。</span><span data-reveal style="--reveal-delay:160ms">把走过的路，写成下一页。</span></p>
 </div>
@@ -80,7 +81,7 @@ const date = (d: Date) => d.toISOString().slice(0,10).replaceAll('-', '.');
 <div class="chapter-top">
 <div>
 <p class="section-index" data-reveal>02 / CHOOSE YOUR CHAPTER</p>
-<h2 id="chapters-title" aria-label="ARCHIVE 选择你的下一段记录"><span class="chapter-title-en" aria-hidden="true"><RevealText text="ARCHIVE"/></span><span data-reveal style="--reveal-delay:180ms">选择你的下一段记录</span>
+<h2 id="chapters-title" aria-label="ARCHIVE 选择你的下一段记录"><span class="chapter-title-en" aria-hidden="true"><RevealText text="ARCHIVE"/></span><span><TitleReveal delay={180}>选择你的下一段记录</TitleReveal></span>
 </h2>
 </div>
 <div class="chapter-controls">
@@ -151,7 +152,7 @@ const date = (d: Date) => d.toISOString().slice(0,10).replaceAll('-', '.');
 <div class="about-story">
 <p class="section-index" data-reveal>03 / BEHIND THE PAGES</p>
 <img src="/images/link-avatar.webp" alt="Link 的头像" width="72" height="72" loading="lazy">
-<h2 id="about-title" data-reveal>你好，我是 Link。</h2>
+<h2 id="about-title"><TitleReveal>你好，我是 Link。</TitleReveal></h2>
 <p class="reveal-lines"><span data-reveal>一半日常，一半好奇。</span><span data-reveal style="--reveal-delay:130ms">学习、记录、动手尝试，在这里留下自己的轨迹。</span><span data-reveal style="--reveal-delay:260ms">不必每一次探索都有结论，下一页总有新的可能。</span></p>
 <a class="archive-link" href="/about/" data-reveal>关于我 <span aria-hidden="true">↗</span>
 </a>

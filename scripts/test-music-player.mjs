@@ -90,6 +90,13 @@ assert.equal(nonHome.root.dataset.placement, 'floating');
 assert.equal(nonHome.root.parentNode, nonHome.doc.body);
 assert.equal(nonHome.root.dataset.collapsed, 'true');
 assert.equal(nonHome.prefs['p3r-player-collapsed'], undefined, 'automatic floating collapse does not overwrite the home preference');
+nonHome.node('[data-player-show]').emit('click');
+assert.equal(nonHome.root.dataset.collapsed, 'false');
+nonHome.root.emit('player:place-default', { detail: { collapsed: false } });
+assert.equal(nonHome.root.dataset.placement, 'floating');
+assert.equal(nonHome.root.dataset.collapsed, 'false', 'cancel restoration may preserve an expanded article-page player');
+nonHome.root.emit('player:place-default');
+assert.equal(nonHome.root.dataset.collapsed, 'true', 'ordinary reset still uses the article-page default launcher');
 
 // Optional autoplay succeeds from the true beginning when browser policy allows it.
 const autoAllowed = mount({ autoplay: true });
@@ -220,6 +227,21 @@ assert.equal(idle.root.parentNode, idle.doc.dock);
 assert.equal(idle.root.dataset.collapsed, 'false', 'home restores the manually saved visible state');
 assert.equal(context.sources[0], persistentSource);
 assert.equal(idle.requests.length, 1);
+
+// Manual desktop placement survives route handoff without rebuilding audio.
+idle.root.dataset.playerDetached = 'true';
+idle.doc.body.append(idle.root);
+idle.doc.emit('astro:page-load');
+assert.equal(idle.root.dataset.placement, 'floating');
+assert.equal(idle.root.parentNode, idle.doc.body);
+assert.equal(idle.root.dataset.collapsed, 'false');
+assert.equal(context.sources[0], persistentSource);
+assert.equal(idle.requests.length, 1);
+delete idle.root.dataset.playerDetached;
+idle.root.emit('player:place-default');
+assert.equal(idle.root.dataset.placement, 'docked');
+assert.equal(idle.root.parentNode, idle.doc.dock);
+assert.equal(context.sources[0], persistentSource);
 
 // Pause preserves time; resume reuses the decoded buffer without another request.
 context.currentTime = 17.25;

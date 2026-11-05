@@ -1,5 +1,6 @@
 ---
 import '../styles/music-player.css';
+import '../styles/player-drag.css';
 ---
 <aside class="music-player" data-music-player data-audio-src="/music/color-your-night-loop.mp3" data-loop-start="6" data-autoplay="true" data-state="idle" data-collapsed="false" aria-label="背景音乐随身听" transition:persist="night-player" transition:name="night-player" transition:animate="none">
   <button class="player-launcher" data-player-show type="button" aria-label="显示音乐播放器" aria-controls="night-player-panel" aria-expanded="false"><span aria-hidden="true">♫</span> 音乐</button>
@@ -15,6 +16,7 @@ import '../styles/music-player.css';
       <button type="button" data-player-restart aria-label="从头播放音乐" title="从头播放"><span aria-hidden="true">↶</span></button>
     </div>
     <div class="player-shell" aria-hidden="true"><span class="player-cap"></span><span class="player-loop-ring"></span></div>
+    <button class="player-drag-handle" data-player-drag-handle type="button" aria-label="拖动音乐播放器" title="拖动播放器；方向键微调，Home 归位"></button>
     <button class="player-main" type="button" data-player-play aria-label="播放 Color Your Night" aria-pressed="false" title="播放 / 暂停"><span class="player-play-symbol" aria-hidden="true"></span></button>
     <div class="player-lcd">
       <span class="player-song" data-player-title>COLOR YOUR NIGHT</span>
@@ -24,6 +26,7 @@ import '../styles/music-player.css';
     </div>
   </div>
   <div class="player-bottom">
+    <button class="player-reset-position" data-player-reset-position type="button">归位</button>
     <a href="https://github.com/sojjeoi/p3r-rainmeter-player" target="_blank" rel="noreferrer" class="player-credit" title="外观灵感：P3R Rainmeter Player">P3R PLAYER ↗</a>
   </div>
   <p class="player-status" data-player-status role="status" aria-live="polite">点击播放音乐</p>
@@ -32,5 +35,7 @@ import '../styles/music-player.css';
 </aside>
 <script>
   import { initMusicPlayer } from '../scripts/music-player.mjs';
+  import { initPlayerDrag } from '../scripts/player-drag.mjs';
   initMusicPlayer();
+  initPlayerDrag();
 </script>

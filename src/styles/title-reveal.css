@@ -1,0 +1,95 @@
+/* One-shot heading accents. Text is fully visible until the reveal controller is ready. */
+.title-reveal {
+  display: inline-block;
+  position: relative;
+  max-width: 100%;
+  padding-bottom: 10px;
+  overflow: hidden;
+  vertical-align: bottom;
+  isolation: isolate;
+}
+.title-reveal .title-reveal-text {
+  display: block;
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+}
+.chapter-top h2 .title-reveal {
+  display: inline-block;
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+}
+.chapter-section .title-reveal { --title-accent: var(--cyan, #76ecff); }
+.title-reveal::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0 -1em 5px;
+  background: var(--title-accent, var(--accent, #005ad3));
+  transform: translateX(-125%) skewX(-12deg);
+  pointer-events: none;
+  opacity: 0;
+}
+.title-reveal .title-reveal-rule {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(110px, 55%);
+  height: 2px;
+  margin: 0;
+  background: var(--title-accent, var(--accent, #005ad3));
+  transform-origin: left;
+}
+html[data-reveal-ready='true'] [data-reveal='title'] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+html[data-reveal-ready='true'] .title-reveal:not(.is-visible) .title-reveal-text {
+  clip-path: inset(0 100% 0 0);
+}
+html[data-reveal-ready='true'] .title-reveal:not(.is-visible) .title-reveal-rule { transform: scaleX(0); }
+html[data-reveal-ready='true'] .title-reveal.is-visible .title-reveal-text {
+  clip-path: inset(0);
+  transition: clip-path .55s cubic-bezier(.2,.8,.2,1);
+  transition-delay: calc(var(--title-delay, 0ms) + 100ms);
+}
+html[data-reveal-ready='true'] .title-reveal.is-visible::after {
+  animation: title-blue-sweep .6s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: var(--title-delay, 0ms);
+}
+html[data-reveal-ready='true'] .title-reveal.is-visible .title-reveal-rule {
+  transform: scaleX(1);
+  transition: transform .4s cubic-bezier(.2,.8,.2,1);
+  transition-delay: calc(var(--title-delay, 0ms) + 300ms);
+}
+@keyframes title-blue-sweep {
+  0% { opacity: 0; transform: translateX(-125%) skewX(-12deg); }
+  15% { opacity: .92; }
+  100% { opacity: 0; transform: translateX(125%) skewX(-12deg); }
+}
+.reveal-word { position: relative; }
+.reveal-word::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: .02em;
+  width: 35%;
+  height: 2px;
+  background: currentColor;
+  opacity: .7;
+  transform-origin: left;
+}
+html[data-reveal-ready='true'] .reveal-word:not(.is-visible)::after { transform: scaleX(0); }
+html[data-reveal-ready='true'] .reveal-word.is-visible::after { transform: scaleX(1); transition: transform .45s .3s; }
+.about-page .title-reveal-text { padding-bottom: 12px; }
+html[data-motion='off'] .title-reveal .title-reveal-text { clip-path: none !important; transition: none !important; }
+html[data-motion='off'] .title-reveal::after { display: none; }
+html[data-motion='off'] .title-reveal-rule,
+html[data-motion='off'] .reveal-word::after { transform: none !important; transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .title-reveal .title-reveal-text { clip-path: none !important; transition: none !important; }
+  .title-reveal::after { display: none; }
+  .title-reveal-rule, .reveal-word::after { transform: none !important; transition: none !important; }
+}

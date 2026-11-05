@@ -1,0 +1,6 @@
+---
+import '../styles/title-reveal.css';
+interface Props { delay?: number; }
+const { delay = 0 } = Astro.props;
+---
+<span class="title-reveal" data-reveal="title" style={`--title-delay:${delay}ms`}><span class="title-reveal-text"><slot /></span><span class="title-reveal-rule" aria-hidden="true"></span></span>
