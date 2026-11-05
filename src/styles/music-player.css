@@ -28,8 +28,10 @@
 .player-rim button:first-child { font-size: 11px; letter-spacing: .04em; }
 .player-rim button:hover { color: #005ad3; background: linear-gradient(#edfbff, #b8e1eb 45%, #89b9ca 75%, #c4e3ec); }
 .player-lcd { z-index: 3; position: absolute; top: 47px; left: 71px; width: calc(100% - 124px); height: 46px; padding: 5px 8px; color: var(--lcd-ink); background: repeating-linear-gradient(0deg, transparent, transparent 2px, #1d434308 2px, #1d434308 3px), linear-gradient(#88c5c8, var(--lcd) 38%, #abdedc); border: 1px solid #41686c; border-radius: 2px; box-shadow: 1px 2px 2px #22383f7a inset; font-family: 'Courier New', monospace; font-weight: bold; }
-.player-song { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 16px; font-size: clamp(10px, .85vw, 13px); line-height: 16px; letter-spacing: .025em; }
-.player-loop-label { position: absolute; top: 4px; right: 7px; font-size: 17px; line-height: 16px; }
+.player-song { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 28px; font-size: clamp(10px, .85vw, 13px); line-height: 16px; letter-spacing: .025em; }
+.player-track-switch { position: absolute; z-index: 2; top: 0; right: 0; display: grid; place-items: center; width: 26px; height: 24px; padding: 0; border: 0; color: var(--lcd-ink); background: transparent; font: bold 16px/1 'Courier New', monospace; }
+.player-track-switch:hover { color: #005ad3; background: #d8ffff66; }
+.player-track-switch:focus-visible { outline-width: 2px; outline-offset: 0; }
 .player-readout { display: flex; align-items: center; gap: 6px; font-size: 14px; line-height: 17px; }
 .player-lcd-symbol { font-size: 8px; opacity: .4; }
 [data-state='playing'] .player-lcd-symbol { opacity: 1; }

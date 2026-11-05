@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { initMusicPlayer } from '../src/scripts/music-player.mjs';
+import { MUSIC_TRACKS } from '../src/scripts/music-tracks.mjs';
 
 const flush = async () => {
   for (let i = 0; i < 12; i++) await Promise.resolve();
@@ -25,15 +26,15 @@ class Clock {
   tickOne() { const entry = this.timers.entries().next().value; if (entry) { this.timers.delete(entry[0]); entry[1].fn(); } }
 }
 
-function mount({ mobile = false, reduce = false, saved = {}, noAudioContext = false, decodeRejects = 0, resumeState = 'running', resumeStates, fetchPending = false, loopStart = '6', docked = true, autoplay = false } = {}) {
-  const root = new Element(); root.dataset.audioSrc = '/music/color-your-night-loop.mp3'; root.dataset.loopStart = loopStart; if (autoplay) root.dataset.autoplay = 'true';
-  const selectors = ['[data-player-play]','[data-player-restart]','[data-player-info]','[data-player-volume-down]','[data-player-volume-up]','[data-player-volume]','[data-player-collapse]','[data-player-show]','[data-player-title]','[data-player-elapsed]','[data-player-status]'];
+function mount({ mobile = false, reduce = false, saved = {}, noAudioContext = false, decodeRejects = 0, decodePending = false, resumeState = 'running', resumeStates, fetchPending = false, docked = true, autoplay = false } = {}) {
+  const root = new Element(); if (autoplay) root.dataset.autoplay = 'true';
+  const selectors = ['[data-player-play]','[data-player-restart]','[data-player-info]','[data-player-track]','[data-player-volume-down]','[data-player-volume-up]','[data-player-volume]','[data-player-collapse]','[data-player-show]','[data-player-title]','[data-player-mode]','[data-player-elapsed]','[data-player-status]'];
   for (const selector of selectors) root.children.set(selector, new Element());
   root.bars = Array.from({ length: 5 }, () => new Element());
   const doc = new Element(); doc.hidden = false; doc.documentElement = new Element(); doc.documentElement.dataset.motion = 'on';
   doc.body = new Element(); doc.dock = docked ? new Element() : null; doc.body.append(root);
   doc.querySelector = selector => selector === '[data-music-player]' ? root : selector === '[data-player-dock]' ? doc.dock : null;
-  const clock = new Clock(), prefs = { ...saved }, requests = [], contexts = [], pendingFetches = [], pendingResumes = [];
+  const clock = new Clock(), prefs = { ...saved }, requests = [], contexts = [], pendingFetches = [], pendingDecodes = [], pendingResumes = [];
   const resumeQueue = resumeStates ? [...resumeStates] : null;
   const reduced = new Element(); reduced.matches = reduce;
   class AudioContext {
@@ -53,7 +54,11 @@ function mount({ mobile = false, reduce = false, saved = {}, noAudioContext = fa
       const source = { connect() {}, disconnect() {}, stop() { this.stopped = true; }, start(when, offset) { this.started = { when, offset }; } };
       this.sources.push(source); return source;
     }
-    decodeAudioData() { if (decodeRejects-- > 0) return Promise.reject(Error('decode failed')); return Promise.resolve({ duration: 208.1064399, sampleRate: 44100 }); }
+    decodeAudioData() {
+      if (decodeRejects-- > 0) return Promise.reject(Error('decode failed'));
+      if (decodePending) return new Promise((resolve, reject) => pendingDecodes.push({ resolve: () => resolve({ duration: 208.1064399, sampleRate: 44100 }), reject }));
+      return Promise.resolve({ duration: 208.1064399, sampleRate: 44100 });
+    }
   }
   const win = new Element();
   win.matchMedia = query => query.includes('max-width') ? { matches: mobile } : reduced;
@@ -66,7 +71,7 @@ function mount({ mobile = false, reduce = false, saved = {}, noAudioContext = fa
     return Promise.resolve({ ok: true, arrayBuffer: async () => new ArrayBuffer(8) });
   };
   initMusicPlayer(doc, win);
-  return { root, doc, win, clock, prefs, requests, contexts, pendingFetches, pendingResumes, node: selector => root.querySelector(selector), reduced };
+  return { root, doc, win, clock, prefs, requests, contexts, pendingFetches, pendingDecodes, pendingResumes, node: selector => root.querySelector(selector), reduced };
 }
 
 // No autoplay, no eager request, and responsive collapse has a stable default.
@@ -77,6 +82,9 @@ assert.equal(idle.root.parentNode, idle.doc.dock);
 assert.equal(idle.root.dataset.collapsed, 'true');
 assert.equal(idle.requests.length, 0);
 assert.equal(idle.contexts.length, 0);
+assert.equal(idle.root.dataset.track, 'original');
+assert.equal(idle.node('[data-player-mode]').textContent, 'ORIG LOOP');
+assert.match(idle.node('[data-player-track]').getAttribute('aria-label'), /伴奏版/);
 assert.equal(idle.node('[data-player-show]').getAttribute('aria-expanded'), 'false');
 idle.node('[data-player-show]').emit('click');
 assert.equal(idle.root.dataset.collapsed, 'false');
@@ -84,6 +92,27 @@ assert.equal(idle.node('[data-player-show]').getAttribute('aria-expanded'), 'tru
 assert.equal(idle.prefs['p3r-player-collapsed'], 'false');
 idle.node('[data-player-info]').emit('click');
 assert.match(idle.node('[data-player-title]').textContent, /LOTUS JUICE/);
+
+// Invalid saved choices fail closed to the original track.
+const invalidChoice = mount({ saved: { 'p3r-player-track': 'missing-track' } });
+assert.equal(invalidChoice.root.dataset.track, 'original');
+assert.equal(invalidChoice.node('[data-player-title]').textContent, 'COLOR YOUR NIGHT');
+
+// Selecting a track while paused changes metadata without fetching or starting audio.
+const pausedChoice = mount();
+pausedChoice.node('[data-player-track]').emit('click');
+assert.equal(pausedChoice.root.dataset.track, 'instrumental');
+assert.equal(pausedChoice.prefs['p3r-player-track'], 'instrumental');
+assert.equal(pausedChoice.node('[data-player-mode]').textContent, 'INST LOOP');
+assert.match(pausedChoice.node('[data-player-title]').textContent, /INSTRUMENTAL/);
+assert.equal(pausedChoice.root.dataset.state, 'paused');
+assert.equal(pausedChoice.requests.length, 0);
+pausedChoice.node('[data-player-info]').emit('click');
+assert.equal(pausedChoice.node('[data-player-title]').textContent, 'REMI');
+assert.match(pausedChoice.node('[data-player-track]').getAttribute('aria-label'), /原唱版/);
+const restoredChoice = mount({ saved: pausedChoice.prefs });
+assert.equal(restoredChoice.root.dataset.track, 'instrumental');
+assert.equal(restoredChoice.requests.length, 0);
 
 const nonHome = mount({ docked: false });
 assert.equal(nonHome.root.dataset.placement, 'floating');
@@ -159,6 +188,18 @@ await flush();
 assert.equal(autoButton.root.dataset.state, 'playing');
 assert.equal(autoButton.requests.length, 1);
 
+// The track control owns the blocked-autoplay gesture and never starts the old selection first.
+const autoTrackButton = mount({ autoplay: true, resumeStates: ['reject', 'running'] });
+await flush();
+const autoTrackControl = autoTrackButton.node('[data-player-track]');
+autoTrackButton.doc.emit('pointerdown', { target: autoTrackControl });
+autoTrackControl.emit('click');
+autoTrackButton.doc.emit('click', { target: autoTrackControl });
+await flush();
+assert.equal(autoTrackButton.root.dataset.track, 'instrumental');
+assert.equal(autoTrackButton.root.dataset.state, 'paused');
+assert.equal(autoTrackButton.requests.length, 0);
+
 // Explicit cancellation defeats timeout, late resume and later fallback gestures.
 const autoCancelled = mount({ autoplay: true, resumeStates: ['pending'] });
 autoCancelled.node('[data-player-play]').emit('click');
@@ -193,6 +234,42 @@ assert.equal(firstSource.loopStart, 6);
 assert.equal(firstSource.loopEnd, 208.1064399);
 assert.deepEqual(firstSource.started, { when: 0, offset: 0 });
 
+// Switching while playing starts the selected track at its true opening using the same context.
+idle.node('[data-player-track]').emit('click');
+await flush();
+assert.equal(idle.contexts.length, 1);
+assert.deepEqual(idle.requests, ['/music/color-your-night-loop.mp3', '/music/color-your-night-instrumental-loop.mp3']);
+assert.equal(idle.root.dataset.track, 'instrumental');
+assert.equal(idle.contexts[0].sources.at(-1).started.offset, 0);
+assert.equal(idle.contexts[0].sources.at(-1).loopStart, MUSIC_TRACKS[1].loopStart);
+assert.match(idle.node('[data-player-status]').textContent, /INSTRUMENTAL/);
+idle.node('[data-player-track]').emit('click');
+await flush();
+assert.equal(idle.root.dataset.track, 'original');
+assert.equal(idle.contexts[0].sources.at(-1).started.offset, 0);
+assert.equal(idle.contexts[0].sources.at(-1).loopStart, MUSIC_TRACKS[0].loopStart);
+assert.equal(idle.contexts.length, 1, 'track changes reuse one AudioContext');
+
+// Astro route placement and manual detachment preserve the selected track and source.
+const trackNav = mount();
+trackNav.node('[data-player-track]').emit('click');
+trackNav.node('[data-player-play]').emit('click');
+await flush();
+const trackNavSource = trackNav.contexts[0].sources.at(-1);
+trackNav.doc.dock = null;
+trackNav.doc.emit('astro:page-load');
+assert.equal(trackNav.root.dataset.track, 'instrumental');
+assert.equal(trackNav.contexts[0].sources.at(-1), trackNavSource);
+assert.equal(trackNav.contexts[0].sources.length, 1, 'navigation must not create another audio source');
+assert.equal(trackNav.requests.length, 1);
+trackNav.root.dataset.playerDetached = 'true';
+trackNav.doc.body.append(trackNav.root);
+trackNav.doc.emit('astro:page-load');
+assert.equal(trackNav.root.dataset.track, 'instrumental');
+assert.equal(trackNav.contexts[0].sources.at(-1), trackNavSource);
+assert.equal(trackNav.contexts[0].sources.length, 1, 'navigation must not create another audio source');
+assert.equal(trackNav.requests.length, 1);
+
 // Hiding the complete device and showing it again never changes playback.
 idle.node('[data-player-collapse]').emit('click');
 assert.equal(idle.root.dataset.collapsed, 'true');
@@ -208,25 +285,28 @@ idle.node('[data-player-show]').emit('click');
 assert.equal(idle.root.dataset.collapsed, 'false');
 assert.equal(idle.node('[data-player-play]').focused, true);
 assert.equal(idle.root.dataset.state, 'playing');
-assert.equal(idle.requests.length, 1);
+assert.equal(idle.requests.length, 3);
 
 // The same persistent player docks on the home page and becomes a launcher elsewhere.
-const persistentSource = context.sources[0];
+const persistentSource = context.sources.at(-1);
+const sourcesBeforeNavigation = context.sources.length;
 idle.doc.dock = null;
 idle.doc.emit('astro:page-load');
 assert.equal(idle.root.dataset.placement, 'floating');
 assert.equal(idle.root.parentNode, idle.doc.body);
 assert.equal(idle.root.dataset.collapsed, 'true');
-assert.equal(context.sources[0], persistentSource);
+assert.equal(context.sources.at(-1), persistentSource);
+assert.equal(context.sources.length, sourcesBeforeNavigation, 'placement must keep the active source');
 assert.equal(idle.root.dataset.state, 'playing');
-assert.equal(idle.requests.length, 1);
+assert.equal(idle.requests.length, 3);
 idle.doc.dock = new Element();
 idle.doc.emit('astro:page-load');
 assert.equal(idle.root.dataset.placement, 'docked');
 assert.equal(idle.root.parentNode, idle.doc.dock);
 assert.equal(idle.root.dataset.collapsed, 'false', 'home restores the manually saved visible state');
-assert.equal(context.sources[0], persistentSource);
-assert.equal(idle.requests.length, 1);
+assert.equal(context.sources.at(-1), persistentSource);
+assert.equal(context.sources.length, sourcesBeforeNavigation, 'placement must keep the active source');
+assert.equal(idle.requests.length, 3);
 
 // Manual desktop placement survives route handoff without rebuilding audio.
 idle.root.dataset.playerDetached = 'true';
@@ -235,13 +315,15 @@ idle.doc.emit('astro:page-load');
 assert.equal(idle.root.dataset.placement, 'floating');
 assert.equal(idle.root.parentNode, idle.doc.body);
 assert.equal(idle.root.dataset.collapsed, 'false');
-assert.equal(context.sources[0], persistentSource);
-assert.equal(idle.requests.length, 1);
+assert.equal(context.sources.at(-1), persistentSource);
+assert.equal(context.sources.length, sourcesBeforeNavigation, 'placement must keep the active source');
+assert.equal(idle.requests.length, 3);
 delete idle.root.dataset.playerDetached;
 idle.root.emit('player:place-default');
 assert.equal(idle.root.dataset.placement, 'docked');
 assert.equal(idle.root.parentNode, idle.doc.dock);
-assert.equal(context.sources[0], persistentSource);
+assert.equal(context.sources.at(-1), persistentSource);
+assert.equal(context.sources.length, sourcesBeforeNavigation, 'placement must keep the active source');
 
 // Pause preserves time; resume reuses the decoded buffer without another request.
 context.currentTime = 17.25;
@@ -249,8 +331,8 @@ idle.node('[data-player-play]').emit('click');
 assert.equal(idle.root.dataset.state, 'paused');
 idle.node('[data-player-play]').emit('click');
 await flush();
-assert.equal(idle.requests.length, 1);
-assert.equal(context.sources[1].started.offset, 17.25);
+assert.equal(idle.requests.length, 3);
+assert.equal(context.sources.at(-1).started.offset, 17.25);
 
 // Volume is clamped, persisted, and restart replaces the source at offset zero.
 for (let i = 0; i < 20; i++) idle.node('[data-player-volume-up]').emit('click');
@@ -276,14 +358,6 @@ await flush();
 assert(Math.abs(wrappedContext.sources.at(-1).started.offset - 16) < 1e-8);
 assert.equal(wrapped.requests.length, 1);
 
-// Missing and invalid loop metadata remain bounded and safe.
-const legacy = mount({ loopStart: '' });
-legacy.node('[data-player-play]').emit('click'); await flush();
-assert.equal(legacy.contexts[0].sources[0].loopStart, 0);
-const invalid = mount({ loopStart: '9999' });
-invalid.node('[data-player-play]').emit('click'); await flush();
-assert(invalid.contexts[0].sources[0].loopStart < invalid.contexts[0].sources[0].loopEnd);
-
 // Loading can be cancelled; its eventual completion must not begin playback.
 const pending = mount({ fetchPending: true });
 pending.node('[data-player-play]').emit('click');
@@ -307,6 +381,49 @@ await flush();
 assert.equal(rapid.contexts[0].sources.length, 1);
 assert.equal(rapid.root.dataset.state, 'playing');
 
+// Obsolete A/B/A loads may finish out of order but only the final selection can play.
+const trackRace = mount({ fetchPending: true });
+trackRace.node('[data-player-play]').emit('click');
+await flush();
+trackRace.node('[data-player-track]').emit('click');
+await flush();
+trackRace.node('[data-player-track]').emit('click');
+await flush();
+assert.deepEqual(trackRace.requests, [
+  '/music/color-your-night-loop.mp3',
+  '/music/color-your-night-instrumental-loop.mp3',
+  '/music/color-your-night-loop.mp3',
+]);
+trackRace.pendingFetches[1].resolve({ ok: true, arrayBuffer: async () => new ArrayBuffer(8) });
+trackRace.pendingFetches[0].resolve({ ok: true, arrayBuffer: async () => new ArrayBuffer(8) });
+await flush();
+assert.equal(trackRace.contexts[0].sources.length, 0);
+trackRace.pendingFetches[2].resolve({ ok: true, arrayBuffer: async () => new ArrayBuffer(8) });
+await flush();
+assert.equal(trackRace.root.dataset.track, 'original');
+assert.equal(trackRace.root.dataset.state, 'playing');
+assert.equal(trackRace.contexts[0].sources.length, 1);
+assert.equal(trackRace.contexts[0].sources[0].loopStart, MUSIC_TRACKS[0].loopStart);
+
+// Decodes completing after a newer selection are discarded just like stale requests.
+const decodeRace = mount({ decodePending: true });
+decodeRace.node('[data-player-play]').emit('click');
+await flush();
+decodeRace.node('[data-player-track]').emit('click');
+await flush();
+decodeRace.node('[data-player-track]').emit('click');
+await flush();
+assert.equal(decodeRace.pendingDecodes.length, 3);
+decodeRace.pendingDecodes[1].resolve();
+decodeRace.pendingDecodes[0].resolve();
+await flush();
+assert.equal(decodeRace.contexts[0].sources.length, 0);
+decodeRace.pendingDecodes[2].resolve();
+await flush();
+assert.equal(decodeRace.root.dataset.track, 'original');
+assert.equal(decodeRace.contexts[0].sources.length, 1);
+assert.equal(decodeRace.root.dataset.state, 'playing');
+
 // A failed decode is retryable and does not reuse the rejected promise.
 const retry = mount({ decodeRejects: 1 });
 retry.node('[data-player-play]').emit('click');
@@ -316,6 +433,19 @@ retry.node('[data-player-play]').emit('click');
 await flush();
 assert.equal(retry.root.dataset.state, 'playing');
 assert.equal(retry.requests.length, 2);
+
+// A failed instrumental load retries the same selection without falling back to original.
+const instrumentalRetry = mount({ decodeRejects: 1 });
+instrumentalRetry.node('[data-player-track]').emit('click');
+instrumentalRetry.node('[data-player-play]').emit('click');
+await flush();
+assert.equal(instrumentalRetry.root.dataset.track, 'instrumental');
+assert.equal(instrumentalRetry.root.dataset.state, 'error');
+instrumentalRetry.node('[data-player-play]').emit('click');
+await flush();
+assert.equal(instrumentalRetry.root.dataset.track, 'instrumental');
+assert.equal(instrumentalRetry.root.dataset.state, 'playing');
+assert.deepEqual(instrumentalRetry.requests, [MUSIC_TRACKS[1].src, MUSIC_TRACKS[1].src]);
 
 // Browser restrictions are clear and a later user click can retry resume.
 const blocked = mount({ resumeState: 'suspended' });
@@ -342,7 +472,7 @@ idle.node('[data-player-play]').emit('click');
 await flush();
 assert.equal(context.state, 'running');
 assert.equal(idle.root.dataset.state, 'playing');
-assert.equal(idle.requests.length, 1, 'resuming an interrupted decoded track does not fetch again');
+assert.equal(idle.requests.length, 3, 'resuming an interrupted decoded track does not fetch again');
 
 // Back/forward cache exits pause but keep the controller recoverable.
 idle.win.emit('pagehide', { persisted: true });
@@ -384,4 +514,4 @@ await flush();
 assert.equal(unsupported.root.dataset.state, 'error');
 assert.equal(unsupported.requests.length, 0);
 
-console.log('PASS: P3R music player is user-activated, cancellable, resumable, retryable and motion-aware.');
+console.log('PASS: P3R music player switches two lazy-loaded loop tracks safely and remains cancellable, resumable and motion-aware.');

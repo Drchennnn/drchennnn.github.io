@@ -1,0 +1,58 @@
+{
+  "title": "Color Your Night - Full Instrumental Cover",
+  "artist": "REMI",
+  "copyright": "Composition: ATLUS / SEGA and the respective rights holders; instrumental cover: REMI",
+  "source": "Owner-supplied local MP3; edited locally for a phase-aligned loop.",
+  "source_filename": "PERSONA 3 RELOAD - COLOR YOUR NIGHT (FULL INSTRUMENTAL COVER) - REMI.mp3",
+  "source_sha256": "aaf75e2a6b54274f5ddb2190088f3c2c41420215197e596d757c9c51d5235e40",
+  "source_duration_seconds": 228.75428571428571,
+  "file": "color-your-night-instrumental-loop.mp3",
+  "file_sha256": "19433bc66202715f4b8aabb4e768c1d903d4e0b2ed8f38f8a3f0a4d49be0484a",
+  "edit": {
+    "sample_rate": 44100,
+    "channels": 2,
+    "decoded_samples_per_channel": 9177442,
+    "duration_seconds": 208.10526077097506,
+    "loop_period_samples": 8912842,
+    "loop_period_seconds": 202.10526077097506,
+    "alignment_window_source_seconds": [
+      4,
+      8
+    ],
+    "alignment_correlation": 0.9279930724874818,
+    "tail": "1-second complementary cosine crossfade into the sample-aligned 5..6 second segment of the same cover",
+    "tail_alignment_correlation": 0.9310280058218359,
+    "playback": {
+      "first_start_seconds": 0,
+      "loop_start_seconds": 6,
+      "loop_end_seconds": 208.10526077097506,
+      "loop_duration_seconds": 202.10526077097506,
+      "restart": "Returns to the cover's original 0-second opening"
+    }
+  },
+  "verification": {
+    "source_unchanged": true,
+    "decode_ok": true,
+    "peak_dbfs": -0.19625365734100342,
+    "encoded_seam_sample_jump": [
+      -0.0034229718148708344,
+      -0.002794591709971428
+    ],
+    "natural_opening_sample_jump": [
+      -0.0016716718673706055,
+      -0.0048105064779520035
+    ],
+    "seam_20ms_rms_change_db": -0.5890440344810486,
+    "subjective_listening_performed": false,
+    "browser_offline_render": {
+      "channels": 2,
+      "duration": 208.10525,
+      "length": 9989052,
+      "passed": true,
+      "postWrapRMSE": 0,
+      "sampleRate": 48000,
+      "seamJump": 0.006318792700767517
+    }
+  },
+  "rights": "Owner-requested blog integration is not proof of redistribution licensing from rights holders."
+}

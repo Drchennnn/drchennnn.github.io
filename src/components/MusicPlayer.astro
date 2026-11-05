@@ -2,7 +2,7 @@
 import '../styles/music-player.css';
 import '../styles/player-drag.css';
 ---
-<aside class="music-player" data-music-player data-audio-src="/music/color-your-night-loop.mp3" data-loop-start="6" data-autoplay="true" data-state="idle" data-collapsed="false" aria-label="背景音乐随身听" transition:persist="night-player" transition:name="night-player" transition:animate="none">
+<aside class="music-player" data-music-player data-autoplay="true" data-state="idle" data-collapsed="false" aria-label="背景音乐随身听" transition:persist="night-player" transition:name="night-player" transition:animate="none">
   <button class="player-launcher" data-player-show type="button" aria-label="显示音乐播放器" aria-controls="night-player-panel" aria-expanded="false"><span aria-hidden="true">♫</span> 音乐</button>
   <div data-player-panel id="night-player-panel">
   <div class="player-heading">
@@ -20,8 +20,8 @@ import '../styles/player-drag.css';
     <button class="player-main" type="button" data-player-play aria-label="播放 Color Your Night" aria-pressed="false" title="播放 / 暂停"><span class="player-play-symbol" aria-hidden="true"></span></button>
     <div class="player-lcd">
       <span class="player-song" data-player-title>COLOR YOUR NIGHT</span>
-      <span class="player-loop-label" aria-label="循环播放">↻</span>
-      <div class="player-readout"><span class="player-lcd-symbol" aria-hidden="true">▶</span><span data-player-elapsed>00:00</span><span class="player-mode">LOOP</span></div>
+      <button class="player-track-switch" data-player-track type="button" aria-label="切换伴奏版" title="切换伴奏版"><span aria-hidden="true">⇄</span></button>
+      <div class="player-readout"><span class="player-lcd-symbol" aria-hidden="true">▶</span><span data-player-elapsed>00:00</span><span class="player-mode" data-player-mode>ORIG LOOP</span></div>
       <div class="player-spectrum" aria-hidden="true">{Array.from({ length: 5 }, () => <i data-player-bar></i>)}</div>
     </div>
   </div>

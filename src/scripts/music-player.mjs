@@ -1,5 +1,8 @@
+import { findMusicTrack, nextMusicTrack } from './music-tracks.mjs';
+
 const VOLUME_KEY = 'p3r-player-volume';
 const COLLAPSED_KEY = 'p3r-player-collapsed';
+const TRACK_KEY = 'p3r-player-track';
 const DEFAULT_VOLUME = .35;
 
 const clamp = (value, minimum, maximum) => Math.min(maximum, Math.max(minimum, value));
@@ -18,12 +21,14 @@ export function initMusicPlayer(doc = document, win = window) {
   const playButton = query('[data-player-play]');
   const restartButton = query('[data-player-restart]');
   const infoButton = query('[data-player-info]');
+  const trackButton = query('[data-player-track]');
   const volumeDown = query('[data-player-volume-down]');
   const volumeUp = query('[data-player-volume-up]');
   const volumeInput = query('[data-player-volume]');
   const collapseButton = query('[data-player-collapse]');
   const showButton = query('[data-player-show]');
   const title = query('[data-player-title]');
+  const mode = query('[data-player-mode]');
   const elapsed = query('[data-player-elapsed]');
   const status = query('[data-player-status]');
   const bars = [...root.querySelectorAll('[data-player-bar]')];
@@ -39,6 +44,7 @@ export function initMusicPlayer(doc = document, win = window) {
   let volume = Number.isFinite(storedVolume) ? clamp(storedVolume, 0, 1) : Number.isFinite(markupVolume) ? clamp(markupVolume, 0, 1) : DEFAULT_VOLUME;
   const storedCollapsed = get(COLLAPSED_KEY);
   let preferredCollapsed = storedCollapsed == null ? Boolean(mobile.matches) : storedCollapsed === 'true';
+  let track = findMusicTrack(get(TRACK_KEY));
   root.dataset.state = 'idle';
   if (volumeInput) volumeInput.value = String(volume);
   if (elapsed) elapsed.textContent = '00:00';
@@ -48,7 +54,9 @@ export function initMusicPlayer(doc = document, win = window) {
   let analyser = null;
   let frequencyData = null;
   let buffer = null;
+  let bufferTrackId = null;
   let loadPromise = null;
+  let loadVersion = 0;
   let source = null;
   let playing = false;
   let desiredPlaying = false;
@@ -68,14 +76,19 @@ export function initMusicPlayer(doc = document, win = window) {
 
   const setStatus = message => { if (status) status.textContent = message; };
   const setTitle = () => {
-    if (title) title.textContent = showArtist ? 'LOTUS JUICE / AZUMI TAKAHASHI' : 'COLOR YOUR NIGHT';
+    if (title) title.textContent = showArtist ? track.artist : track.title;
     infoButton?.setAttribute('aria-pressed', String(showArtist));
+    if (mode) mode.textContent = track.mode;
+    root.dataset.track = track.id;
+    const next = nextMusicTrack(track.id);
+    trackButton?.setAttribute('aria-label', `切换到${next.id === 'instrumental' ? '伴奏版' : '原唱版'}`);
+    trackButton?.setAttribute('title', `切换到${next.id === 'instrumental' ? '伴奏版' : '原唱版'}`);
   };
   const setPlayLabel = () => {
     if (!playButton) return;
     const active = playing || desiredPlaying;
     playButton.setAttribute('aria-pressed', String(active));
-    playButton.setAttribute('aria-label', active ? '暂停 Color Your Night' : '播放 Color Your Night');
+    playButton.setAttribute('aria-label', `${active ? '暂停' : '播放'} ${track.title}`);
   };
   const syncCollapseButton = () => {
     const collapsed = root.dataset.collapsed === 'true';
@@ -209,7 +222,8 @@ export function initMusicPlayer(doc = document, win = window) {
   };
 
   const ensureAudio = async ({ command, resumeTimeout = 0 } = {}) => {
-    if (buffer) {
+    const requestedTrack = track;
+    if (buffer && bufferTrackId === requestedTrack.id) {
       await resumeContext(resumeTimeout);
       return buffer;
     }
@@ -240,8 +254,9 @@ export function initMusicPlayer(doc = document, win = window) {
     root.dataset.state = 'loading';
     setStatus('正在载入音乐…');
     setPlayLabel();
-    loadPromise = Promise.resolve()
-      .then(() => win.fetch(root.dataset.audioSrc))
+    const version = ++loadVersion;
+    const pending = Promise.resolve()
+      .then(() => win.fetch(requestedTrack.src))
       .then(response => {
         if (!response?.ok) throw new Error(`audio-request-${response?.status ?? 'failed'}`);
         return response.arrayBuffer();
@@ -249,13 +264,16 @@ export function initMusicPlayer(doc = document, win = window) {
       .then(data => context.decodeAudioData(data))
       .then(decoded => {
         if (!decoded?.duration) throw new Error('audio-decode-empty');
+        if (version !== loadVersion || requestedTrack.id !== track.id) throw new Error('audio-start-cancelled');
         buffer = decoded;
-        const requestedLoopStart = Number.parseFloat(root.dataset.loopStart);
+        bufferTrackId = requestedTrack.id;
+        const requestedLoopStart = Number(requestedTrack.loopStart);
         const finalSampleStart = Math.max(0, decoded.duration - 1 / (decoded.sampleRate || 44100));
         loopStart = clamp(Number.isFinite(requestedLoopStart) ? requestedLoopStart : 0, 0, finalSampleStart);
         return decoded;
       })
-      .finally(() => { loadPromise = null; });
+      .finally(() => { if (loadPromise === pending) loadPromise = null; });
+    loadPromise = pending;
     return loadPromise;
   };
 
@@ -307,7 +325,7 @@ export function initMusicPlayer(doc = document, win = window) {
         gestureArmed = false;
       }
       root.dataset.state = 'playing';
-      setStatus('正在播放 Color Your Night');
+      setStatus(`正在播放 ${track.title}`);
       setPlayLabel();
       startTimer();
     } catch (error) {
@@ -340,6 +358,32 @@ export function initMusicPlayer(doc = document, win = window) {
     root.dataset.state = 'paused';
     setStatus('已暂停');
   };
+  const selectTrack = next => {
+    if (!next || next.id === track.id) return;
+    const resumeAfterSwitch = playing || desiredPlaying;
+    autoplayCancelled = true;
+    autoplayInFlight = false;
+    gestureArmed = false;
+    commandVersion++;
+    loadVersion++;
+    loadPromise = null;
+    stopSource({ preserve: false });
+    buffer = null;
+    bufferTrackId = null;
+    offset = 0;
+    shownSecond = -1;
+    track = next;
+    set(TRACK_KEY, track.id);
+    showArtist = false;
+    setTitle();
+    updateElapsed();
+    if (resumeAfterSwitch) begin({ restart: true });
+    else {
+      root.dataset.state = 'paused';
+      setStatus(`已选择 ${track.title}`);
+      setPlayLabel();
+    }
+  };
   playButton?.addEventListener('click', () => {
     if (desiredPlaying || playing) pause();
     else {
@@ -360,6 +404,7 @@ export function initMusicPlayer(doc = document, win = window) {
     begin({ restart: true });
   });
   infoButton?.addEventListener('click', () => { showArtist = !showArtist; setTitle(); });
+  trackButton?.addEventListener('click', () => selectTrack(nextMusicTrack(track.id)));
   volumeDown?.addEventListener('click', () => applyVolume(volume - .05));
   volumeUp?.addEventListener('click', () => applyVolume(volume + .05));
   volumeInput?.addEventListener('input', event => applyVolume(event.target.value));
@@ -371,7 +416,7 @@ export function initMusicPlayer(doc = document, win = window) {
     setCollapsed(false);
     playButton?.focus?.();
   });
-  const isPlaybackControl = target => target === playButton || target === restartButton || playButton?.contains?.(target) || restartButton?.contains?.(target);
+  const isPlaybackControl = target => target === playButton || target === restartButton || target === trackButton || playButton?.contains?.(target) || restartButton?.contains?.(target) || trackButton?.contains?.(target);
   const activateFromGesture = event => {
     if (!gestureArmed || autoplayCancelled || disposed || playing || isPlaybackControl(event.target)) return;
     if (desiredPlaying && !autoplayInFlight) return;
