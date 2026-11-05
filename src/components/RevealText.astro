@@ -1,0 +1,5 @@
+---
+interface Props { text: string; delay?: number; }
+const { text, delay = 0 } = Astro.props;
+---
+<span class="reveal-word" data-reveal="word">{Array.from(text).map((letter, index) => <span class="reveal-letter" style={`--reveal-delay:${delay + index * 35}ms`}>{letter}</span>)}</span>

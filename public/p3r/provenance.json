@@ -30,6 +30,36 @@
       "file": "public/p3r/hero-poster.webp",
       "source": "https://asia.sega.com/p3r/cht/resources/img/top/fv_movie2_1aaf21a0de60678450744da0dbaf9ef4.mp4",
       "derivation": "ffmpeg at second 1, width 1600 WebP"
+    },
+    {
+      "file": "public/p3r/hero-intro.mp4",
+      "source": "https://asia.sega.com/p3r/cn/resources/img/top/fv_movie1_bef3ec38c6b4ba869207fc85cf95bc78.mp4",
+      "sha256": "ad43b8438fce73061a85d35ff656d70b5fb88aa9814358628079d7ef5dbf61c3",
+      "purpose": "Original official landscape opening video, reused without transcoding."
+    },
+    {
+      "file": "public/p3r/hero-intro-mobile.mp4",
+      "source": "https://asia.sega.com/p3r/cn/resources/img/sp/top/fv_movie1_29d27123eb72c13ff6989a6b27d9254d.mp4",
+      "sha256": "9a42fdb2abb1c7c6b74f0829095e73b57c39fe5d61f6519fdf96f0e157db9649",
+      "purpose": "Official portrait composition, selected instead of the landscape media on portrait/small viewports."
+    },
+    {
+      "file": "public/p3r/hero-loop-mobile.mp4",
+      "source": "https://asia.sega.com/p3r/cn/resources/img/sp/top/fv_movie2_52dc5fe4e1e1e0d4986c75a132ec97c0.mp4",
+      "sha256": "41ef7169d5a7e1d35f39d27ca2dc656fc9cd975d24849c48de16c1eef9d9c504",
+      "purpose": "Official portrait composition, selected instead of the landscape media on portrait/small viewports."
+    },
+    {
+      "file": "public/p3r/hero-poster-mobile.jpg",
+      "source": "https://asia.sega.com/p3r/cn/resources/img/sp/top/fv_movie2_52dc5fe4e1e1e0d4986c75a132ec97c0.mp4",
+      "derivation": "ffmpeg at second 1, native 750x1600 JPEG",
+      "sha256": "246bef589b54123e181dc095d75c7016d4abf0b3aea8ccef37a3b3f36b7f7777"
+    },
+    {
+      "file": "public/p3r/memento-mori.svg",
+      "source": "https://asia.sega.com/p3r/cn/",
+      "derivation": "Decoded the inline SVG in #loading h1 img; vector paths unchanged.",
+      "sha256": "653a8768acacec7f5707494ff4f4ce676aba996e54633e4114a1b1a120e8b813"
     }
   ]
 }

@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../styles/p3r.css';
 import '../styles/p3r-menu.css';
+import '../styles/p3r-opening.css';
 import ReloadMotion from '../components/ReloadMotion.astro';
 interface Props { title?: string; description?: string; category?: 'daily' | 'study'; }
 const { title = 'LINK RELOAD · 青蓝档案', description = 'Link 的个人档案：日常记录、学习档案、光影片段与交互实验。' } = Astro.props;
@@ -20,12 +21,27 @@ const nav = [
   <link rel="canonical" href={new URL(path, Astro.site)} />
   <link rel="icon" href="/brand-reload.svg" type="image/svg+xml" />
   <script is:inline>
-    try { const r=document.documentElement; r.dataset.motion=localStorage.getItem('journal-motion')==='off'||matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on'; } catch { if(matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.dataset.motion='off'; }
+    const r = document.documentElement;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let paused = false;
+    try { paused = localStorage.getItem('journal-motion') === 'off'; } catch {}
+    const saveData = Boolean(window.navigator?.connection?.saveData);
+    r.dataset.motion = paused || reduce ? 'off' : 'on';
+    if (window.location?.pathname === '/' && !paused && !reduce && !saveData) {
+      r.dataset.opening = 'blue';
+      window.setTimeout?.(() => { if (!r.dataset.openingManaged) delete r.dataset.opening; }, 4000);
+      window.setTimeout?.(() => {
+        if (r.dataset.opening && r.dataset.opening !== 'ready') {
+          r.dataset.opening = 'ready';
+          delete r.dataset.openingManaged;
+        }
+      }, 15000);
+    }
   </script>
 </head>
 <body>
   <a class="skip" href="#main">跳至正文</a>
-  <div class="site">
+  <div class:list={['site', { 'site-home': path === '/' }]}>
     <div class="topline" aria-hidden="true"></div>
     <header class="site-header">
       <a class="brand" href="/" aria-label="LINK RELOAD，返回首页"><img class="brand-symbol" src="/brand-reload.svg" alt="" width="64" height="64"/><span class="brand-wordmark">LINK<span class="brand-reload">RELOAD</span><small>青蓝档案 / PERSONAL RECORDS</small></span></a>

@@ -1,65 +1,50 @@
 # Design
-## Source of truth
-状态：Active · 日期：2026-10-18 · 范围：首页、栏目、文章、搜索、关于、照片、作品、404、共享导航和页脚。已查阅线上首页、搜索页和一篇完整文章，以及 Astro 路由、共享布局、内容配置、CSS、动效、CMS 和测试脚本。此文件规定已实施的主题；文章内容保持不变。原版日系模板保存在 templates/japanese-journal/。详细提案及可交互原型见用户交付文件“整体改版方案.md”和“leblanc-concept.html”。
 
-研究依据：Persona 5 官方[佐仓惣治郎介绍](https://persona5.jp/school_life/coop_sakura.html)描述卢布朗为巷弄里的旧式纯喫茶；[P5R 官方站](https://persona.atlus.com/p5r/)介绍咖啡馆背景；[ATLUS 餐具商品页](https://shopatlus.com/collections/persona-5-royal/products/persona-5-royal-coffee-curry-leblanc-tableware-set)展示 Coffee & Curry 和条纹餐具意象；[PlayStation P5R 介绍](https://www.playstation.com/en-us/games/persona-5-royal/)说明游戏保留其标志性视觉风格。画面研究参考直接查看过的[第三方游戏截图](https://megatenwiki.com/images/7/76/P5R_Caf%C3%A9_Leblanc_Screenshot.png)和[ATLUS 官方角色短片](https://www.youtube.com/watch?v=QkD0ptHLp98)；两者只作参考，网站素材须原创。原声发行信息可见《PERSONA5 ORIGINAL SOUNDTRACK》的[Beneath the Mask -rain- 演唱版](https://www.youtube.com/watch?v=U2Qd9TRY1Ro)及[纯音乐版本](https://open.spotify.com/track/5a41NqDQH7pI0TM8zarBoi)。未将其称为 P5R 独有原声，不在本次载入音乐。检索日期：2026-10-18。
+## Source of truth
+Status: Active. Updated: 2026-11-05. Surfaces: the P3R LINK RELOAD blog and homepage opening/scroll presentation. This replaces the superseded Café Leblanc brief; the preserved Japanese journal template remains in `templates/japanese-journal/`.
+
+Evidence reviewed: the owner's 44.37-second original-site recording; owner-provided `p3/fv_movie1.webm`, `fv_movie2.webm`, HTML and CSS; the official reference https://asia.sega.com/p3r/cn/ at 1280×720; current Astro pages, shared layout, controller and tests. The owner approved the sequence and asked for a large video with an unobstructed character. Reference game-menu assets in P3R are outside this change.
 
 ## Brand
-把个人博客呈现为受 Persona 5 Royal 启发的四轩茶屋旧式咖啡馆：安静、亲切、带一点戏剧性的视觉节奏。明确这是 Link 的个人博客，不是 ATLUS 官方站点。
+LINK RELOAD / 青蓝档案 is Link's personal archive: open, curious, clear, with blue-white P3R visual rhythm and a custom LR mark. Identify the blog as a personal fan site. Retain the existing reference-media attribution and provenance. Avoid café/day/weather controls, preview labels, audio, and dedicated video-play controls.
 
 ## Product goals
-- 让读者一眼进入有吧台、咖啡器具、窗景和灯光层次的卢布朗空间。
-- 保留所有文章原文、数据字段、公开网址与博客功能。
-- 为昼夜和天气提供可访问的手动设置，并以同一场景结构实现四种组合。
-- 保证手机、键盘、减少动态偏好和长文阅读体验。
-非目标：评论/账户/实时天气；复刻游戏素材；改变文章正文；当前加入音乐。
-成功信号：读者可清晰识别场景与栏目，独立操作昼夜/晴雨，且全部已有内容、搜索、CMS、作品嵌入功能继续可用。
+Give the homepage an opening that moves from a blue wave curtain to white with Memento Mori text, then the one-time falling sequence and continuous underwater loop. Preserve the left-hand character and place desktop copy in the right-hand blue space. Reveal headings, body lines, entries and imagery in layers as they enter view.
+
+Success: desktop video occupies the viewport; portrait media has its own large stage with copy below; the opening never prevents navigation or leaves content hidden after failure; all existing routes, content and management functions work. Non-goals: cloning the official site's commerce, modals, navigation destinations, account systems, game menus or copyrighted logo.
 
 ## Personas and jobs
-回访读者浏览日常和学习记录；新访客了解作者并找到近期文章；触屏、键盘和减少动态用户以等价方式阅读与操作。场景装饰不得遮挡或阻止内容访问。
+New readers enter the archive and find recent posts or a category. Returning readers can immediately scroll or use navigation. Touch, keyboard, reduced-motion and slow-network visitors have direct access to all content.
 
 ## Information architecture
-保留原 URL 与分类字段：`/` 店内；`/daily/` 吧台手记；`/study/` 研磨笔记；`/photos/` 窗边相册；`/play/` 桌边小物；`/search/` 寻一页；`/about/` 关于。文章详情根据现有分类使用“手记/笔记”语气。首页顺序：空间欢迎区、最近手记、四栏目菜单；照片及作品通过真实栏目入口访问。照片目前没有公开内容，显示明确空状态。文章页优先保证 Markdown 阅读。保留 `/admin/`、`/manage/`、全部详情路由与 404。
+Keep `/`, `/daily/`, `/study/`, `/photos/`, `/play/`, `/search/`, `/about/`, `/admin/`, `/manage/`, all detail URLs and 404. Homepage order remains hero, recent entries, four category cards, about. Preserve collection filtering, search data and content text. The empty gallery remains an honest empty state.
 
 ## Design principles
-1. 以可辨认的咖啡馆空间而非换色定义主题。
-2. 用窗外冷色与室内暖木形成安静的昼夜氛围。
-3. P5R 图形特征作为导航、栏目序号、重点提示的点缀，正文保留留白。
-4. 白昼/夜晚和晴天/雨天彼此独立，同一结构组合，不复制页面。
-5. 动态装饰克制、可暂停、不能成为内容入口的唯一方式。
+The video is the main image, not a small decorative tile. Keep the character's face and body free of homepage text. Match the source media's left-aligned composition. Opening motion runs once per page visit, then only the underwater scene loops. A scroll, keyboard focus or Escape can leave the opening immediately. Animation enhances content access and never locks scrolling.
 
 ## Visual language
-色彩目标：深胡桃木、烘焙棕、奶油纸、陶瓷白；白天窗外用灰蓝与灰绿，夜晚窗外用靛蓝与石板灰，灯光用琥珀色，P5R 红仅用于少量交互标记。场景用原创分层 HTML/SVG：吧台、杯具、咖啡器具/罐、红色吧凳、窗框与窗帘、吊灯、巷灯及手写菜单。P5R 语言由不对称版面、高对比黑白、斜切色块、窄体英文和少量朱红体现，不照搬 HUD/Logo/人物或截图。中文大标题采用本地衬线字族，正文系统无衬线，避免远程字体依赖。
+Retain existing ocean/cyan/white tokens, italic English display type, clear Chinese headings and numbered bilingual navigation. Desktop hero is 100svh with no solid header bar taking height from the media. The LR badge and navigation sit at the top; primary copy begins at 58% of width in the right blue space. Remove the prior full-image dark overlay and bottom decorative waves that obscured the scene.
 
-昼夜切换保持同一构图，以 CSS 色彩变量和约 300–500ms 的天空亮度、木色、吊灯与反射渐变实现。雨天单独控制；仅窗玻璃与室外路面出现雨线、雾度和反射。晴天+白昼、雨天+白昼、晴天+夜晚、雨天+夜晚均成立。雨线图案的斜切重复向量为 (-37.5, 150)，动画匀速移动恰好一个周期，窗外裁切范围全程被覆盖，首尾画面一致。不得依据本地时间或联网天气自动伪装实时状态。
-
-鼠标视差幅度比现状更浅，家具与接触阴影在同一刚性分组内小幅移动，文字稳定；只启用精细鼠标指针，触屏关闭，指针离开复位。滚动不使文章漂移。中文显示优先，英文仅为小号辅助标签。
-
-首页 Hero 专属昼夜过场：复用用户提供的 Persona 5 Crowd Animated Dynamic 素材包中的 6 组、每组 4 张透明人物帧，保留原始 Pixi 脚本的随机人物、左右方向、速度差和每 100 帧一次的垂直轻摆；网页端将持续生成收束为 8 个有远中近层次的行人，在约 3.5 秒内完成交错穿场。人物使用原始浅色动漫轮廓和深色线稿，不再用纯 SVG 黑色人形；右向人物水平翻转，前景人物更大且带接触阴影，场景在 1100ms 左右更新主题，人物完全离场后清理过场。过场只在 Hero 内绝对定位和裁切，不遮导航、正文或其他页面，不拦截指针、不锁滚动。素材来源为用户提供的 `/Users/Link/Downloads/1255218296`，已转换为 `public/images/crowd/` 的 24 个 Web PNG；原始脚本和素材仅作为迁移输入，不在博客中运行 Pixi。
-
-夜景保留原咖啡馆几何布局：一位员工在吧台后擦杯、偶尔点头，一位侧坐顾客在右下原有吧凳上缓慢喝咖啡；人物改为奶油色主体、深色线条和局部阴影，保留发型、衣褶、围裙、外套与杯具的动漫剪影特征。员工先于吧台绘制；顾客与吧凳、员工与吧台分别共享相同视差深度，坐姿接触点保持固定。吧台的咖啡杯、陶瓷器和虹吸壶统一缩小到原 SVG 坐标的约 72–78%，保留接触阴影和支撑面，避免器具盖住整张吧台。返回白天时在行人经过期间淡出，恢复空店。初访或保存的夜景只展示店内人物，不自动播放过场。
+Blue curtain color is #029eeb; its wave edge moves down over white. The white text screen uses the original Memento Mori SVG wordmark. Intro and loop share identical sizing and alignment. New motion styles live in `p3r-opening.css`, with existing non-home presentation retained. Title letters rise in a clipped line with 35ms stagger, body lines and post rows enter independently, and imagery uses a retreating white cover. Every reveal is one-time on entry, not tied frame-by-frame to scrolling.
 
 ## Components
-共享品牌导航及清晰的活动项；共享 CafeControls 在各页提供昼夜/雨天状态按钮，首页 CafeScene 显示统一坐标的 SVG 场景；最近文章点单条目；四栏目入口；照片空胶片状态；可容纳 Markdown 的文章纸页；搜索框、结果及播报；保留全站动效开关。作品详情必须保留 iframe、沙箱、父子窗口消息验证、尺寸边界、暂停同步、独立打开与下载。后台保持独立清晰。
+`ReloadMotion` owns controller startup. `reload.mjs` coordinates blue/quote/fall/ready phases, two video elements, failure paths, navigation, gallery and reveals. `RevealText` renders decorative staggered English letters; meaningful Chinese headings retain normal accessible text. `.hero-media` is an independent media container, used for viewport observation and portrait composition. The opening is decorative, aria-hidden and pointer-transparent.
 
 ## Accessibility
-新改区域以 WCAG 2.2 AA 为目标；保留正文跳转、地标、标题层级、当前导航标识和可见键盘焦点。昼夜与晴雨控件需文字说明、明确选中状态和可键盘操作；装饰性雨效标记为辅助技术隐藏。两种主题均检查文字、次级说明、控件对比度。支持 `prefers-reduced-motion`，关闭持续动画但仍允许场景切换。无自动音乐、闪光、仅悬停功能或触摸难以点击的目标。
+Target WCAG 2.2 AA for modified areas. Preserve skip-to-content, semantic headings, visible focus and keyboard navigation. No sound or flashing. System reduced motion, saved pause and data saving skip the opening and do not request either video. Autoplay denial and media errors release the opening and preserve the poster. Pausing makes all revealed text/images visible; returning to motion does not replay the opening. A bootstrap watchdog releases the opening if the module fails to load. No-JavaScript content and navigation remain reachable.
 
 ## Responsive behavior
-桌面使用完整空间与独立文本留白；平板缩小器具与视差幅度；窄屏导航换行或采用清晰可达的紧凑控件，场景随欢迎文字改为纵向布局，SVG 保持统一坐标与比例，过场人群位于 Hero 下方 56% 区域并随该区域缩放。阅读页在手机上单列、保留行距，代码和表格可横向滚动，无整页横向溢出；开关触摸区域舒适。
+Landscape desktop: full-viewport video, object-fit cover, left alignment, copy to the right of the character. At widths ≤900px or portrait aspect ratios: full-viewport 100svh portrait media, using the official 750×1600 portrait source with bottom alignment, all headline and introductory copy in a separate blue region below. Use the supplied landscape source on desktop and official portrait variants on small/portrait screens; do not overlay the main copy on the character. Compact navigation opens above media only when requested. Check 1920×1080, 1280×720, tablet portrait and 390×844; no document-wide horizontal overflow.
 
 ## Interaction states
-昼夜与天气为两个有标签且可记忆的手动设置；首次访问默认白昼晴天。减少动态效果时雨线静止或隐藏、光照切换仍有效。搜索保留空闲/命中/无结果反馈。无照片时显示相册空状态。外部图片失败时说明仍可读。音乐位置只展示“音乐留座 · 暂未载入”的诚实预留状态。
-
-行人过场仅响应首页的手动昼夜切换；其他页面保持原逻辑。快速点击以最后一次选择为准：遮挡前合并目标，遮挡后若再次改变则在本轮走完后开始下一轮。暂停动效、系统减动、页面进入后台或离开页面时清除定时器并立即应用最后选择，避免卡住过场；减动时人物静态显示，所有装饰动画停用。
+Blue → quote → fall → ready; the completed intro hands off to the existing loop, holding the final intro image until the loop is available. A bounded timeout, scroll/focus/Escape, pause, reduced motion, hidden/offscreen state or errors can bypass the opening. No permanent loading overlay. A rejected autoplay can retry the loop on a later interaction. Media failure retains the still poster. Search, empty-gallery and admin states keep their existing behavior.
 
 ## Content voice
-温和、简洁，像安静街区里的小店。栏目名可以有情境感，但须明确真实功能；英文不取代中文。任何文章标题、Markdown 正文、日期、链接与图片说明都保持原样。
+Keep LINK RELOAD, 青蓝档案 and existing section labels. The opening says Memento Mori / Time never waits. / Every day, a new chapter. Content titles, Markdown, dates, images, captions and links remain unchanged.
 
 ## Implementation constraints
-项目使用 Astro 7 静态生成、Decap CMS 和当前 GitHub Pages 工作流。优先复用 CSS、SVG 与小脚本，不新增前端或动效依赖。实现主要涉及共享布局、首页、栏目/详情页显示文案、现有全站样式、JournalMotion 及可复用场景组件。保持原路径、slug、schema/frontmatter、草稿过滤、公开全文搜索、CMS/OAuth/导入上传、构建发布和 iframe 安全协议。不要叠加难维护的样式补丁。实施后运行内容、admin、OAuth 测试和生产构建，并做桌面/375px、四种场景组合、键盘与减动检查。
+Astro static output with the existing lockfile, dependencies and GitHub Pages workflow. No new frontend dependencies. Reuse official native H.264 intro and portrait variants, plus the inline Memento Mori SVG; retain all source URLs and provenance hashes. Keep CMS/OAuth, import logic, content schemas, drafts, iframe sandbox/message checks, independent toy opening/download and pause propagation. Run build (15 pages), content, source/compiled P3R, OAuth and admin tests; inspect desktop/portrait video composition, opening handoff, scroll reveals, motion fallback and navigation in a real browser before publication.
 
 ## Open questions
-- [x] 昼夜与雨天组合方式：单一场景结构，昼夜和雨独立切换。由用户明确提出。
-- [ ] 是否将来提供按系统时间自动设定昼夜：当前提案为手动并本地记忆，初访白昼晴天。
-- [ ] 音乐来源和许可：在确认来源/嵌入方式前不加入曲目或音频文件。
+- [ ] Longer-term reference-art redistribution rights remain unestablished, as already disclosed and accepted by the owner; do not treat publication authorization as an asset license.
+- [x] Portrait composition: inspected the official 750×1600 intro/loop variants and recorded their source URLs and hashes in provenance.json; portrait views use them with copy below the video.
