@@ -133,7 +133,7 @@ const date = (d: Date) => d.toISOString().slice(0,10).replaceAll('-', '.');
 <p class="gallery-hint">四个入口，同一本未完的记录。<span>DRAG / SCROLL TO DISCOVER →</span>
 </p>
 </section>
-<section class="reload-about" aria-labelledby="about-title">
+<section class="reload-about" id="about-intro" aria-labelledby="about-title">
 <div class="about-water" data-reveal="image" aria-hidden="true">
 <span>STAY<br/>
 <i>CURIOUS.</i>
@@ -148,12 +148,15 @@ const date = (d: Date) => d.toISOString().slice(0,10).replaceAll('-', '.');
 </svg>
 </div>
 <div class="about-copy">
+<div class="about-story">
 <p class="section-index" data-reveal>03 / BEHIND THE PAGES</p>
 <img src="/images/link-avatar.webp" alt="Link 的头像" width="72" height="72" loading="lazy">
 <h2 id="about-title" data-reveal>你好，我是 Link。</h2>
 <p class="reveal-lines"><span data-reveal>一半日常，一半好奇。</span><span data-reveal style="--reveal-delay:130ms">学习、记录、动手尝试，在这里留下自己的轨迹。</span><span data-reveal style="--reveal-delay:260ms">不必每一次探索都有结论，下一页总有新的可能。</span></p>
 <a class="archive-link" href="/about/" data-reveal>关于我 <span aria-hidden="true">↗</span>
 </a>
+</div>
+<div class="music-player-dock" data-player-dock></div>
 </div>
 </section>
 </Base>

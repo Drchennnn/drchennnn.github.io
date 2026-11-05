@@ -20,20 +20,36 @@ const { Content } = await render(toy);
   </article>
 </Base>
 <script>
+  let disposeToy = () => {};
+  const initToy = () => {
+  disposeToy();
   const frame = document.querySelector<HTMLIFrameElement>('.toy-frame');
   if (frame) {
     const sendMotion = () => frame.contentWindow?.postMessage({ type: 'journal:motion', paused: document.documentElement.dataset.motion === 'off' || document.hidden }, '*');
     // The sandbox has an opaque origin; match the exact window before using its messages.
-    window.addEventListener('message', event => {
+    const onMessage = (event: MessageEvent) => {
       if (event.source !== frame.contentWindow) return;
       if (event.data?.type === 'toy:ready') sendMotion();
       if (event.data?.type === 'toy:resize' && Number.isFinite(event.data.height) && event.data.height >= 200 && event.data.height <= 2000) {
         frame.style.height = `${Math.ceil(event.data.height)}px`;
       }
-    });
+    };
+    window.addEventListener('message', onMessage);
     frame.addEventListener('load', sendMotion);
-    new MutationObserver(sendMotion).observe(document.documentElement, { attributes: true, attributeFilter: ['data-motion'] });
+    const observer = new MutationObserver(sendMotion);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-motion'] });
     document.addEventListener('visibilitychange', sendMotion);
     sendMotion();
+    disposeToy = () => {
+      window.removeEventListener('message', onMessage);
+      frame.removeEventListener('load', sendMotion);
+      document.removeEventListener('visibilitychange', sendMotion);
+      observer.disconnect();
+      disposeToy = () => {};
+    };
   }
+  };
+  initToy();
+  document.addEventListener('astro:before-swap', () => disposeToy());
+  document.addEventListener('astro:page-load', initToy);
 </script>

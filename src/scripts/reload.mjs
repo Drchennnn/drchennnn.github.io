@@ -1,13 +1,33 @@
 /** Motion and navigation for the P3R presentation. No day/night or weather state is read or written. */
 export function initReload(doc = document, win = window) {
   const root = doc.documentElement;
+  const cleanups = [], observers = [];
+  let disposed = false;
+  const on = (target, type, handler, options) => {
+    target?.addEventListener?.(type, handler, options);
+    if (target?.removeEventListener) cleanups.push(() => target.removeEventListener(type, handler, options));
+  };
+  const observe = (handler, options) => {
+    const observer = new win.IntersectionObserver(handler, options);
+    observers.push(observer);
+    return observer;
+  };
+  const dispose = () => {
+    if (disposed) return;
+    disposed = true;
+    while (cleanups.length) cleanups.pop()();
+    while (observers.length) observers.pop().disconnect?.();
+    if (root.__reloadDispose === dispose) delete root.__reloadDispose;
+  };
+  root.__reloadDispose?.();
+  root.__reloadDispose = dispose;
   try {
   const query = selector => doc.querySelector(selector);
   const reduced = win.matchMedia('(prefers-reduced-motion: reduce)');
   const mobileMedia = win.matchMedia('(max-width: 900px), (max-aspect-ratio: 1/1)');
   const get = key => { try { return win.localStorage.getItem(key); } catch { return null; } };
   const set = (key, value) => { try { win.localStorage.setItem(key, value); } catch {} };
-  const later = (callback, delay) => (win.setTimeout ?? setTimeout)(callback, delay);
+  const later = (callback, delay) => (win.setTimeout ?? setTimeout)(() => { if (!disposed) callback(); }, delay);
   const cancel = timer => { if (timer != null) (win.clearTimeout ?? clearTimeout)(timer); };
   const motion = query('.motion-toggle'), top = query('.back-top');
   const menu = query('.menu-toggle'), nav = query('#main-nav');
@@ -20,8 +40,8 @@ export function initReload(doc = document, win = window) {
   let openingActive = Boolean(intro && openingLayer && root.dataset.opening === 'blue');
   let openingStarted = false, openingFinishing = false, openingVersion = 0, phaseTimer = null, introTimer = null, openingGuard = null;
   const motionAllowed = () => root.dataset.motion !== 'off';
-  const shouldPlay = () => wantsVideo && motionAllowed() && !doc.hidden && inView;
-  const setOpening = phase => { root.dataset.opening = phase; };
+  const shouldPlay = () => !disposed && wantsVideo && motionAllowed() && !doc.hidden && inView;
+  const setOpening = phase => { if (!disposed) root.dataset.opening = phase; };
   const ensureSource = media => {
     if (!media || media.getAttribute('src')) return;
     const source = mobileMedia.matches && media.dataset.mobileSrc ? media.dataset.mobileSrc : media.dataset.src;
@@ -36,6 +56,16 @@ export function initReload(doc = document, win = window) {
     cancel(phaseTimer); cancel(introTimer); cancel(openingGuard);
     phaseTimer = introTimer = openingGuard = null;
   };
+  cleanups.push(() => {
+    ++playVersion;
+    ++openingVersion;
+    clearOpeningTimers();
+    openingActive = false;
+    openingStarted = false;
+    openingFinishing = false;
+    stopMedia(intro);
+    stopMedia(video);
+  });
 
   async function playLoop({ completeOpening = false, openingToken = openingVersion } = {}) {
     if (!video) {
@@ -183,14 +213,14 @@ export function initReload(doc = document, win = window) {
     }
     syncVideo();
   }
-  motion?.addEventListener('click', () => { paused = !paused; set('journal-motion', paused ? 'off' : 'on'); syncMotion(); });
-  reduced.addEventListener('change', syncMotion);
+  on(motion, 'click', () => { paused = !paused; set('journal-motion', paused ? 'off' : 'on'); syncMotion(); });
+  on(reduced, 'change', syncMotion);
   const retryAfterInteraction = () => { if (blocked && !mediaFailed && !openingActive) { blocked = false; playLoop(); } };
-  doc.addEventListener('click', retryAfterInteraction);
-  doc.addEventListener('keydown', retryAfterInteraction);
-  intro?.addEventListener('ended', () => { if (openingActive && root.dataset.opening === 'fall') finishOpening({ holdIntro: true }); });
-  intro?.addEventListener('error', () => { if (openingActive) finishOpening({ playLoopAfter: shouldPlay() }); });
-  video?.addEventListener('error', () => {
+  on(doc, 'click', retryAfterInteraction);
+  on(doc, 'keydown', retryAfterInteraction);
+  on(intro, 'ended', () => { if (openingActive && root.dataset.opening === 'fall') finishOpening({ holdIntro: true }); });
+  on(intro, 'error', () => { if (openingActive) finishOpening({ playLoopAfter: shouldPlay() }); });
+  on(video, 'error', () => {
     ++playVersion;
     mediaFailed = true;
     stopMedia(video);
@@ -200,11 +230,11 @@ export function initReload(doc = document, win = window) {
     }
     if (root.dataset.opening && root.dataset.opening !== 'ready') setOpening('ready');
   });
-  doc.addEventListener('visibilitychange', () => {
+  on(doc, 'visibilitychange', () => {
     if (doc.hidden && openingActive) finishOpening({ playLoopAfter: false });
     else syncVideo();
   });
-  win.addEventListener('pagehide', () => {
+  on(win, 'pagehide', () => {
     ++playVersion;
     ++openingVersion;
     clearOpeningTimers();
@@ -213,27 +243,27 @@ export function initReload(doc = document, win = window) {
     stopMedia(video);
     if (openingActive) { openingActive = false; setOpening('ready'); }
   });
-  win.addEventListener('pageshow', syncVideo);
+  on(win, 'pageshow', syncVideo);
   const skipOpening = () => { if (openingActive) finishOpening({ playLoopAfter: shouldPlay() }); };
-  doc.addEventListener('focusin', skipOpening);
+  on(doc, 'focusin', skipOpening);
   root.dataset.navReady = 'true';
   const closeMenu = () => { nav?.classList.remove('is-open'); menu?.setAttribute('aria-expanded', 'false'); };
-  menu?.addEventListener('click', () => { const open = menu.getAttribute('aria-expanded') !== 'true'; menu.setAttribute('aria-expanded', String(open)); nav?.classList.toggle('is-open', open); });
-  doc.addEventListener('keydown', event => {
+  on(menu, 'click', () => { const open = menu.getAttribute('aria-expanded') !== 'true'; menu.setAttribute('aria-expanded', String(open)); nav?.classList.toggle('is-open', open); });
+  on(doc, 'keydown', event => {
     if (event.key === 'Escape') {
       skipOpening();
       if (menu?.getAttribute('aria-expanded') === 'true') { closeMenu(); menu.focus(); }
     }
   });
-  doc.addEventListener('click', event => { if(!nav?.contains(event.target) && !menu?.contains(event.target)) closeMenu(); });
-  nav?.addEventListener('click', event => { if(event.target.closest?.('a')) closeMenu(); });
+  on(doc, 'click', event => { if(!nav?.contains(event.target) && !menu?.contains(event.target)) closeMenu(); });
+  on(nav, 'click', event => { if(event.target.closest?.('a')) closeMenu(); });
   const gallery = query('.chapter-gallery');
   const step = direction => gallery?.scrollBy({ left: direction * ((gallery.querySelector('.chapter-card')?.offsetWidth ?? 290) + 25), behavior: motionAllowed() ? 'smooth' : 'instant' });
-  query('[data-gallery-prev]')?.addEventListener('click', () => step(-1));
-  query('[data-gallery-next]')?.addEventListener('click', () => step(1));
-  gallery?.addEventListener('keydown', event => { if(event.target === gallery && ['ArrowLeft','ArrowRight'].includes(event.key)) { event.preventDefault(); step(event.key === 'ArrowRight' ? 1 : -1); } });
+  on(query('[data-gallery-prev]'), 'click', () => step(-1));
+  on(query('[data-gallery-next]'), 'click', () => step(1));
+  on(gallery, 'keydown', event => { if(event.target === gallery && ['ArrowLeft','ArrowRight'].includes(event.key)) { event.preventDefault(); step(event.key === 'ArrowRight' ? 1 : -1); } });
   if ('IntersectionObserver' in win) {
-    if (heroMedia) new win.IntersectionObserver(entries => {
+    if (heroMedia) observe(entries => {
       inView = entries[0].isIntersecting;
       if (!inView && openingActive) finishOpening({ playLoopAfter: false });
       else syncVideo();
@@ -241,19 +271,21 @@ export function initReload(doc = document, win = window) {
     const reveals = [...doc.querySelectorAll('[data-reveal]')];
     if(!paused && !reduced.matches) {
       root.dataset.revealReady = 'true';
-      const observer = new win.IntersectionObserver(entries => { for(const entry of entries) if(entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }, { threshold: .08 });
+      const observer = observe(entries => { for(const entry of entries) if(entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }, { threshold: .08 });
       reveals.forEach(el => observer.observe(el));
     }
     const section = query('.chapter-section'), cards = [...doc.querySelectorAll('[data-chapter]')], ratios = new Map();
     const activate = card => { if(section) section.dataset.activeChapter = card.dataset.chapter; cards.forEach(el => el.classList.toggle('is-active', el === card)); };
-    const observer = new win.IntersectionObserver(entries => { entries.forEach(entry => ratios.set(entry.target, entry.intersectionRatio)); const visible = [...ratios].sort((a,b) => b[1]-a[1])[0]; if(visible && visible[1] > 0) activate(visible[0]); }, { root: gallery, threshold: [0,.25,.5,.75,1] });
-    cards.forEach(card => { observer.observe(card); card.addEventListener('focus', () => activate(card)); card.addEventListener('pointerenter', () => activate(card)); });
+    const observer = observe(entries => { entries.forEach(entry => ratios.set(entry.target, entry.intersectionRatio)); const visible = [...ratios].sort((a,b) => b[1]-a[1])[0]; if(visible && visible[1] > 0) activate(visible[0]); }, { root: gallery, threshold: [0,.25,.5,.75,1] });
+    cards.forEach(card => { observer.observe(card); on(card, 'focus', () => activate(card)); on(card, 'pointerenter', () => activate(card)); });
   }
   const syncTop = () => { if(top) top.hidden = win.scrollY < 450; };
-  win.addEventListener('scroll', () => { if (win.scrollY > 80) skipOpening(); syncTop(); }, { passive: true });
-  top?.addEventListener('click', () => win.scrollTo({ top: 0, behavior: motionAllowed() ? 'smooth' : 'instant' }));
+  on(win, 'scroll', () => { if (win.scrollY > 80) skipOpening(); syncTop(); }, { passive: true });
+  on(top, 'click', () => win.scrollTo({ top: 0, behavior: motionAllowed() ? 'smooth' : 'instant' }));
   syncMotion(); syncTop();
+  return dispose;
   } catch (error) {
+    dispose();
     try {
       delete root.dataset.openingManaged;
       delete root.dataset.revealReady;

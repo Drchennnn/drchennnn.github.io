@@ -1,5 +1,17 @@
 <button class="back-top" type="button" aria-label="返回顶部" hidden>↑<span>TOP</span></button>
 <script>
   import { initReload } from '../scripts/reload.mjs';
-  initReload();
+  let dispose = initReload();
+  let activeBody = document.body;
+  document.addEventListener('astro:before-swap', () => {
+    dispose?.();
+    dispose = undefined;
+    activeBody = undefined;
+  });
+  document.addEventListener('astro:page-load', () => {
+    if (dispose && activeBody === document.body) return;
+    dispose?.();
+    activeBody = document.body;
+    dispose = initReload();
+  });
 </script>

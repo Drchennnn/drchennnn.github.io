@@ -1,0 +1,32 @@
+{
+  "title": "Color Your Night",
+  "artists": [
+    "Lotus Juice",
+    "Azumi Takahashi"
+  ],
+  "copyright": "ATLUS / SEGA and the respective rights holders",
+  "source": "Owner-supplied local audio; edited locally for a phase-aligned loop.",
+  "edit": {
+    "source_loop_start_seconds": 6,
+    "source_loop_end_seconds": 208.10643990929705,
+    "duration_seconds": 208.10643990929705,
+    "sample_rate": 44100,
+    "decoded_samples_per_channel": 9177494,
+    "channels": 2,
+    "tail": "1-second complementary smooth crossfade into an aligned unfaded instrumental segment from the same source",
+    "playback": {
+      "first_start_seconds": 0,
+      "loop_start_seconds": 6,
+      "loop_end_seconds": 208.10643990929705,
+      "loop_duration_seconds": 202.10643990929705,
+      "restart": "Returns to original 0-second opening"
+    }
+  },
+  "file_sha256": "1bff5ed818c5b1eeb8cce80ab0f2cc1c78c16a8c2241912759267f98e130b579",
+  "player_inspiration": {
+    "url": "https://github.com/sojjeoi/p3r-rainmeter-player",
+    "commit": "bf1206a4f46a0302658ebe58f3f12610b6dfd642",
+    "reuse": "Independent HTML/CSS/Web Audio implementation; no upstream code, artwork, font, plugin, or binary copied."
+  },
+  "rights": "Owner-supplied media; public distribution authorization by the owner is not evidence of a license from music rights holders."
+}

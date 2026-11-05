@@ -17,6 +17,7 @@ class Element {
     contains: value => this.classList.items.has(value)
   };
   addEventListener(type, handler) { (this.handlers[type] ??= []).push(handler); }
+  removeEventListener(type, handler) { this.handlers[type] = (this.handlers[type] ?? []).filter(value => value !== handler); }
   emit(type, event = {}) { for (const handler of this.handlers[type] ?? []) handler(event); }
   querySelector(selector) { return this.children[selector] ?? null; }
   setAttribute(key, value) { this.attrs[key] = value; }
@@ -85,6 +86,7 @@ function mount({ saved = {}, reduce = false, mobile = false, storageDenied = fal
     }
     observe(target) { this.targets.push(target); }
     unobserve(target) { this.targets = this.targets.filter(value => value !== target); }
+    disconnect() { this.disconnected = true; this.targets = []; }
   };
 
   const pending = { intro: [], loop: [] };
@@ -115,20 +117,23 @@ function mount({ saved = {}, reduce = false, mobile = false, storageDenied = fal
     if (opening) prepareVideo(nodes['[data-hero-intro]'], 'intro', '/p3r/hero-intro.mp4');
   }
 
+  let dispose;
   if (compiled) {
     const built = readFileSync('dist/index.html', 'utf8');
     const startup = [...built.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].find(match => match[1].includes('journal-motion'))?.[1];
     assert(startup, 'Compiled page contains the opening boot script');
-    const moduleTag = built.match(/<script([^>]*type="module"[^>]*)>([\s\S]*?)<\/script>/);
-    assert(moduleTag, 'Compiled page contains the motion module');
-    const modulePath = moduleTag[1].match(/src="([^"]+)"/)?.[1];
-    const moduleCode = modulePath ? readFileSync(`dist${modulePath}`, 'utf8') : moduleTag[2];
+    const modules = [...built.matchAll(/<script([^>]*type="module"[^>]*)>([\s\S]*?)<\/script>/g)].map(match => {
+      const path = match[1].match(/src="([^"]+)"/)?.[1];
+      return { code: path ? readFileSync(`dist${path}`, 'utf8') : match[2], path };
+    });
+    const moduleCode = modules.find(module => module.code.includes('data-hero-intro') && module.code.includes('journal-motion'))?.code;
+    assert(moduleCode, 'Compiled page contains the motion module');
     const context = vm.createContext({ document: doc, window: win, localStorage: win.localStorage, matchMedia: win.matchMedia, console });
     vm.runInContext(startup, context);
     vm.runInContext(moduleCode, context);
-  } else initReload(doc, win);
+  } else dispose = initReload(doc, win);
   return {
-    doc, win, nodes, reduced, prefs, observers, card, reveals, clock, pending,
+    doc, win, nodes, reduced, prefs, observers, card, reveals, clock, pending, dispose,
     setBehavior: (kind, value) => { behaviors[kind] = value; }
   };
 }
@@ -310,6 +315,33 @@ await flush();
 assert(!lateLoop.nodes['[data-hero-video]'].paused, 'Late old fulfillment does not stop a newer valid play');
 assert(lateLoop.nodes['[data-hero-video]'].classList.contains('is-playing'));
 
+// Disposing a swapped-out page cancels timers/listeners/observers and makes late media results inert.
+if (!compiled) {
+  const disposedIntro = mount({ introBehavior: 'pending' });
+  disposedIntro.clock.advance(300);
+  disposedIntro.clock.advance(2500);
+  await flush();
+  const oldOpening = disposedIntro.doc.documentElement.dataset.opening;
+  disposedIntro.dispose();
+  assert(disposedIntro.nodes['[data-hero-intro]'].paused);
+  assert(disposedIntro.nodes['[data-hero-video]'].paused);
+  assert(disposedIntro.observers.every(observer => observer.disconnected));
+  disposedIntro.pending.intro[0].resolve();
+  disposedIntro.clock.advance(20000);
+  await flush();
+  assert.equal(disposedIntro.doc.documentElement.dataset.opening, oldOpening, 'Disposed controller cannot rewrite the old root');
+  assert(disposedIntro.nodes['[data-hero-intro]'].paused, 'Late intro result stays stopped after disposal');
+
+  const first = mount({ opening: false, loopBehavior: 'pending' });
+  await flush();
+  const firstPlay = first.nodes['[data-hero-video]'];
+  initReload(first.doc, first.win);
+  assert(firstPlay.paused, 'Reinitializing disposes the previous controller');
+  first.pending.loop[0].resolve();
+  await flush();
+  assert.equal((first.doc.handlers.click ?? []).length, 2, 'Reinitialization replaces listeners instead of accumulating them');
+}
+
 // Autoplay rejection uses the poster, then retries silently on interaction; hard errors do not retry.
 const blocked = mount({ opening: false, loopBehavior: 'reject' });
 await flush();
@@ -360,7 +392,9 @@ page.nodes['.back-top'].emit('click'); assert.equal(page.win.lastScroll.top, 0);
 // Source boot script paints blue only for an eligible home visit and clears itself if the module never starts.
 if (!compiled) {
   const base = readFileSync('src/layouts/Base.astro', 'utf8');
-  const boot = base.match(/<script is:inline>([\s\S]*?)<\/script>/)?.[1];
+  const boot = [...base.matchAll(/<script\b[^>]*\bis:inline\b[^>]*>([\s\S]*?)<\/script>/g)]
+    .map(match => match[1])
+    .find(code => code.includes('journal-motion') && code.includes('dataset.opening'));
   assert(boot?.includes("dataset.opening = 'blue'"));
   const runBoot = options => {
     const bootPage = mount({ ...options, home: false, opening: false });

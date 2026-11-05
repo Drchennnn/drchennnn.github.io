@@ -4,6 +4,8 @@ import '../styles/p3r.css';
 import '../styles/p3r-menu.css';
 import '../styles/p3r-opening.css';
 import ReloadMotion from '../components/ReloadMotion.astro';
+import MusicPlayer from '../components/MusicPlayer.astro';
+import { ClientRouter } from 'astro:transitions';
 interface Props { title?: string; description?: string; category?: 'daily' | 'study'; }
 const { title = 'LINK RELOAD · 青蓝档案', description = 'Link 的个人档案：日常记录、学习档案、光影片段与交互实验。' } = Astro.props;
 const path = Astro.url.pathname;
@@ -20,8 +22,14 @@ const nav = [
   <meta name="theme-color" content="#0649bd" />
   <link rel="canonical" href={new URL(path, Astro.site)} />
   <link rel="icon" href="/brand-reload.svg" type="image/svg+xml" />
-  <script is:inline>
+  <ClientRouter />
+  <script is:inline data-astro-rerun>
+    (() => {
     const r = document.documentElement;
+    delete r.dataset.opening;
+    delete r.dataset.openingManaged;
+    delete r.dataset.revealReady;
+    delete r.dataset.navReady;
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let paused = false;
     try { paused = localStorage.getItem('journal-motion') === 'off'; } catch {}
@@ -29,14 +37,18 @@ const nav = [
     r.dataset.motion = paused || reduce ? 'off' : 'on';
     if (window.location?.pathname === '/' && !paused && !reduce && !saveData) {
       r.dataset.opening = 'blue';
-      window.setTimeout?.(() => { if (!r.dataset.openingManaged) delete r.dataset.opening; }, 4000);
+      const visit = {};
+      window.__reloadOpeningVisit = visit;
+      window.setTimeout?.(() => { if (window.__reloadOpeningVisit === visit && !r.dataset.openingManaged) delete r.dataset.opening; }, 4000);
       window.setTimeout?.(() => {
+        if (window.__reloadOpeningVisit !== visit) return;
         if (r.dataset.opening && r.dataset.opening !== 'ready') {
           r.dataset.opening = 'ready';
           delete r.dataset.openingManaged;
         }
       }, 15000);
-    }
+    } else window.__reloadOpeningVisit = null;
+    })();
   </script>
 </head>
 <body>
@@ -53,5 +65,6 @@ const nav = [
     <footer><div>© {new Date().getFullYear()} Link <span class="footer-note">RECORD. EXPLORE. RELOAD.</span><small>P3R-inspired personal archive · 第三方参考素材 ©ATLUS ©SEGA</small></div><div class="footer-links"><button class="motion-toggle" type="button" aria-pressed="false">暂停动效</button><a href="https://github.com/Drchennnn" target="_blank" rel="noreferrer">GitHub ↗</a><a href="/admin/">管理登录</a></div></footer>
   </div>
   <ReloadMotion />
+  <MusicPlayer />
 </body>
 </html>
