@@ -27,7 +27,10 @@
 .hero-poster > img { width: 100%; height: 100%; object-fit: cover; object-position: left center; }
 .site-home .hero-film { opacity: 0; z-index: 1; transition: opacity .35s; }
 .site-home .hero-film.is-playing { opacity: 1; }
-.site-home .hero-film-intro { z-index: 2; }
+/* The intro starts on white; a transparent fade would expose the underwater poster first. */
+.site-home .hero-film-intro { z-index: 2; transition: none; }
+html:is([data-opening="blue"], [data-opening="quote"], [data-opening="fall"]) .site-home .hero-media { background: #fff; }
+html:is([data-opening="blue"], [data-opening="quote"], [data-opening="fall"]) .site-home .hero-poster { visibility: hidden; }
 .site-home .hero-coordinate { display: none; }
 .site-home .reload-title {
   position: absolute; top: 50%; left: 58%; width: 36%; max-width: 600px;
