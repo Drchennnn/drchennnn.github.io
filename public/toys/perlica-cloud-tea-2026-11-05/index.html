@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="佩丽卡穿上飞行邮差制服，驾驶蒸汽茶壶独轮车，在云海间送信。纯 SVG 交互小剧场。">
+<title>佩丽卡的云端茶邮 · 每日奇想 001</title>
+<style>
+:root{color-scheme:light;--paper:#f3ead0;--ink:#173f48;--muted:#586e69;--line:#ced4bd;--accent:#286e70}*{box-sizing:border-box}body{margin:0;padding:32px 20px;background:#faf7ec;color:var(--ink);font-family:ui-rounded,"PingFang SC","Microsoft YaHei",sans-serif}main{width:min(100%,1100px);margin:auto}header{display:flex;gap:20px;align-items:center;justify-content:space-between;margin:0 8px 20px}.eyebrow{font-size:10px;letter-spacing:3px;color:var(--muted)}h1{margin:12px 0 8px;font-size:clamp(23px,4vw,32px);font-weight:600;letter-spacing:2px}.intro{margin:0;color:var(--muted);font-size:13px;line-height:1.7}.edition{flex-shrink:0;border:1px solid var(--line);border-radius:50%;width:72px;height:72px;display:grid;place-content:center;text-align:center;font-size:11px;line-height:1.7;transform:rotate(8deg)}.edition b{font-family:Georgia,serif;font-size:24px;font-weight:400}.scene{overflow:hidden;border-radius:24px;background:var(--paper)}.scene svg{display:block;width:100%;height:auto}.scene .moving{animation:none!important}.controls{display:flex;align-items:center;gap:24px;padding:22px 24px;margin-top:16px;background:#fffcf2;border:1px solid var(--line);border-radius:18px}.button{font:inherit;font-size:13px;min-height:44px;padding:11px 19px;border:1px solid #94b3a7;border-radius:99px;background:#e5eee1;color:var(--ink);cursor:pointer;white-space:nowrap}.button:hover{background:#d5e6d7}.button:disabled{cursor:default;opacity:.6}.button:focus-visible,input:focus-visible{outline:3px solid #b47940;outline-offset:4px}.speed{flex:1;min-width:130px}.speed-label{display:flex;justify-content:space-between;gap:12px;font-size:13px}output{font-variant-numeric:tabular-nums;color:var(--accent)}input[type=range]{display:block;accent-color:var(--accent);width:100%;margin:16px 0 8px;cursor:pointer}.range-ends{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}.status{min-height:22px;margin:14px 8px 0;color:var(--muted);font-size:12px;line-height:1.8}.signature{margin:8px;color:#71817a;font-size:10px;letter-spacing:1px}html.embedded body{padding:0;background:var(--paper)}html.embedded header,html.embedded .signature{display:none}html.embedded .scene{border-radius:0}html.embedded .controls{margin:16px 18px 0}html.embedded .status{margin:12px 24px 18px}@media(max-width:560px){body{padding:20px 12px}.edition{display:none}.scene{border-radius:16px}.controls{flex-wrap:wrap;gap:14px;padding:18px 16px}.speed{order:-1;flex-basis:100%}.button{flex:1}.status{margin-top:12px}html.embedded .controls{margin:12px 12px 0}html.embedded .status{margin:12px 18px 16px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+<script>if(new URLSearchParams(location.search).has('embed'))document.documentElement.classList.add('embedded');</script>
+</head>
+<body>
+<main id="page">
+<header><div><p class="eyebrow">DAILY PERLICA / 2026.11.05</p><h1>佩丽卡的云端茶邮</h1><p class="intro">今天的交通工具：蒸汽茶壶独轮车。今天的衣服：飞行邮差制服。</p></div><div class="edition">每日奇想<b>001</b></div></header>
+<section class="scene" aria-label="佩丽卡驾驶蒸汽茶壶独轮车穿越云海">
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" id="perlica-art" role="img" aria-labelledby="title desc">
+  <title id="title">佩丽卡的云端茶邮 · 蒸汽茶壶独轮车</title>
+  <desc id="desc">参考用户提供的佩丽卡形象创作的原创矢量同人插画。浅银米色长发、尖耳、蓝色大眼睛和小鸟发饰的 Q 版佩丽卡，身穿奶白、紫罗兰与青色的飞行邮差制服，驾驶黄铜蒸汽茶壶独轮车穿过云海，手中拿着热茶。交通工具与服装为本次原创设计。所有图形均为 SVG 路径与形状，无外部图片。</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#123e50"/><stop offset=".55" stop-color="#1b5962"/><stop offset="1" stop-color="#38827a"/></linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffcc8a"/><stop offset="1" stop-color="#eaa779"/></linearGradient>
+    <linearGradient id="brass" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#ffe1a2"/><stop offset=".32" stop-color="#edb95f"/><stop offset=".72" stop-color="#d78b44"/><stop offset="1" stop-color="#b66739"/></linearGradient>
+    <linearGradient id="bill" x1="0" y1="0" x2="1" y2=".5"><stop stop-color="#ffe69e"/><stop offset=".6" stop-color="#f9c568"/><stop offset="1" stop-color="#ed8b4b"/></linearGradient>
+    <linearGradient id="pouch" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f2b975"/><stop offset="1" stop-color="#df875d"/></linearGradient>
+    <linearGradient id="feather" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff9df"/><stop offset="1" stop-color="#d8e7d6"/></linearGradient>
+    <linearGradient id="coat" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#30586d"/><stop offset="1" stop-color="#163e50"/></linearGradient>
+    <linearGradient id="cloud" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c3dbbc"/><stop offset="1" stop-color="#72b8a6"/></linearGradient>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#f4dba7" opacity=".1"/></pattern>
+    <clipPath id="canvas"><rect x="32" y="32" width="1536" height="1136" rx="36"/></clipPath>
+    <clipPath id="potClip"><path d="M620 720 C628 683 674 661 821 661 C948 661 1000 695 1014 737 C1072 914 946 982 804 972 C666 964 573 883 620 720Z"/></clipPath>
+    <g id="star"><path d="M0-12 Q2-2 12 0 Q2 2 0 12 Q-2 2-12 0 Q-2-2 0-12Z" fill="#f9dfa7"/></g>
+    <g id="envelope" stroke="#254c56" stroke-width="3" stroke-linejoin="round"><rect x="-49" y="-31" width="98" height="62" rx="6" fill="#f9e9bd"/><path d="M-48 29 0-6 48 29" fill="none"/><path d="M-48-28 0 8 48-28" fill="#fff4d2"/><circle cx="0" cy="6" r="8" fill="#ce6950" stroke="none"/><path d="m-3 6 3-3 3 3-3 3Z" fill="#f9e9bd" stroke="none"/></g>
+    <g id="rivet"><circle r="6" fill="#815638"/><circle cx="-1" cy="-1" r="3" fill="#ffe1a1"/></g>
+    <linearGradient id="hair" x1="0" y1="0" x2=".6" y2="1"><stop stop-color="#fff6e3"/><stop offset=".55" stop-color="#e9dfcf"/><stop offset="1" stop-color="#c2c5c5"/></linearGradient>
+    <linearGradient id="hairDark" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d6cbbb"/><stop offset="1" stop-color="#aaaeb2"/></linearGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff5df"/><stop offset="1" stop-color="#f5d6c4"/></linearGradient>
+    <linearGradient id="eyes" x1="0" y1="0" x2=".1" y2="1"><stop stop-color="#335b9f"/><stop offset=".65" stop-color="#4d8bd0"/><stop offset="1" stop-color="#7ecce3"/></linearGradient>
+    <linearGradient id="jacket" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff9e9"/><stop offset="1" stop-color="#c7ddda"/></linearGradient>
+    <style>
+      .ink{stroke:#173f48;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+      .fine{fill:none;stroke:#173f48;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+      .goldline{fill:none;stroke:#f9d599;stroke-width:2;stroke-linecap:round}
+      .small{font-family:Georgia,'Times New Roman',serif;letter-spacing:4px}
+
+      #courier{animation:float-courier 4s ease-in-out infinite}
+      #spokes{animation:turn-wheel 6s linear infinite;transform-origin:0 0}
+      #steam{animation:drift-steam 3s ease-in-out infinite}
+      #mail-0,#mail-1,#mail-2{animation:float-letter 4.8s ease-in-out infinite}
+      #mail-1{animation-delay:-1.6s}#mail-2{animation-delay:-3.2s}
+      svg[data-motion="paused"] .moving{animation-play-state:paused!important}
+      #motion-toggle{display:none;cursor:pointer;outline:none}
+      #motion-toggle:focus-visible rect{stroke:#fff7dd;stroke-width:3}
+      @keyframes float-courier{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+      @keyframes turn-wheel{to{transform:rotate(360deg)}}
+      @keyframes drift-steam{0%,100%{transform:translate(0,0);opacity:.72}50%{transform:translate(5px,-12px);opacity:1}}
+      @keyframes float-letter{0%,100%{transform:translate(0,0)}50%{transform:translate(5px,-9px)}}
+      @media(prefers-reduced-motion:reduce){.moving{animation:none!important}#motion-toggle{display:none!important}}
+    </style>
+  </defs>
+  <!-- A printed-paper border surrounds a fully scalable vector scene. -->
+  <rect width="1600" height="1200" fill="#f3ead0"/>
+  <g clip-path="url(#canvas)">
+    <rect x="32" y="32" width="1536" height="1136" fill="url(#sky)"/>
+    <rect x="32" y="32" width="1536" height="1136" fill="url(#dots)"/>
+    <!-- Orbital postal routes and the warm setting sun. -->
+    <circle cx="1011" cy="460" r="291" fill="url(#sun)"/>
+    <circle cx="1011" cy="460" r="306" fill="none" stroke="#f8dca2" stroke-width="1.5" opacity=".3"/>
+    <path d="M229 852 C66 576 380 204 819 206 C1300 208 1566 534 1384 879" fill="none" stroke="#e2d6a4" stroke-width="2" stroke-dasharray="6 16" opacity=".35"/>
+    <path d="M140 810 C252 642 521 568 823 629 C1107 685 1398 730 1491 627" fill="none" stroke="#d7e7c4" stroke-width="2" stroke-dasharray="4 14" opacity=".4"/>
+    <g fill="none" stroke="#e5d7a4" stroke-width="1.5" opacity=".35"><circle cx="1011" cy="460" r="325" stroke-dasharray="1 24"/><path d="M1390 187v71m-35-35h71"/><circle cx="1390" cy="223" r="26"/></g>
+    <!-- Spacious editorial lettering. -->
+    <g fill="#fff0c7"><text x="110" y="116" font-family="Georgia,'Times New Roman',serif" font-size="24" letter-spacing="7">PERLICA EXPRESS</text><path d="M110 143h284" stroke="#f3d5a3" stroke-width="1.5"/><text x="110" y="205" font-family="'Noto Serif CJK SC','Noto Serif SC',serif" font-size="49" font-weight="600" letter-spacing="5">云端茶邮</text><text x="113" y="245" font-family="sans-serif" font-size="14" letter-spacing="4" opacity=".7">ONE CUP · A THOUSAND MILES</text></g>
+    <g transform="translate(1380 115)" fill="#f4dbb0"><rect x="-81" y="-38" width="162" height="76" rx="38" fill="none" stroke="#f4dbb0" stroke-width="1.5" opacity=".6"/><text y="-4" text-anchor="middle" font-family="sans-serif" font-size="12" letter-spacing="3">DAILY PERLICA</text><text y="19" text-anchor="middle" font-family="Georgia,serif" font-size="20" letter-spacing="3">NO. 001</text></g>
+    <!-- High clouds and little celestial details. -->
+    <g fill="#a2c6b2" opacity=".2"><path d="M57 341c31-54 92-46 114-17 24-62 125-73 161-14 47-28 102-4 110 31Z"/><path d="M1238 315c19-29 51-31 73-12 4-35 57-49 81-12 29-14 59 1 66 24Z"/></g>
+    <g><use href="#star" x="526" y="154"/><use href="#star" x="637" y="287" transform="rotate(15 637 287)"/><use href="#star" x="1337" y="405"/><use href="#star" x="1463" y="499" transform="scale(.7) translate(627 214)"/><use href="#star" x="384" y="691"/><use href="#star" x="1189" y="213"/></g>
+    <g fill="#e7d8ac"><circle cx="580" cy="219" r="3"/><circle cx="724" cy="158" r="2"/><circle cx="1433" cy="367" r="3"/><circle cx="1300" cy="179" r="2"/><circle cx="1490" cy="668" r="3"/><circle cx="434" cy="337" r="3"/><circle cx="245" cy="594" r="3"/><circle cx="340" cy="747" r="2"/><circle cx="611" cy="389" r="2"/></g>
+    <!-- A distant floating post office. -->
+    <g transform="translate(218 496)" opacity=".8"><path d="M-71 27c12-31 40-31 55-15 10-42 64-45 82-4 27-15 49 1 49 23Z" fill="#a9cfb9"/><path d="M-28 10v-62h61v62" fill="#e5c68d" stroke="#214d56" stroke-width="3"/><path d="m-39-51 42-35 43 35Z" fill="#ca7c5d" stroke="#214d56" stroke-width="3"/><rect x="-14" y="-35" width="33" height="23" rx="2" fill="#285966"/><path d="m-13-34 15 13 16-13" stroke="#d8d8ab" stroke-width="2" fill="none"/><path d="M3-86v-31m1 2h25l-6 10H4" fill="#ead29d" stroke="#d0bd8f" stroke-width="3"/></g>
+    <!-- An arc of mail is caught in the slipstream. -->
+    <path d="M236 709 C371 584 244 428 441 419 C538 414 543 341 500 314" fill="none" stroke="#d8deba" stroke-width="2" stroke-dasharray="3 12" opacity=".65"/>
+    <g id="mail-0" class="moving"><g transform="translate(397 433) rotate(-19)"><use href="#envelope"/></g></g>
+    <g id="mail-1" class="moving"><g transform="translate(310 640) rotate(16) scale(.64)"><use href="#envelope"/></g></g>
+    <g id="mail-2" class="moving"><g transform="translate(524 324) rotate(24) scale(.48)"><use href="#envelope"/></g></g>
+    <!-- Cloud banks behind the vehicle. -->
+    <path d="M-50 991c24-65 119-81 164-27 30-102 150-103 198-15 46-35 109-13 123 35 67-92 193-53 193 43H-50Z" fill="#75ad9d" opacity=".6"/>
+    <path d="M1108 958c14-58 73-86 118-52 25-70 117-68 147-3 65-38 127 6 129 55 43-14 72 3 93 38v138h-487Z" fill="#a7cbb1" opacity=".55"/>
+    <path d="M-50 1103c33-64 107-71 150-29 29-91 138-112 199-36 52-46 132-14 137 46 50-30 103-11 125 32 43-69 126-82 177-32 48-62 128-46 161 2 40-40 111-25 130 24 43-92 153-113 223-45 46-53 131-30 148 31 46-20 105-3 130 40v65H-50Z" fill="url(#cloud)"/>
+    <g id="courier" class="moving">
+    <!-- Wind lifts a small flight scarf behind the silver hair. -->
+    <path d="M755 554C693 516 661 568 613 533 C582 511 551 517 527 537 L557 554 534 576 C594 555 628 601 693 586 L764 581Z" fill="#8b78a0" class="ink"/>
+    <path d="M735 565C677 545 661 586 603 554" fill="none" stroke="#c4a3ba" stroke-width="5" stroke-linecap="round"/>
+    <!-- Rear brass handle of the teapot. -->
+    <path d="M646 727 C463 635 451 898 653 909" fill="none" stroke="#183f47" stroke-width="48"/>
+    <path d="M646 727 C463 635 451 898 653 909" fill="none" stroke="#d8954a" stroke-width="37"/>
+    <path d="M631 727 C481 665 481 866 634 889" fill="none" stroke="#f9d28b" stroke-width="8"/>
+    <path d="M558 732q-32 59 4 112" fill="none" stroke="#a76839" stroke-width="6"/>
+    <!-- The unicycle: exposed, radial, and visibly mechanical. -->
+    <g transform="translate(827 1006)">
+      <circle r="135" fill="#193f48"/>
+      <circle r="123" fill="#31777b" stroke="#e3bb77" stroke-width="8"/>
+      <circle r="110" fill="#245762" stroke="#173f48" stroke-width="4"/>
+      <g id="spokes" class="moving" stroke="#9cc3b2" stroke-width="3" opacity=".9"><path d="M0-106V106M-106 0H106M-75-75 75 75M-75 75 75-75M-41-98 41 98M-98-41 98 41M-98 41 98-41M-41 98 41-98"/></g>
+      <circle r="36" fill="#dba35b" stroke="#173f48" stroke-width="5"/>
+      <circle r="21" fill="#f5ce88" stroke="#7d623d" stroke-width="3"/>
+      <circle r="8" fill="#1b444c"/>
+      <g fill="#e7d7a5"><circle cy="-129" r="3"/><circle cy="129" r="3"/><circle cx="129" r="3"/><circle cx="-129" r="3"/></g>
+      <path d="M-113-42A121 121 0 0 1 12-120" fill="none" stroke="#fff2c2" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <path d="M749 884 804 1007q23 20 47-2l59-135" fill="none" stroke="#173f48" stroke-width="24" stroke-linecap="round"/>
+    <path d="M749 884 804 1007q23 20 47-2l59-135" fill="none" stroke="#d2924d" stroke-width="14" stroke-linecap="round"/>
+    <path d="M826 1007h69l35-38h45" fill="none" stroke="#173f48" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M826 1007h69l35-38h45" fill="none" stroke="#e6bd72" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="947" y="958" width="74" height="17" rx="7" fill="#183e48"/>
+    <path d="M958 961h49" stroke="#81aba4" stroke-width="3"/>
+    <!-- Mail bag behind the pilot. -->
+    <g transform="rotate(-12 660 635)"><rect x="586" y="552" width="139" height="159" rx="21" fill="#b9724b" class="ink"/><path d="M586 587h139v-16q-1-19-20-19h-99q-20 2-20 19Z" fill="#d99a63" class="ink"/><path d="M598 609h114v87H598Z" fill="none" stroke="#f1bf83" stroke-width="2" stroke-dasharray="5 6"/><path d="M607 554v-31q49-31 99 0v31" fill="none" stroke="#173f48" stroke-width="14"/><path d="M607 554v-31q49-31 99 0v31" fill="none" stroke="#cb8959" stroke-width="7"/><use href="#envelope" transform="translate(655 643) scale(.65)"/><rect x="643" y="568" width="22" height="33" rx="5" fill="#8a503c" stroke="#173f48" stroke-width="3"/><rect x="647" y="578" width="14" height="14" rx="2" fill="none" stroke="#f9d389" stroke-width="3"/></g>
+    <!-- Perlica: a chibi interpretation of the user's reference. -->
+    <!-- Silver, warm-ivory hair forms a broad silhouette behind the uniform. -->
+    <path d="M661 323C604 372 610 495 591 567 L571 665 602 643 592 707 629 682 652 718 673 670 704 691 737 614 932 610 953 693 982 670 1013 709 1018 655 1054 678 1036 606 C1036 525 1071 429 1016 349Z" fill="url(#hairDark)" class="ink"/>
+    <path d="M653 438C629 522 659 598 616 665 653 652 684 612 687 563M1015 436C1016 523 969 598 1008 663 962 634 949 587 959 529" fill="#ece5d7" stroke="#173f48" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M632 536q-11 52-22 79m58-35-16 55m352-106q-14 50-8 80m-33-23 16 40" fill="none" stroke="#a7aaa9" stroke-width="3" stroke-linecap="round"/>
+    <!-- Compact seated body in a cream aviation-mail jacket. -->
+    <path d="M748 552q76-25 151 4l37 105-28 56H728l-25-59Z" fill="#3b455c" class="ink"/>
+    <path d="M749 551q33-15 63-8l11 151-91 20q-20-49-13-101Z" fill="url(#jacket)" class="ink"/>
+    <path d="M900 554q-35-16-66-11l-10 152 88 17q26-47 13-103Z" fill="url(#jacket)" class="ink"/>
+    <path d="M745 552 800 571 820 615 772 585 734 596Z" fill="#8f80a3" class="ink"/>
+    <path d="m900 552-53 20-22 44 48-32 40 10Z" fill="#8f80a3" class="ink"/>
+    <path d="m741 592 62 10 21 28m85-39-64 11-21 28v67" fill="none" stroke="#5bc2c3" stroke-width="8" stroke-linejoin="round"/>
+    <path d="m785 548 40 34 39-35-13-19h-54Z" fill="#fffae8" stroke="#173f48" stroke-width="4"/>
+    <path d="m815 558 10-12 10 12-10 13Z" fill="#b29cb4" stroke="#173f48" stroke-width="3"/>
+    <path d="m825 570-6 31 10 9 8-12-12-28" fill="#695777" stroke="#173f48" stroke-width="3"/>
+    <rect x="743" y="632" width="47" height="37" rx="4" fill="#d1d8d2" stroke="#678587" stroke-width="3"/>
+    <path d="M749 640h35v10h-35Z" fill="#f6e9d1"/>
+    <rect x="855" y="631" width="46" height="37" rx="4" fill="#d1d8d2" stroke="#678587" stroke-width="3"/>
+    <path d="M861 639h34v11h-34Z" fill="#f6e9d1"/>
+    <path d="M727 693q44 8 89-2m17 0q45 11 77 0" fill="none" stroke="#f0c786" stroke-width="5"/>
+    <!-- One hand keeps a very serious grip on a very small steering wheel. -->
+    <path d="M898 576C924 563 935 576 944 593l28 1 1 34q-55 20-75-25Z" fill="url(#jacket)" class="ink"/>
+    <path d="m943 593 5 38 18-3-2-36Z" fill="#364f5e" class="ink"/>
+    <path d="m947 603 18-3" stroke="#e8bc76" stroke-width="5"/>
+    <path d="M963 592q19-19 31-6l5 18q0 17-25 18l-9-6Z" fill="url(#skin)" class="ink"/>
+    <path d="M976 593q12-6 12 3v12m-10-8v14" fill="none" stroke="#be9584" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M988 599h35q15 0 15 15v91" fill="none" stroke="#173f48" stroke-width="13" stroke-linecap="round"/>
+    <path d="M988 599h35q15 0 15 15v91" fill="none" stroke="#e8bd76" stroke-width="6" stroke-linecap="round"/>
+    <rect x="978" y="591" width="38" height="16" rx="7" fill="#77624c" stroke="#173f48" stroke-width="3"/>
+    <path d="M988 594v10m8-10v10m8-10v10" stroke="#c7ac78" stroke-width="2"/>
+    <!-- The other hand has brought tea for the journey. -->
+    <path d="M746 578q-17-11-31 9l-17 28-19-11-17 31q37 35 61 8l28-41Z" fill="url(#jacket)" class="ink"/>
+    <path d="m678 604-17 31 18 10 18-32Z" fill="#394a5d" class="ink"/>
+    <path d="m674 615 17 10" stroke="#ebc683" stroke-width="5"/>
+    <path d="M671 606q-5-24-19-23-17 2-12 20l12 21 18-1Z" fill="url(#skin)" class="ink"/>
+    <g transform="translate(644 586) rotate(-9)"><path d="M-29-26h55l-4 43q-27 18-47-1Z" fill="#fff0c7" stroke="#173f48" stroke-width="4"/><path d="M26-18q31-3 26 18-3 14-28 11" fill="none" stroke="#173f48" stroke-width="11"/><path d="M26-18q31-3 26 18-3 14-28 11" fill="none" stroke="#f8ddaa" stroke-width="5"/><ellipse cy="-26" rx="28" ry="8" fill="#bb7b4c" stroke="#173f48" stroke-width="3"/><path d="M-24 2q26 9 47 0" fill="none" stroke="#72aaa7" stroke-width="6"/><path d="M-11-47c-14-19 13-21 4-40m20 38c-11-14 14-18 6-35" fill="none" stroke="#eff0d0" stroke-width="5" stroke-linecap="round" opacity=".75"/></g>
+    <!-- Face framed by signature long, light hair and pointed ears. -->
+    <path d="M647 365C637 306 688 267 757 259q91-26 175 8 104 21 100 122l-20 122q-26 43-173 48-132 1-183-42Z" fill="url(#hair)" class="ink"/>
+    <path d="M655 369C652 410 643 491 678 523q55 40 150 39 108 2 153-37 31-29 25-123l-47-59-257-3Z" fill="url(#skin)" class="ink"/>
+    <!-- Small human ears sit below the animal-like hair silhouette. -->
+    <path d="M666 445q-30-15-32 17-1 28 32 30M995 443q27-18 31 16 0 28-27 31" fill="#efc5ae" stroke="#173f48" stroke-width="4"/>
+    <path d="M649 458q15-4 12 17m350-20q-14 1-10 17" fill="none" stroke="#c68f7a" stroke-width="3" stroke-linecap="round"/>
+    <!-- Rounded rectangular blue eyes echo the reference, with crisp lashes. -->
+    <path d="M716 419q-2 48 5 62 32 12 60-1 5-35-1-65Z" fill="url(#eyes)" stroke="#223e49" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M881 417q-4 39 2 63 31 11 59-2 7-38 0-65Z" fill="url(#eyes)" stroke="#223e49" stroke-width="7" stroke-linejoin="round"/>
+    <path d="m704 422 13-9 63 2m91 6 12-10 60 2" fill="none" stroke="#223c46" stroke-width="9" stroke-linecap="round"/>
+    <path d="M723 433v34m166-35v34" stroke="#97c6ec" stroke-width="5" opacity=".65" stroke-linecap="round"/>
+    <path d="M728 476h41m122-1h39" stroke="#95e4ea" stroke-width="5" stroke-linecap="round"/>
+    <rect x="726" y="422" width="13" height="18" rx="5" fill="#fff7e6"/><rect x="893" y="420" width="13" height="18" rx="5" fill="#fff7e6"/>
+    <circle cx="770" cy="468" r="4" fill="#d1f3ed"/><circle cx="930" cy="467" r="4" fill="#d1f3ed"/>
+    <path d="M723 399q28-13 54-3m108-1q25-11 48-1" fill="none" stroke="#ac9c8d" stroke-width="4" stroke-linecap="round"/>
+    <!-- Soft blush and a tiny, delighted open mouth. -->
+    <ellipse cx="709" cy="503" rx="28" ry="13" fill="#efa59b" opacity=".55"/><ellipse cx="950" cy="501" rx="28" ry="13" fill="#efa59b" opacity=".55"/>
+    <g stroke="#d98783" stroke-width="3" stroke-linecap="round" opacity=".7"><path d="m697 500-6 7m18-9-6 10m18-10-6 10m224-10-6 10m18-10-6 10m18-10-6 10"/></g>
+    <path d="M808 522q1-25 21-25 24 0 26 25-24 16-47 0Z" fill="#ae6958" stroke="#173f48" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M812 521q16-14 38 1-20 11-38-1Z" fill="#ec9c7a"/>
+    <!-- The hair cap and pointed, tufted ears are the main recognizers. -->
+    <path d="M652 365C620 330 600 291 609 231 L690 271 728 297 Q821 244 919 290 L1025 228 Q1051 287 1018 331l23-3-15 26 17 5-29 27 C1036 431 1007 456 1001 493l-24-71-31-70-4 75-39-37-30 18-35-70-30 76-27-19-18 26-31-57-24 66-38 9-21 77-17-53-16 30Z" fill="url(#hair)" class="ink"/>
+    <path d="M622 250 641 322 689 292Z" fill="#d2bbb5"/><path d="m1014 248-63 53 55 22q21-36 8-75Z" fill="#d2bbb5"/>
+    <path d="m631 261 16 42 26-10m335-29-34 37 28 9" fill="none" stroke="#f6e6d5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M693 329q67-59 147-46M880 285q31 3 58 17M681 354q-31 45-29 83M965 342q23 40 30 75" fill="none" stroke="#fff9ec" stroke-width="10" stroke-linecap="round"/>
+    <path d="M799 299q-28 23-43 54m109-47 14 39m-166-1-15 37" fill="none" stroke="#cfccbf" stroke-width="3" stroke-linecap="round"/>
+    <path d="M740 276q6-24 26-35-2 20-3 33m21-3q10-22 30-30-7 18-12 31" fill="#ece6d8" class="ink"/>
+    <!-- Long side locks curl toward the little shoulders. -->
+    <path d="M669 390C640 457 657 548 703 579 L726 587 C695 539 705 476 701 438Z" fill="url(#hair)" class="ink"/>
+    <path d="M993 386C1021 449 1002 554 951 588l-26 7c36-60 29-105 36-154Z" fill="url(#hair)" class="ink"/>
+    <path d="M674 435q-9 82 31 124m285-134q12 83-44 142" fill="none" stroke="#fff5e3" stroke-width="7" stroke-linecap="round"/>
+    <path d="M685 486q1 35 13 56m280-55q-4 37-18 58" fill="none" stroke="#b8bdb7" stroke-width="3" stroke-linecap="round"/>
+    <!-- A miniature bird hairpin copied only as a recognizable motif. -->
+    <g transform="translate(647 357) rotate(-16)"><path d="M-27 4q-26 18-36-5l-6-16 27 6Z" fill="#d8ddd5" stroke="#173f48" stroke-width="4"/><path d="M-21-3q-20-24-8-33 13-12 27 13 31 0 33 26 2 29-32 31-30 0-33-20Z" fill="#fff8e6" stroke="#173f48" stroke-width="4"/><path d="M-31 13q31 20 58-2-4 29-30 25-28-1-28-23Z" fill="#29434a"/><path d="m23-9 15 5-13 9" fill="#e8af59" stroke="#173f48" stroke-width="3"/><circle cx="12" cy="-4" r="3.5" fill="#e6a34e"/><circle cx="13" cy="-5" r="1.8" fill="#173f48"/><path d="M-7 9q6 8 16 2" fill="none" stroke="#d0d5cb" stroke-width="3" stroke-linecap="round"/></g>
+    <!-- Tiny brass flight goggles rest like a headband, leaving both ears free. -->
+    <path d="M719 295q102-45 205 5" fill="none" stroke="#6f5a50" stroke-width="11" stroke-linecap="round"/>
+    <g transform="rotate(4 823 290)"><rect x="755" y="270" width="54" height="38" rx="15" fill="#d4ad70" stroke="#173f48" stroke-width="4"/><rect x="765" y="277" width="35" height="23" rx="9" fill="#3e767c" stroke="#f1d39a" stroke-width="2"/><rect x="831" y="270" width="54" height="38" rx="15" fill="#d4ad70" stroke="#173f48" stroke-width="4"/><rect x="840" y="277" width="36" height="23" rx="9" fill="#3e767c" stroke="#f1d39a" stroke-width="2"/><path d="M809 282h22" stroke="#173f48" stroke-width="8"/><path d="m774 280-5 14m83-14-5 14" stroke="#b8dad3" stroke-width="3" stroke-linecap="round"/></g>
+    <!-- Upright tea spout, also the steam engine's chimney. -->
+    <path d="M977 756 C1082 744 1098 645 1194 624 L1233 668 C1175 672 1174 789 1025 839Z" fill="url(#brass)" class="ink"/>
+    <path d="M1028 777c94-36 89-95 167-125" fill="none" stroke="#ffe1a1" stroke-width="10" stroke-linecap="round"/>
+    <path d="M1194 624q29 2 48 36-3 12-16 10-26-8-39-34Z" fill="#173f48" stroke="#d9a45b" stroke-width="7"/>
+    <ellipse cx="1211" cy="642" rx="10" ry="22" transform="rotate(-38 1211 642)" fill="#244b4c"/>
+    <!-- Teapot body with subtle brass engraving. -->
+    <path d="M620 720 C628 683 674 661 821 661 C948 661 1000 695 1014 737 C1072 914 946 982 804 972 C666 964 573 883 620 720Z" fill="url(#brass)" class="ink"/>
+    <g clip-path="url(#potClip)">
+      <path d="M604 755c48 77 50 154 180 185 116 28 193-11 245-64v88H610Z" fill="#b5753d" opacity=".28"/>
+      <path d="M646 765C633 835 657 885 705 912" fill="none" stroke="#ffdf9a" stroke-width="13" stroke-linecap="round" opacity=".7"/>
+      <path d="M668 763q132 70 303-1M682 919q123 45 247-3" fill="none" stroke="#9b693e" stroke-width="2" opacity=".55"/>
+      <path d="M677 777q130 64 284-1M690 908q116 43 233-1" fill="none" stroke="#fff0b2" stroke-width="2" opacity=".55"/>
+      <g fill="none" stroke="#ae7c46" stroke-width="2" opacity=".5"><path d="M696 809q-12 25 0 51m-3-35-13-9m13 38-12 6m279-51q12 25 0 51m3-35 13-9m-13 38 12 6"/><path d="M718 826q-9-9-16 0m16 21q-9 9-16 0m237-21q9-9 16 0m-16 21q9 9 16 0"/></g>
+    </g>
+    <!-- Open rim makes the bird clearly the rider, not part of the vessel. -->
+    <ellipse cx="817" cy="710" rx="199" ry="48" fill="#a76c3e" class="ink"/>
+    <ellipse cx="817" cy="701" rx="182" ry="35" fill="#153e46" stroke="#f8d28b" stroke-width="5"/>
+    <path d="M640 703q17 38 180 43 156-2 181-36" fill="none" stroke="#f5ca80" stroke-width="13" stroke-linecap="round"/>
+    <path d="M667 720q43 15 113 18" fill="none" stroke="#ffe7ae" stroke-width="4" stroke-linecap="round"/>
+    <!-- The enamel postal badge on the engine. -->
+    <g transform="translate(824 843)"><path d="M-69-45 0-65 69-45v61q0 48-69 69-69-21-69-69Z" fill="#23565b" stroke="#795a3e" stroke-width="5"/><path d="M-60-39 0-56 60-39v53q-1 39-60 62-59-23-60-62Z" fill="none" stroke="#e5bd78" stroke-width="2"/><g transform="translate(0 -8) scale(.69)"><use href="#envelope"/></g><path d="M-18 33h36M0 25v16" stroke="#d4bd83" stroke-width="2"/><circle cx="-37" cy="34" r="2" fill="#f3d18b"/><circle cx="37" cy="34" r="2" fill="#f3d18b"/></g>
+    <use href="#rivet" x="658" y="776"/><use href="#rivet" x="976" y="776"/><use href="#rivet" x="708" y="918"/><use href="#rivet" x="929" y="918"/>
+    <!-- Pressure gauge, knurled valve, and a small copper whistle. -->
+    <g transform="translate(1014 761)"><path d="M-7 23v22" stroke="#173f48" stroke-width="12"/><circle r="31" fill="#f2d497" stroke="#173f48" stroke-width="5"/><circle r="23" fill="#fff1c8" stroke="#b98545" stroke-width="2"/><path d="M-16 5a18 18 0 0 1 32-5" fill="none" stroke="#528380" stroke-width="4"/><path d="m0 0 10-13" stroke="#bb664b" stroke-width="3" stroke-linecap="round"/><circle r="4" fill="#173f48"/><path d="M-14 11h28" stroke="#b6a976" stroke-width="1.5"/></g>
+    <g transform="translate(653 808)"><path d="M0 11v18" stroke="#173f48" stroke-width="7"/><circle r="16" fill="#a5633e" stroke="#173f48" stroke-width="4"/><path d="M-23 0h46M0-23v46" stroke="#dca661" stroke-width="8" stroke-linecap="round"/><circle r="5" fill="#173f48"/></g>
+    </g>
+    <!-- Steam drifts up in hand-drawn curves. -->
+    <g id="steam" class="moving" fill="none" stroke="#eef0d2" stroke-linecap="round"><path d="M1220 610C1202 571 1256 568 1245 535C1237 512 1208 517 1213 492" stroke-width="12" opacity=".72"/><path d="M1263 618C1301 577 1260 562 1281 534C1299 509 1327 523 1327 493" stroke-width="8" opacity=".4"/><path d="M1192 584c-9-17 9-28 5-43" stroke-width="6" opacity=".35"/></g>
+    <g id="outgoing" opacity="0" aria-hidden="true"><use href="#envelope"/></g>
+    <!-- Cloud road and little motion accents. -->
+    <ellipse cx="825" cy="1143" rx="193" ry="14" fill="#477b76" opacity=".38"/>
+    <path d="M448 1032h146m-196 21h166m-72 22h103" fill="none" stroke="#e7e9c5" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+    <path d="M1090 1058q36-37 77-17m-30-28q38-44 92-20m109-38q42-27 76-9M136 1084q51-35 92-16" fill="none" stroke="#e5e9c9" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+    <!-- Small botanical clouds add a storybook finish. -->
+    <g transform="translate(1438 1116)" fill="none" stroke="#427e77" stroke-width="4" stroke-linecap="round"><path d="M0 0q-2-62-29-96M-7-36q25-33 44-40M-17-66q-38-17-49-10"/><path d="M-29-96q-20-5-11 19 22 6 11-19M36-76q-24-9-24 18 24 10 24-18M-66-76q9-23 27-5-4 19-27 5" fill="#599b8d"/></g>
+    <g transform="translate(111 1141)" fill="none" stroke="#4b8b7e" stroke-width="4" stroke-linecap="round"><path d="M0 0q7-37 36-61M12-28q-16-20-29-23"/><path d="M36-61q-19-13-23 14 20 9 23-14M-17-51q-8 22 17 23 6-20-17-23" fill="#70a68f"/></g>
+    <g fill="#e9d29c"><use href="#star" x="1363" y="820" transform="rotate(15 1363 820)"/><use href="#star" x="486" y="879" transform="rotate(15 486 879)"/></g>
+    <text x="110" y="934" fill="#d7ddbb" font-family="Georgia,serif" font-size="18" font-style="italic" letter-spacing="1">A letter, a little tea,</text><text x="110" y="963" fill="#d7ddbb" font-family="Georgia,serif" font-size="18" font-style="italic" letter-spacing="1">and somewhere new to be.</text>
+    <text x="1482" y="1125" text-anchor="end" fill="#2b655f" font-family="sans-serif" font-size="11" letter-spacing="3">PERLICA · CLOUD TEA COURIER</text>
+  </g>
+  <rect x="48" y="48" width="1504" height="1104" rx="23" fill="none" stroke="#e6d9ad" stroke-width="1" opacity=".4"/>
+  <g id="motion-toggle" role="button" tabindex="0" aria-label="暂停动画" aria-pressed="false">
+    <rect x="110" y="265" width="198" height="36" rx="18" fill="#f3ead0" fill-opacity=".92" stroke="#f5dba6"/>
+    <text id="motion-label" x="209" y="289" text-anchor="middle" fill="#173f48" font-family="sans-serif" font-size="13">暂停动画 · 点击或空格</text>
+  </g>
+</svg>
+
+</section>
+<section class="controls" aria-label="云端茶邮动画控制">
+<button id="pause" class="button" type="button" aria-pressed="false">暂停旅程</button>
+<div class="speed"><div class="speed-label"><label for="speed">云端巡航速度</label><output id="speed-value" for="speed">1.0 ×</output></div><input id="speed" type="range" min="0" max="2" step="0.1" value="1" aria-valuetext="1.0 倍速"><div class="range-ends"><span>歇一歇</span><span>慢慢送</span><span>追上风</span></div></div>
+<button id="send-letter" class="button" type="button">寄一封云端信 ↗</button>
+</section>
+<p class="status" id="status" role="status" aria-live="polite">茶水温热，邮路畅通。</p>
+<p class="signature">PERLICA EXPRESS · 一杯热茶，一路好奇。</p>
+<noscript><p class="status">当前显示静态 SVG 插画。开启 JavaScript 后可调节动画和寄出装饰信封。</p></noscript>
+</main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+const button=$('pause'), slider=$('speed'), status=$('status');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+let speed=1, userPaused=false, hostPaused=false, time=0, last=null, raf=0, sent=0, launchedAt=null;
+const canMove=()=>!userPaused&&!hostPaused&&!reduced.matches&&!document.hidden&&speed>0;
+function updateStatus(){
+ button.disabled=hostPaused||reduced.matches;
+ button.setAttribute('aria-pressed',String(userPaused||hostPaused||reduced.matches));
+ button.textContent=reduced.matches?'系统已减少动效':hostPaused?'已随全站暂停':userPaused?'继续旅程':'暂停旅程';
+ $('speed-value').textContent=speed.toFixed(1)+' ×';
+ slider.setAttribute('aria-valuetext',speed.toFixed(1)+' 倍速');
+ const state=reduced.matches?'静态欣赏中，已遵循系统的减少动态效果设置。':hostPaused?'已跟随博客暂停动效。':userPaused?'停在云端，喝口热茶。':speed===0?'歇一歇，看看云海。':'茶水温热，邮路畅通。';
+ status.textContent=state+(sent?' 已寄出 '+sent+' 封想象中的信。':'');
+}
+function render(){
+ const bob=Math.sin(time*1.5)*5;
+ $('courier').setAttribute('transform',`translate(0 ${bob.toFixed(3)}) rotate(${(Math.sin(time*.8)*.22).toFixed(3)} 827 780)`);
+ $('spokes').setAttribute('transform',`rotate(${(time*58%360).toFixed(3)})`);
+ $('steam').setAttribute('transform',`translate(${(Math.sin(time*1.3)*4).toFixed(3)} ${(-Math.sin(time*1.7)*7).toFixed(3)})`);
+ for(let i=0;i<3;i++) $('mail-'+i).setAttribute('transform',`translate(${(Math.sin(time*.8+i)*4).toFixed(3)} ${(Math.sin(time*1.2+i)*8).toFixed(3)})`);
+ if(launchedAt!==null){
+  const p=Math.min((time-launchedAt)/2.8,1), x=850+550*p, y=780-620*p+120*p*p;
+  $('outgoing').setAttribute('transform',`translate(${x} ${y}) rotate(${-16+32*p}) scale(${.65-.3*p})`);
+  $('outgoing').setAttribute('opacity',String(p<.8?1:Math.max(0,(1-p)*5)));
+  if(p>=1)launchedAt=null;
+ }
+}
+function frame(now){
+ raf=0;
+ if(!canMove()){last=null;return;}
+ if(last!==null)time+=Math.min((now-last)/1000,.05)*speed;
+ last=now;render();raf=requestAnimationFrame(frame);
+}
+function sync(){
+ if(raf)cancelAnimationFrame(raf);
+ raf=0;last=null;updateStatus();
+ if(canMove())raf=requestAnimationFrame(frame);
+}
+slider.addEventListener('input',()=>{speed=Number(slider.value);sync();});
+button.addEventListener('click',()=>{userPaused=!userPaused;sync();});
+$('send-letter').addEventListener('click',()=>{
+ sent++; launchedAt=canMove()?time:null;
+ if(!canMove())$('outgoing').setAttribute('opacity','0');
+ updateStatus();
+});
+reduced.addEventListener('change',sync);
+document.addEventListener('visibilitychange',sync);
+if(window.parent!==window){
+ const notifySize=()=>parent.postMessage({type:'toy:resize',height:Math.ceil($('page').getBoundingClientRect().height)},'*');
+ window.addEventListener('message',event=>{
+  if(event.source!==parent||event.data?.type!=='journal:motion'||typeof event.data.paused!=='boolean')return;
+  hostPaused=event.data.paused;sync();
+ });
+ new ResizeObserver(notifySize).observe($('page'));
+ parent.postMessage({type:'toy:ready'},'*');notifySize();
+}
+// Leave the original still composition intact until animation actually advances.
+updateStatus();sync();
+})();
+</script>
+</body>
+</html>
