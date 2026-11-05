@@ -23,15 +23,17 @@
 .player-play-symbol { width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 9px solid #d9faff; filter: drop-shadow(0 1px 2px #000); }
 [data-state='playing'] .player-play-symbol { width: 10px; height: 13px; border: 0; border-left: 3px solid #d9faff; border-right: 3px solid #d9faff; }
 [data-state='loading'] .player-play-symbol { width: 12px; height: 12px; border: 2px solid #d9faff; border-bottom-color: transparent; border-radius: 50%; }
-.player-rim { z-index: 1; position: absolute; display: grid; grid-template-columns: repeat(4, minmax(44px, 1fr)); left: 69px; right: 65px; top: 0; gap: 3px; height: 47px; }
+.player-rim { z-index: 1; position: absolute; display: grid; grid-template-columns: repeat(5, minmax(44px, 1fr)); left: 69px; right: 14px; top: 0; gap: 3px; height: 47px; }
 .player-rim button { display: grid; place-items: center; min-width: 0; min-height: 44px; padding: 0 0 5px; border: 1px solid #7a8b95; border-bottom: 0; border-radius: 3px 3px 0 0; background: linear-gradient(#edf4f7, #b2bec5 45%, #80909a 75%, #c5ced4); box-shadow: 0 1px 0 #fff inset; font: bold 19px/1 Arial, sans-serif; color: #163e55; text-shadow: 0 1px #fff8; }
 .player-rim button:first-child { font-size: 11px; letter-spacing: .04em; }
+.player-rim .player-skip { grid-template-rows: 16px 12px; align-content: center; gap: 1px; }
+.player-skip span { font: 700 9px/1 Arial, 'PingFang SC', sans-serif; letter-spacing: .03em; }
 .player-rim button:hover { color: #005ad3; background: linear-gradient(#edfbff, #b8e1eb 45%, #89b9ca 75%, #c4e3ec); }
 .player-lcd { z-index: 3; position: absolute; top: 47px; left: 71px; width: calc(100% - 124px); height: 46px; padding: 5px 8px; color: var(--lcd-ink); background: repeating-linear-gradient(0deg, transparent, transparent 2px, #1d434308 2px, #1d434308 3px), linear-gradient(#88c5c8, var(--lcd) 38%, #abdedc); border: 1px solid #41686c; border-radius: 2px; box-shadow: 1px 2px 2px #22383f7a inset; font-family: 'Courier New', monospace; font-weight: bold; }
 .player-song { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 28px; font-size: clamp(10px, .85vw, 13px); line-height: 16px; letter-spacing: .025em; }
-.player-track-switch { position: absolute; z-index: 2; top: 0; right: 0; display: grid; place-items: center; width: 26px; height: 24px; padding: 0; border: 0; color: var(--lcd-ink); background: transparent; font: bold 16px/1 'Courier New', monospace; }
-.player-track-switch:hover { color: #005ad3; background: #d8ffff66; }
-.player-track-switch:focus-visible { outline-width: 2px; outline-offset: 0; }
+.player-restart { position: absolute; z-index: 2; top: 0; right: 0; display: grid; place-items: center; width: 26px; height: 24px; padding: 0; border: 0; color: var(--lcd-ink); background: transparent; font: bold 16px/1 'Courier New', monospace; }
+.player-restart:hover { color: #005ad3; background: #d8ffff66; }
+.player-restart:focus-visible { outline-width: 2px; outline-offset: 0; }
 .player-readout { display: flex; align-items: center; gap: 6px; font-size: 14px; line-height: 17px; }
 .player-lcd-symbol { font-size: 8px; opacity: .4; }
 [data-state='playing'] .player-lcd-symbol { opacity: 1; }
@@ -72,11 +74,11 @@
   .reload-about .about-copy { grid-template-columns: 1fr; gap: 20px; padding: 55px 8vw; }
   .music-player-dock { justify-content: start; min-height: 210px; }
   .music-player[data-placement='floating'] { right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); }
-  .player-rim { right: 58px; }
+  .player-rim { right: 14px; }
   .player-song { font-size: 10px; }
 }
 @media (max-width: 370px) {
-  .player-rim { left: 63px; right: 47px; gap: 2px; }
+  .player-rim { left: 10px; right: 10px; gap: 2px; }
   .player-rim button { font-size: 17px; }
   .player-rim button:first-child { font-size: 10px; }
   .player-lcd { left: 65px; width: calc(100% - 112px); padding-left: 6px; padding-right: 6px; }

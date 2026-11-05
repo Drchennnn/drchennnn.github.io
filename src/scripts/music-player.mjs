@@ -1,4 +1,4 @@
-import { findMusicTrack, nextMusicTrack } from './music-tracks.mjs';
+import { findMusicTrack, nextMusicTrack, previousMusicTrack } from './music-tracks.mjs';
 
 const VOLUME_KEY = 'p3r-player-volume';
 const COLLAPSED_KEY = 'p3r-player-collapsed';
@@ -21,7 +21,8 @@ export function initMusicPlayer(doc = document, win = window) {
   const playButton = query('[data-player-play]');
   const restartButton = query('[data-player-restart]');
   const infoButton = query('[data-player-info]');
-  const trackButton = query('[data-player-track]');
+  const previousButton = query('[data-player-prev]');
+  const nextButton = query('[data-player-next]');
   const volumeDown = query('[data-player-volume-down]');
   const volumeUp = query('[data-player-volume-up]');
   const volumeInput = query('[data-player-volume]');
@@ -80,9 +81,12 @@ export function initMusicPlayer(doc = document, win = window) {
     infoButton?.setAttribute('aria-pressed', String(showArtist));
     if (mode) mode.textContent = track.mode;
     root.dataset.track = track.id;
+    const previous = previousMusicTrack(track.id);
     const next = nextMusicTrack(track.id);
-    trackButton?.setAttribute('aria-label', `切换到${next.id === 'instrumental' ? '伴奏版' : '原唱版'}`);
-    trackButton?.setAttribute('title', `切换到${next.id === 'instrumental' ? '伴奏版' : '原唱版'}`);
+    previousButton?.setAttribute('aria-label', '上一首');
+    nextButton?.setAttribute('aria-label', '下一首');
+    previousButton?.setAttribute('title', `上一首：${previous.id === 'instrumental' ? 'REMI 伴奏版' : '原唱版'}`);
+    nextButton?.setAttribute('title', `下一首：${next.id === 'instrumental' ? 'REMI 伴奏版' : '原唱版'}`);
   };
   const setPlayLabel = () => {
     if (!playButton) return;
@@ -404,7 +408,8 @@ export function initMusicPlayer(doc = document, win = window) {
     begin({ restart: true });
   });
   infoButton?.addEventListener('click', () => { showArtist = !showArtist; setTitle(); });
-  trackButton?.addEventListener('click', () => selectTrack(nextMusicTrack(track.id)));
+  previousButton?.addEventListener('click', () => selectTrack(previousMusicTrack(track.id)));
+  nextButton?.addEventListener('click', () => selectTrack(nextMusicTrack(track.id)));
   volumeDown?.addEventListener('click', () => applyVolume(volume - .05));
   volumeUp?.addEventListener('click', () => applyVolume(volume + .05));
   volumeInput?.addEventListener('input', event => applyVolume(event.target.value));
@@ -416,7 +421,7 @@ export function initMusicPlayer(doc = document, win = window) {
     setCollapsed(false);
     playButton?.focus?.();
   });
-  const isPlaybackControl = target => target === playButton || target === restartButton || target === trackButton || playButton?.contains?.(target) || restartButton?.contains?.(target) || trackButton?.contains?.(target);
+  const isPlaybackControl = target => [playButton, restartButton, previousButton, nextButton].some(control => control && (control === target || control.contains?.(target)));
   const activateFromGesture = event => {
     if (!gestureArmed || autoplayCancelled || disposed || playing || isPlaybackControl(event.target)) return;
     if (desiredPlaying && !autoplayInFlight) return;

@@ -28,7 +28,7 @@ class Clock {
 
 function mount({ mobile = false, reduce = false, saved = {}, noAudioContext = false, decodeRejects = 0, decodePending = false, resumeState = 'running', resumeStates, fetchPending = false, docked = true, autoplay = false } = {}) {
   const root = new Element(); if (autoplay) root.dataset.autoplay = 'true';
-  const selectors = ['[data-player-play]','[data-player-restart]','[data-player-info]','[data-player-track]','[data-player-volume-down]','[data-player-volume-up]','[data-player-volume]','[data-player-collapse]','[data-player-show]','[data-player-title]','[data-player-mode]','[data-player-elapsed]','[data-player-status]'];
+  const selectors = ['[data-player-play]','[data-player-restart]','[data-player-info]','[data-player-prev]','[data-player-next]','[data-player-volume-down]','[data-player-volume-up]','[data-player-volume]','[data-player-collapse]','[data-player-show]','[data-player-title]','[data-player-mode]','[data-player-elapsed]','[data-player-status]'];
   for (const selector of selectors) root.children.set(selector, new Element());
   root.bars = Array.from({ length: 5 }, () => new Element());
   const doc = new Element(); doc.hidden = false; doc.documentElement = new Element(); doc.documentElement.dataset.motion = 'on';
@@ -84,7 +84,7 @@ assert.equal(idle.requests.length, 0);
 assert.equal(idle.contexts.length, 0);
 assert.equal(idle.root.dataset.track, 'original');
 assert.equal(idle.node('[data-player-mode]').textContent, 'ORIG LOOP');
-assert.match(idle.node('[data-player-track]').getAttribute('aria-label'), /伴奏版/);
+assert.match(idle.node('[data-player-next]').getAttribute('title'), /伴奏版/);
 assert.equal(idle.node('[data-player-show]').getAttribute('aria-expanded'), 'false');
 idle.node('[data-player-show]').emit('click');
 assert.equal(idle.root.dataset.collapsed, 'false');
@@ -100,7 +100,7 @@ assert.equal(invalidChoice.node('[data-player-title]').textContent, 'COLOR YOUR 
 
 // Selecting a track while paused changes metadata without fetching or starting audio.
 const pausedChoice = mount();
-pausedChoice.node('[data-player-track]').emit('click');
+pausedChoice.node('[data-player-next]').emit('click');
 assert.equal(pausedChoice.root.dataset.track, 'instrumental');
 assert.equal(pausedChoice.prefs['p3r-player-track'], 'instrumental');
 assert.equal(pausedChoice.node('[data-player-mode]').textContent, 'INST LOOP');
@@ -109,10 +109,32 @@ assert.equal(pausedChoice.root.dataset.state, 'paused');
 assert.equal(pausedChoice.requests.length, 0);
 pausedChoice.node('[data-player-info]').emit('click');
 assert.equal(pausedChoice.node('[data-player-title]').textContent, 'REMI');
-assert.match(pausedChoice.node('[data-player-track]').getAttribute('aria-label'), /原唱版/);
+assert.match(pausedChoice.node('[data-player-next]').getAttribute('title'), /原唱版/);
 const restoredChoice = mount({ saved: pausedChoice.prefs });
 assert.equal(restoredChoice.root.dataset.track, 'instrumental');
 assert.equal(restoredChoice.requests.length, 0);
+
+// Previous wraps at the first track and preserves pause; during playback it selects a new opening.
+const previousChoice = mount();
+assert.equal(previousChoice.node('[data-player-prev]').getAttribute('aria-label'), '上一首');
+assert.equal(previousChoice.node('[data-player-next]').getAttribute('aria-label'), '下一首');
+previousChoice.node('[data-player-prev]').emit('click');
+assert.equal(previousChoice.root.dataset.track, 'instrumental');
+assert.equal(previousChoice.root.dataset.state, 'paused');
+assert.equal(previousChoice.requests.length, 0);
+previousChoice.node('[data-player-prev]').emit('click');
+assert.equal(previousChoice.root.dataset.track, 'original');
+previousChoice.node('[data-player-play]').emit('click');
+await flush();
+const beforePrevious = previousChoice.contexts[0].sources.at(-1);
+previousChoice.contexts[0].currentTime = 15;
+previousChoice.node('[data-player-prev]').emit('click');
+await flush();
+assert.equal(previousChoice.root.dataset.track, 'instrumental');
+assert.equal(previousChoice.root.dataset.state, 'playing');
+assert.equal(beforePrevious.stopped, true);
+assert.equal(previousChoice.contexts[0].sources.at(-1).started.offset, 0);
+assert.equal(previousChoice.contexts.length, 1);
 
 const nonHome = mount({ docked: false });
 assert.equal(nonHome.root.dataset.placement, 'floating');
@@ -191,7 +213,7 @@ assert.equal(autoButton.requests.length, 1);
 // The track control owns the blocked-autoplay gesture and never starts the old selection first.
 const autoTrackButton = mount({ autoplay: true, resumeStates: ['reject', 'running'] });
 await flush();
-const autoTrackControl = autoTrackButton.node('[data-player-track]');
+const autoTrackControl = autoTrackButton.node('[data-player-next]');
 autoTrackButton.doc.emit('pointerdown', { target: autoTrackControl });
 autoTrackControl.emit('click');
 autoTrackButton.doc.emit('click', { target: autoTrackControl });
@@ -199,6 +221,20 @@ await flush();
 assert.equal(autoTrackButton.root.dataset.track, 'instrumental');
 assert.equal(autoTrackButton.root.dataset.state, 'paused');
 assert.equal(autoTrackButton.requests.length, 0);
+
+const autoPreviousButton = mount({ autoplay: true, resumeStates: ['reject', 'running'] });
+await flush();
+const previousGlyph = new Element();
+const previousControl = autoPreviousButton.node('[data-player-prev]');
+previousControl.children.set('glyph', previousGlyph);
+autoPreviousButton.doc.emit('pointerdown', { target: previousGlyph });
+autoPreviousButton.doc.emit('keydown', { target: previousControl, key: 'Enter' });
+previousControl.emit('click');
+autoPreviousButton.doc.emit('click', { target: previousGlyph });
+await flush();
+assert.equal(autoPreviousButton.root.dataset.track, 'instrumental');
+assert.equal(autoPreviousButton.root.dataset.state, 'paused');
+assert.equal(autoPreviousButton.requests.length, 0, 'previous and its icon must not start the old blocked selection');
 
 // Explicit cancellation defeats timeout, late resume and later fallback gestures.
 const autoCancelled = mount({ autoplay: true, resumeStates: ['pending'] });
@@ -235,7 +271,7 @@ assert.equal(firstSource.loopEnd, 208.1064399);
 assert.deepEqual(firstSource.started, { when: 0, offset: 0 });
 
 // Switching while playing starts the selected track at its true opening using the same context.
-idle.node('[data-player-track]').emit('click');
+idle.node('[data-player-next]').emit('click');
 await flush();
 assert.equal(idle.contexts.length, 1);
 assert.deepEqual(idle.requests, ['/music/color-your-night-loop.mp3', '/music/color-your-night-instrumental-loop.mp3']);
@@ -243,7 +279,7 @@ assert.equal(idle.root.dataset.track, 'instrumental');
 assert.equal(idle.contexts[0].sources.at(-1).started.offset, 0);
 assert.equal(idle.contexts[0].sources.at(-1).loopStart, MUSIC_TRACKS[1].loopStart);
 assert.match(idle.node('[data-player-status]').textContent, /INSTRUMENTAL/);
-idle.node('[data-player-track]').emit('click');
+idle.node('[data-player-next]').emit('click');
 await flush();
 assert.equal(idle.root.dataset.track, 'original');
 assert.equal(idle.contexts[0].sources.at(-1).started.offset, 0);
@@ -252,7 +288,7 @@ assert.equal(idle.contexts.length, 1, 'track changes reuse one AudioContext');
 
 // Astro route placement and manual detachment preserve the selected track and source.
 const trackNav = mount();
-trackNav.node('[data-player-track]').emit('click');
+trackNav.node('[data-player-next]').emit('click');
 trackNav.node('[data-player-play]').emit('click');
 await flush();
 const trackNavSource = trackNav.contexts[0].sources.at(-1);
@@ -385,9 +421,9 @@ assert.equal(rapid.root.dataset.state, 'playing');
 const trackRace = mount({ fetchPending: true });
 trackRace.node('[data-player-play]').emit('click');
 await flush();
-trackRace.node('[data-player-track]').emit('click');
+trackRace.node('[data-player-next]').emit('click');
 await flush();
-trackRace.node('[data-player-track]').emit('click');
+trackRace.node('[data-player-next]').emit('click');
 await flush();
 assert.deepEqual(trackRace.requests, [
   '/music/color-your-night-loop.mp3',
@@ -409,9 +445,9 @@ assert.equal(trackRace.contexts[0].sources[0].loopStart, MUSIC_TRACKS[0].loopSta
 const decodeRace = mount({ decodePending: true });
 decodeRace.node('[data-player-play]').emit('click');
 await flush();
-decodeRace.node('[data-player-track]').emit('click');
+decodeRace.node('[data-player-next]').emit('click');
 await flush();
-decodeRace.node('[data-player-track]').emit('click');
+decodeRace.node('[data-player-next]').emit('click');
 await flush();
 assert.equal(decodeRace.pendingDecodes.length, 3);
 decodeRace.pendingDecodes[1].resolve();
@@ -436,7 +472,7 @@ assert.equal(retry.requests.length, 2);
 
 // A failed instrumental load retries the same selection without falling back to original.
 const instrumentalRetry = mount({ decodeRejects: 1 });
-instrumentalRetry.node('[data-player-track]').emit('click');
+instrumentalRetry.node('[data-player-next]').emit('click');
 instrumentalRetry.node('[data-player-play]').emit('click');
 await flush();
 assert.equal(instrumentalRetry.root.dataset.track, 'instrumental');

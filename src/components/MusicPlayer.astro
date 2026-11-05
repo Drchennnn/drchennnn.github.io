@@ -13,14 +13,15 @@ import '../styles/player-drag.css';
       <button type="button" data-player-info aria-label="切换显示曲名或歌手" title="曲名 / 歌手"><span aria-hidden="true">INFO</span></button>
       <button type="button" data-player-volume-down aria-label="降低音乐音量" title="音量 −"><span aria-hidden="true">−</span></button>
       <button type="button" data-player-volume-up aria-label="提高音乐音量" title="音量 ＋"><span aria-hidden="true">＋</span></button>
-      <button type="button" data-player-restart aria-label="从头播放音乐" title="从头播放"><span aria-hidden="true">↶</span></button>
+      <button type="button" class="player-skip" data-player-prev aria-label="上一首" title="上一首"><svg viewBox="0 0 24 24" width="17" height="16" aria-hidden="true"><path fill="currentColor" d="M4 4h2v16H4zm14 0v16L8 12z" /></svg><span>上一首</span></button>
+      <button type="button" class="player-skip" data-player-next aria-label="下一首" title="下一首"><svg viewBox="0 0 24 24" width="17" height="16" aria-hidden="true"><path fill="currentColor" d="M18 4h2v16h-2zM6 4l10 8-10 8z" /></svg><span>下一首</span></button>
     </div>
     <div class="player-shell" aria-hidden="true"><span class="player-cap"></span><span class="player-loop-ring"></span></div>
     <button class="player-drag-handle" data-player-drag-handle type="button" aria-label="拖动音乐播放器" title="拖动播放器；方向键微调，Home 归位"></button>
     <button class="player-main" type="button" data-player-play aria-label="播放 Color Your Night" aria-pressed="false" title="播放 / 暂停"><span class="player-play-symbol" aria-hidden="true"></span></button>
     <div class="player-lcd">
       <span class="player-song" data-player-title>COLOR YOUR NIGHT</span>
-      <button class="player-track-switch" data-player-track type="button" aria-label="切换伴奏版" title="切换伴奏版"><span aria-hidden="true">⇄</span></button>
+      <button class="player-restart" data-player-restart type="button" aria-label="从头播放音乐" title="从头播放"><span aria-hidden="true">↶</span></button>
       <div class="player-readout"><span class="player-lcd-symbol" aria-hidden="true">▶</span><span data-player-elapsed>00:00</span><span class="player-mode" data-player-mode>ORIG LOOP</span></div>
       <div class="player-spectrum" aria-hidden="true">{Array.from({ length: 5 }, () => <i data-player-bar></i>)}</div>
     </div>

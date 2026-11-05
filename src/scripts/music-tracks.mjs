@@ -27,3 +27,8 @@ export function nextMusicTrack(id) {
   const index = MUSIC_TRACKS.findIndex(track => track.id === id);
   return MUSIC_TRACKS[(index < 0 ? 0 : index + 1) % MUSIC_TRACKS.length];
 }
+
+export function previousMusicTrack(id) {
+  const index = MUSIC_TRACKS.findIndex(track => track.id === id);
+  return MUSIC_TRACKS[index < 0 ? 0 : (index - 1 + MUSIC_TRACKS.length) % MUSIC_TRACKS.length];
+}
