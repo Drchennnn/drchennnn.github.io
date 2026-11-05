@@ -44,6 +44,8 @@
     margin: 0;
     max-width: calc(100vw - 32px);
   }
+  /* Preserve the expanded width inline, but let the hidden player occupy only its launcher. */
+  .music-player[data-player-detached='true'][data-collapsed='true'] { width: 108px !important; }
   .music-player[data-dragging='true'] {
     filter: drop-shadow(0 10px 12px #00153b38);
   }
