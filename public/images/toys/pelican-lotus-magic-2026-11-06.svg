@@ -31,6 +31,8 @@
  @keyframes twinkle{0%,100%{opacity:.4}50%{opacity:1}}
  @keyframes wake{0%,100%{transform:scaleX(.98);opacity:.45}50%{transform:scaleX(1.04);opacity:.8}}
  @media(prefers-reduced-motion:reduce){.moving{animation:none!important}#svg-toggle{display:none!important}}
+ /* Gallery images stay still; the downloadable SVG and interactive demo animate. */
+ .moving{animation:none!important}
  </style>
 </defs>
 <rect width="1400" height="1100" fill="#efe5d1"/>
