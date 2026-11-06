@@ -1,0 +1,19 @@
+{
+  "dateHKT": "2026-11-06",
+  "transport": "莲叶气垫船",
+  "outfit": "魔术师的紫色燕尾服与高礼帽",
+  "method": "Python secrets.choice; independent uniform draws from 12 vehicle and 12 outfit options, excluding yesterday’s teapot-unicycle and aviation-mail uniform.",
+  "title": "鹈鹕的莲叶魔术航线",
+  "slug": "pelican-lotus-magic-2026-11-06",
+  "subject": "Actual white pelican bird, not Perlica",
+  "artwork": "Original SVG paths, shapes, gradients and lettering created for this edition. No third-party assets or external dependencies.",
+  "recentWorksChecked": [
+    "pelican-ride",
+    "pelican-run",
+    "pelica-zhuang-chase",
+    "perlica-cloud-tea-2026-11-05"
+  ],
+  "baselineCommit": "929106a76b3bb5fb16db6c56c2647f8b1872470e",
+  "duplicateDateCheck": "No 2026-11-06 toy or SVG was present in the repository tree before creation.",
+  "animation": "Native CSS keyframes inside SVG. Manual pause, prefers-reduced-motion and document visibility; wrapper also accepts journal:motion from its exact parent window."
+}
