@@ -1,0 +1,57 @@
+{
+  "dateHKT": "2026-11-07",
+  "transport": "钟表穿梭舱",
+  "outfit": "深蓝侦探风衣与格纹帽",
+  "vehicles": [
+    "月牙轨道列车",
+    "水母热气球",
+    "蜗牛履带车",
+    "折纸潜水艇",
+    "蒲公英滑翔机",
+    "星际独木舟",
+    "蘑菇缆车",
+    "钟表穿梭舱",
+    "贝壳气垫摩托",
+    "彗星滑板",
+    "巨型飞鱼渡船",
+    "云端旋翼背包"
+  ],
+  "outfits": [
+    "海军蓝厨师服与白色高厨师帽",
+    "橘色宇航服与透明头盔",
+    "墨绿园丁背带裤与草帽",
+    "珊瑚红雨衣与雨靴",
+    "深蓝侦探风衣与格纹帽",
+    "红白赛车服与护目镜",
+    "奶油色牧羊毛衣与贝雷帽",
+    "青色潜水服与铜潜水头盔",
+    "白金交响乐指挥燕尾服",
+    "紫红骑士披风与羽毛盔",
+    "靛蓝工装与星形安全帽",
+    "薄荷色芭蕾练功服与披肩"
+  ],
+  "title": "鹈鹕的零点侦探",
+  "slug": "pelican-clock-detective-2026-11-07",
+  "subject": "Actual white pelican bird, not Perlica",
+  "method": "Two independent Python secrets.choice draws, uniformly from the recorded 12-option vehicle and outfit lists. Recent vehicles and outfits were excluded before drawing.",
+  "artwork": "Original SVG paths, shapes, gradients and lettering. No external assets or libraries.",
+  "recentWorksChecked": [
+    "pelican-ride",
+    "pelican-run",
+    "pelica-zhuang-chase",
+    "perlica-cloud-tea-2026-11-05",
+    "pelican-lotus-magic-2026-11-06"
+  ],
+  "excludedRecentTransport": [
+    "bicycle",
+    "teapot unicycle",
+    "lotus hovercraft"
+  ],
+  "excludedRecentOutfit": [
+    "aviation-mail uniform",
+    "purple magician tailcoat and top hat"
+  ],
+  "baselineCommit": "127e8a917b25c391f8cad30dd3a766c28b202b98",
+  "duplicateDateCheck": "No toy dated 2026-11-07 found in the repository tree at baseline.",
+  "animation": "Native SVG CSS keyframes. Standalone keyboard/click pause, reduced motion and page visibility; wrapper also accepts journal:motion from its exact parent window. Static gallery cover."
+}
