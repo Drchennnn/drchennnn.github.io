@@ -1,0 +1,20 @@
+{
+  "dateHKT": "2026-11-08",
+  "transport": "彗星雪橇",
+  "outfit": "灯塔守夜人的黄雨衣与渔夫帽",
+  "method": "Independent uniform random draws using Python secrets.choice from 12 vehicles and 12 outfits; recent teapot/unicycle, lotus hovercraft, clock vehicle, flight-mail, magician and detective combinations excluded.",
+  "title": "鹈鹕的彗星夜航",
+  "slug": "pelican-comet-keeper-2026-11-08",
+  "subject": "Actual white pelican bird, not Perlica",
+  "artwork": "Original SVG paths, shapes, gradients, patterns and lettering. No third-party assets or external libraries.",
+  "recentWorksChecked": [
+    "pelican-ride",
+    "pelican-run",
+    "perlica-cloud-tea-2026-11-05",
+    "pelican-lotus-magic-2026-11-06",
+    "pelican-clock-detective-2026-11-07"
+  ],
+  "baselineCommit": "12d5fe113a468fd55f331d495cb9c8d72ac14cc3",
+  "duplicateDateCheck": "No toy dated 2026-11-08 present in the repository tree before creation.",
+  "animation": "Native CSS keyframes inside SVG; keyboard/click pause, reduced motion and document visibility. Wrapper accepts journal:motion only from exact parent. Static gallery cover."
+}
