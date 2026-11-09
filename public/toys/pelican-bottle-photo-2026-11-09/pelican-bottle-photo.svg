@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" id="pelican-art" role="group" aria-labelledby="art-title art-desc">
+<title id="art-title">鹈鹕的瓶中摄影航线</title>
+<desc id="art-desc">一只真正的白鹈鹕穿卡其摄影马甲、戴墨绿色贝雷帽，在巨大的透明玻璃瓶潜水艇里端起相机，为窗外的珊瑚色小鱼拍照。长鸟喙、宽喉囊、弯颈与橙色蹼足清晰可见。瓶口用木塞密封，尾部螺旋桨缓缓转动，气泡上浮，海草轻摆。画面由原创矢量路径和形状组成。</desc>
+<defs>
+ <linearGradient id="ocean" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#d4e8d7"/><stop offset=".36" stop-color="#91c8b9"/><stop offset=".73" stop-color="#519f9e"/><stop offset="1" stop-color="#317d86"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e8f4d9" stop-opacity=".55"/><stop offset=".5" stop-color="#d7edd8" stop-opacity=".1"/><stop offset="1" stop-color="#c1e0cf" stop-opacity=".55"/></linearGradient>
+ <linearGradient id="feather" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#fffbea"/><stop offset="1" stop-color="#c6dacb"/></linearGradient>
+ <linearGradient id="bill" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#ffe1a0"/><stop offset=".65" stop-color="#efb467"/><stop offset="1" stop-color="#d98b59"/></linearGradient>
+ <linearGradient id="pouch" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f4d294"/><stop offset="1" stop-color="#dc9c73"/></linearGradient>
+ <linearGradient id="vest" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e4cf9f"/><stop offset=".65" stop-color="#bdab7c"/><stop offset="1" stop-color="#8e8f69"/></linearGradient>
+ <linearGradient id="cork" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#d2ac72"/><stop offset="1" stop-color="#9e7752"/></linearGradient>
+ <linearGradient id="metal" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#f1d9a5"/><stop offset=".6" stop-color="#b89761"/><stop offset="1" stop-color="#857653"/></linearGradient>
+ <linearGradient id="lens" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#284f5b"/><stop offset=".5" stop-color="#5e9e9d"/><stop offset="1" stop-color="#a5ccbe"/></linearGradient>
+ <radialGradient id="bubble"><stop offset=".5" stop-color="#f7f4d3" stop-opacity="0"/><stop offset="1" stop-color="#ecf3d5" stop-opacity=".4"/></radialGradient>
+ <pattern id="paper-grain" width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="2" cy="3" r=".7" fill="#e9efd0" opacity=".12"/></pattern>
+ <clipPath id="canvas"><rect x="28" y="28" width="1544" height="1044" rx="25"/></clipPath>
+ <g id="fish" stroke="#3a6670" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M-38 0C-16-34 29-28 54 0C30 29-17 34-38 0L-67 25-62-25Z" fill="#eaa08a"/><path d="m-9-23 22-20 17 22M-2 24l15 17 20-23" fill="#d68876"/><path d="M27-16q-14 17 0 33" fill="none"/><circle cx="38" cy="-4" r="4" fill="#254c57" stroke="none"/><path d="m-18-12 3 8m-4 10 4 8m6-22 3 9" fill="none" stroke="#f7cfb3" stroke-width="2"/></g>
+ <g id="little-fish" fill="#d1ddb4"><path d="M-15 0Q0-17 22 0Q0 17-15 0L-28 12-27-11Z"/><circle cx="13" cy="-2" r="2" fill="#52838a"/></g>
+ <g id="air"><circle r="18" fill="url(#bubble)" stroke="#dcebd0" stroke-width="1.5"/><path d="M-11-7q4-7 12-7" fill="none" stroke="#f9f5d9" stroke-width="2.5" stroke-linecap="round"/></g>
+ <g id="leaf"><path d="M0 0C-54-21-72-68-35-99C-3-76 14-37 0 0Z" fill="#4f9c87" stroke="#326f75" stroke-width="2.5"/><path d="M-34-88Q-7-42 0 0" fill="none" stroke="#a0c5a2" stroke-width="2"/></g>
+ <style>
+ .ink{stroke:#2b535d;stroke-width:4.5;stroke-linejoin:round;stroke-linecap:round}.fine{fill:none;stroke:#527575;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+ .light-ray{opacity:.22}
+ #submarine{animation:sub-float 7s ease-in-out infinite;transform-origin:800px 550px}#propeller{animation:prop-turn 5s linear infinite;transform-origin:0 0}.fish-school{animation:fish-drift 9s ease-in-out infinite}.fish-school.two{animation-delay:-4.5s}.air-column{animation:bubble-rise 8s linear infinite}.air-column.second{animation-delay:-4s}.kelp{animation:kelp-sway 8s ease-in-out infinite;transform-origin:0 0}.kelp.second{animation-delay:-4s}#eye{animation:blink 8.5s infinite;transform-box:fill-box;transform-origin:center}.light-ray{animation:ray-breathe 12s ease-in-out infinite}#camera-shine{animation:lens-glow 5.5s ease-in-out infinite}.photo-focus{animation:focus-breathe 6s ease-in-out infinite}
+ svg[data-motion="paused"] .moving{animation-play-state:paused!important}#svg-toggle{display:none;cursor:pointer}#svg-toggle:focus-visible{outline:none}#svg-toggle:focus-visible rect{stroke:#fff7d5;stroke-width:4}
+ @keyframes sub-float{0%,100%{transform:translate(0,0) rotate(-.6deg)}50%{transform:translate(8px,-14px) rotate(.6deg)}}
+ @keyframes prop-turn{to{transform:rotate(360deg)}}
+ @keyframes fish-drift{0%,100%{transform:translate(0,0)}50%{transform:translate(-28px,10px)}}
+ @keyframes bubble-rise{0%{transform:translateY(25px);opacity:0}15%,75%{opacity:.8}100%{transform:translateY(-100px);opacity:0}}
+ @keyframes kelp-sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+ @keyframes blink{0%,51%,55%,100%{transform:scaleY(1)}53%{transform:scaleY(.1)}}
+ @keyframes ray-breathe{0%,100%{opacity:.18}50%{opacity:.32}}
+ @keyframes lens-glow{0%,100%{opacity:.4}50%{opacity:.85}}
+ @keyframes focus-breathe{0%,100%{opacity:.3}50%{opacity:.75}}
+ @media(prefers-reduced-motion:reduce){.moving{animation:none!important}#svg-toggle{display:none!important}}
+ </style>
+</defs>
+<rect width="1600" height="1100" fill="#f0e9d5"/>
+<g clip-path="url(#canvas)">
+ <rect x="28" y="28" width="1544" height="1044" fill="url(#ocean)"/>
+ <g class="moving light-ray" fill="#f5f1cd"><path d="m830 28-351 761 169 69L930 28Z"/><path d="M1056 28 943 881l89 19 97-872Z"/><path d="m1219 28 115 814 176-24L1293 28Z"/></g>
+ <g fill="none" stroke="#eef0d0" stroke-width="2" opacity=".55"><path d="M52 80Q172 50 289 78T539 80T803 71T1065 78T1324 75T1580 74"/><path d="M93 94q95-22 159-7m839 6q107-23 184-1m67-4 137-3"/></g>
+ <!-- Small distant shoals establish depth without crowding the subject. -->
+ <g class="moving fish-school" opacity=".65"><use href="#little-fish" x="1086" y="179"/><use href="#little-fish" x="1154" y="158"/><use href="#little-fish" x="1220" y="178"/><use href="#little-fish" x="1132" y="212"/><use href="#little-fish" x="1234" y="226"/></g>
+ <g class="moving fish-school two" opacity=".45"><use href="#little-fish" x="205" y="419"/><use href="#little-fish" x="152" y="443"/><use href="#little-fish" x="249" y="453"/></g>
+ <!-- Headline is printed above the glass shoulder, in the bright surface light. -->
+ <g fill="#285861"><text x="103" y="144" font-family="sans-serif" font-size="15" letter-spacing="5">DAILY PELICAN / 2026.11.09</text><path d="M103 169h238" stroke="#638f8c"/><text x="99" y="238" font-family="'Noto Serif CJK SC','Noto Serif SC',serif" font-size="51" font-weight="600" letter-spacing="4">瓶中摄影航线</text><text x="105" y="280" font-family="Georgia,serif" font-size="17" letter-spacing="3">A LITTLE WINDOW INTO THE BLUE</text><text x="105" y="319" font-family="sans-serif" font-size="13" letter-spacing="2">今天，给路过的小鱼拍张照。</text></g>
+ <g transform="translate(1464 142)" fill="#2d6670"><circle r="48" fill="none" stroke="#63968f"/><text y="-11" text-anchor="middle" font-family="sans-serif" font-size="10" letter-spacing="2">每日奇想</text><text y="23" text-anchor="middle" font-family="Georgia,serif" font-size="32">005</text></g>
+ <!-- Sea floor and low distant seagrass. -->
+ <path d="M28 941C188 871 332 919 505 885C757 851 919 925 1124 872C1326 822 1459 903 1572 874V1072H28Z" fill="#527f79" opacity=".6"/>
+ <path d="M28 992C180 927 383 984 551 944C768 892 957 987 1151 932C1355 890 1464 944 1572 928V1072H28Z" fill="#d3d5ae"/>
+ <path d="M28 1019C206 959 377 1009 566 972C764 935 991 1000 1179 965C1369 930 1467 970 1572 960V1072H28Z" fill="#e2dfbd"/>
+ <g fill="none" stroke="#b6c29f" stroke-width="2"><path d="M370 1035q98-20 191-4m484-13q74-17 147-4m-448 33 109-5"/></g>
+ <g fill="#9cb89d"><ellipse cx="397" cy="985" rx="14" ry="5"/><ellipse cx="1115" cy="1006" rx="10" ry="4"/><ellipse cx="1248" cy="965" rx="16" ry="5"/><ellipse cx="646" cy="1015" rx="9" ry="3"/></g>
+ <!-- Glass submarine: a broad transparent bottle and a real cork at the tail. -->
+ <g id="submarine" class="moving">
+  <g transform="rotate(-3 820 550)">
+   <ellipse cx="827" cy="836" rx="410" ry="24" fill="#3f8788" opacity=".18"/>
+   <path d="M478 404C505 220 673 150 916 164C1123 178 1269 274 1305 450C1357 653 1249 790 1071 808C812 840 605 794 509 707L479 655H410V404Z" fill="url(#glass)" stroke="#477d7d" stroke-width="7"/>
+   <!-- Fins are shaped like sea glass, not borrowed image assets. -->
+   <path d="M715 782q-36 52-14 83 67-18 99-72m186-4q47 52 83 43l-31-35" fill="#58918c" fill-opacity=".7" stroke="#3f7377" stroke-width="4"/>
+   <path d="M1170 372q52-40 77-19l-2 56" fill="#75a99b" fill-opacity=".7" stroke="#477d7d" stroke-width="4"/>
+   <!-- Thick neck ring and stippled cork. -->
+   <path d="M393 417q31-11 61 0v228q-31 12-61 0Z" fill="url(#cork)" class="ink"/>
+   <ellipse cx="394" cy="532" rx="23" ry="115" fill="#ab8058" class="ink"/>
+   <g fill="#775c47" opacity=".45"><circle cx="407" cy="456" r="3"/><circle cx="438" cy="472" r="3"/><circle cx="418" cy="494" r="2.5"/><circle cx="435" cy="535" r="4"/><circle cx="412" cy="564" r="3"/><circle cx="432" cy="600" r="2.5"/><circle cx="407" cy="620" r="3"/></g>
+   <path d="M449 399q23-8 42 0v264q-20 12-42 0Z" fill="#b4d8c3" fill-opacity=".72" stroke="#477d7d" stroke-width="5"/>
+   <path d="M460 416v230" fill="none" stroke="#eef4d5" stroke-width="5" stroke-linecap="round"/>
+   <!-- Tail propeller has a cage and a slow rotating three-blade hub. -->
+   <path d="M393 532H290" stroke="#2b535d" stroke-width="20" stroke-linecap="round"/><path d="M393 532H290" stroke="#b7a26d" stroke-width="11" stroke-linecap="round"/>
+   <g transform="translate(287 532)"><circle r="78" fill="#5d9a97" fill-opacity=".35" stroke="#456d6a" stroke-width="6"/><g id="propeller" class="moving" fill="url(#metal)" stroke="#3a6268" stroke-width="3"><path d="M0-8C-39-72-72-38-62-17-50 6-18 10 0 5Z"/><path d="M0-8C-39-72-72-38-62-17-50 6-18 10 0 5Z" transform="rotate(120)"/><path d="M0-8C-39-72-72-38-62-17-50 6-18 10 0 5Z" transform="rotate(240)"/></g><circle r="13" fill="#dfc087" stroke="#315961" stroke-width="4"/><path d="M0-76V-20M0 20v56M-66-38-17-10m34 20 49 28m-132 0 49-28m34-20 49-28" stroke="#4e8280" stroke-width="3"/></g>
+   <path d="M574 716C761 756 1034 759 1199 700L1180 737C1010 795 752 788 592 753Z" fill="#537a75" fill-opacity=".65" stroke="#477573" stroke-width="4"/>
+   <path d="M594 720q258 63 581-16" fill="none" stroke="#e0dfb5" stroke-width="3"/>
+   <!-- Camera bag, spare film and a miniature depth gauge. -->
+   <g transform="translate(656 704)"><rect x="-53" y="-61" width="105" height="79" rx="12" fill="#9a8860" class="ink"/><path d="M-53-37H52l-8 18h-86Z" fill="#c9b686" class="ink"/><path d="M-23-61v-14q22-17 45 0v14" fill="none" stroke="#31535b" stroke-width="7"/><rect x="-6" y="-27" width="14" height="22" rx="3" fill="#e8d59a" stroke="#3e5d5d" stroke-width="2"/><path d="M-39 0h23m33 0h21" stroke="#dbc798" stroke-width="2"/></g>
+   <g transform="translate(1133 685)"><path d="M-32 25v-55h64v55" fill="#8e9c7f" class="ink"/><circle cy="-8" r="23" fill="#eee4bd" stroke="#335e64" stroke-width="4"/><path d="M-17-8h5m29 0h-5M0-25v5m-12-1 4 4m20-4-4 4" stroke="#547577" stroke-width="2"/><path d="M0-8 11-20" stroke="#c47758" stroke-width="3" stroke-linecap="round"/><circle cy="-8" r="3" fill="#315b64"/></g>
+   <!-- Orange webbed feet and a compact seated bird body. -->
+   <path d="m793 659-9 39-45 18q-15 12 1 18l64-8 19-24 5-39" fill="#dfa76c" class="ink"/><path d="m876 672 7 30 43 11q22 12 8 21l-62-6-17-22-7-36" fill="#ebb979" class="ink"/><path d="m788 711-32 14m42-13-22 14m105-11 25 10m-11-14 26 13" class="fine"/>
+   <path d="M785 492C720 522 717 599 753 656C790 716 900 715 955 668C1010 620 1001 547 938 499Z" fill="url(#feather)" class="ink"/>
+   <path d="M953 622q45 1 65 28l-25-1 6 22q-28-4-50-18" fill="#44636b" class="ink"/>
+   <!-- Khaki photographer vest has broad pockets and a dark camera strap. -->
+   <path d="M783 496q-51 18-49 83l13 62 60 33 24-129Z" fill="url(#vest)" class="ink"/><path d="M911 500q65 2 76 59l-10 69-42 47-52-134Z" fill="url(#vest)" class="ink"/>
+   <path d="m789 501 33 29-18 44-32-38m140-31-29 28 28 39 27-38" fill="#efe0b7" stroke="#627667" stroke-width="3"/>
+   <path d="m755 588 47 6-8 44-40-6Zm173 2 39-11-4 44-31 18Z" fill="#b4a278" stroke="#586f65" stroke-width="3"/><path d="m754 587 47 5-2 15-44-6m172-13 42-11-2 15-39 13" fill="#d9c694" stroke="#586f65" stroke-width="3"/><circle cx="777" cy="608" r="3" fill="#5b6c5f"/><circle cx="949" cy="601" r="3" fill="#5b6c5f"/>
+   <path d="M792 519q30 76 105 116l88-82" fill="none" stroke="#365a61" stroke-width="13" stroke-linecap="round"/><path d="M797 524q31 73 100 106l84-78" fill="none" stroke="#8b9b84" stroke-width="3"/>
+   <!-- White neck keeps the characteristic long pelican silhouette. -->
+   <path d="M809 527C782 492 782 456 811 420C837 390 838 370 824 345C808 315 828 285 866 281C906 277 939 299 938 333C937 366 907 392 890 419C873 446 886 483 912 506C888 538 848 543 809 527Z" fill="url(#feather)" class="ink"/>
+   <path d="M833 500C816 471 832 445 853 423C874 397 885 371 874 348" fill="none" stroke="#adcabd" stroke-width="7" stroke-linecap="round"/>
+   <path d="m828 311-13-17 21 5-1-15 21 13" fill="#f9f3db" class="ink"/>
+   <!-- Broad, unmistakable gular pouch below the long bill. -->
+   <path d="M911 342C949 363 1043 375 1159 359C1121 410 1025 446 966 423C935 411 913 378 911 342Z" fill="url(#pouch)" class="ink"/>
+   <path d="M939 370C992 402 1053 404 1122 376" fill="none" stroke="#f8dca4" stroke-width="4" stroke-linecap="round"/>
+   <path d="M915 323C981 325 1071 339 1179 354L1159 368C1058 367 983 358 914 350Z" fill="url(#bill)" class="ink"/>
+   <path d="M936 338 1155 357" fill="none" stroke="#b9845a" stroke-width="2.5"/><path d="m1179 354-9 18-11-4" fill="#c88053" stroke="#2b535d" stroke-width="3" stroke-linejoin="round"/>
+   <ellipse cx="897" cy="325" rx="13" ry="16" fill="#e3c57d"/><g id="eye" class="moving"><ellipse cx="898" cy="325" rx="7.5" ry="10" fill="#2b535d"/><circle cx="901" cy="322" r="2.5" fill="#fff8df"/></g><path d="M882 305q11-8 22-2" class="fine"/>
+   <!-- A soft beret, angled over a short feathered forehead. -->
+   <path d="M806 283C782 256 800 226 849 220C886 202 939 216 947 242C951 260 928 280 892 287Z" fill="#4e7567" class="ink"/><path d="M812 278q58 15 111-5l-11 20q-55 15-95-2Z" fill="#2f5d58" class="ink"/><path d="M848 220q9-20 21-16l-4 15" fill="none" stroke="#2b535d" stroke-width="7" stroke-linecap="round"/><path d="M821 241q38-22 83-8" fill="none" stroke="#83a18a" stroke-width="3" stroke-linecap="round"/>
+   <!-- Extended wing supports the camera, with primary feathers as the grip. -->
+   <path d="M932 543q30-28 49-4l26 18 24-2 9 30q-57 17-91-13Z" fill="url(#feather)" class="ink"/><path d="m1007 558 18-6 13 14-23 10m6-2 18-8 8 13-22 10" fill="#496972" stroke="#2b535d" stroke-width="3"/>
+   <g transform="translate(1053 546)"><path d="M-48-27h31l12-17h38l14 17h16v65H-48Z" fill="#375b64" class="ink"/><path d="M-45-24H60v16H-45Z" fill="#d4c695" stroke="#2b535d" stroke-width="3"/><rect x="-33" y="-35" width="20" height="9" rx="2" fill="#a3b69a" stroke="#2b535d" stroke-width="2"/><rect x="8" y="-36" width="21" height="13" rx="2" fill="#91bcb4" stroke="#2b535d" stroke-width="2"/><circle cx="15" cy="7" r="32" fill="#213f4e" stroke="#b8b78d" stroke-width="5"/><circle cx="15" cy="7" r="24" fill="url(#lens)" stroke="#294c5b" stroke-width="3"/><circle cx="15" cy="7" r="13" fill="#315e6a"/><path id="camera-shine" class="moving" d="M0-8q12-12 27-1M-2-3l24 24" fill="none" stroke="#d6ecd0" stroke-width="4" stroke-linecap="round"/><circle cx="-30" cy="13" r="4" fill="#d3c18b"/></g>
+   <!-- Reflections stay in front of the rider but avoid its eye and camera. -->
+   <path d="M533 379C563 315 674 296 782 297" fill="none" stroke="#f2f7d9" stroke-width="11" stroke-linecap="round" opacity=".72"/>
+   <path d="M563 377q22-36 67-49" fill="none" stroke="#f2f7d9" stroke-width="4" stroke-linecap="round" opacity=".65"/>
+   <path d="M1207 403q79 145-14 267" fill="none" stroke="#edf4d4" stroke-width="10" stroke-linecap="round" opacity=".7"/>
+   <path d="M1198 705q-106 75-321 73" fill="none" stroke="#d6eaca" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+   <path d="M478 404C505 220 673 150 916 164C1123 178 1269 274 1305 450C1357 653 1249 790 1071 808C812 840 605 794 509 707L479 655" fill="none" stroke="#477d7d" stroke-width="4"/>
+   <g transform="translate(937 752) rotate(-2)"><rect x="-71" y="-15" width="142" height="31" rx="15" fill="#d9dfb9" fill-opacity=".8" stroke="#62938b" stroke-width="1.5"/><text y="5" text-anchor="middle" font-family="sans-serif" font-size="11" letter-spacing="3" fill="#3e7073">BOTTLE / 005</text></g>
+  </g>
+ </g>
+ <!-- Fish sit outside the glass, framed by a gentle photographic focus mark. -->
+ <g class="moving fish-school"><g transform="translate(1401 566) rotate(-8) scale(-1.05 1.05)"><use href="#fish"/></g><g class="moving photo-focus" fill="none" stroke="#e9edca" stroke-width="2.5"><path d="M1321 517v-16h21m117 16v-16h-21m-117 99v16h21m117-16v16h-21"/></g></g>
+ <g class="moving fish-school two"><use href="#fish" transform="translate(1395 718) scale(-.62 .62)"/><use href="#fish" transform="translate(1219 870) rotate(12) scale(.55)"/></g>
+ <!-- Rising bubbles originate behind the propeller, with staggered timing. -->
+ <g class="moving air-column"><use href="#air" x="208" y="558"/><use href="#air" x="175" y="467"/><use href="#air" transform="translate(220 374) scale(.6)"/></g>
+ <g class="moving air-column second"><use href="#air" x="249" y="607"/><use href="#air" transform="translate(179 535) scale(.7)"/><use href="#air" transform="translate(146 404) scale(.5)"/></g>
+ <g opacity=".7"><use href="#air" transform="translate(1354 342) scale(.55)"/><use href="#air" transform="translate(1405 387) scale(.8)"/><use href="#air" transform="translate(1490 818) scale(.65)"/></g>
+ <!-- Foreground kelp is anchored at the sea floor, not floating freely. -->
+ <g transform="translate(158 1022)"><g class="moving kelp"><path d="M0 0C-21-114 15-204-7-345" fill="none" stroke="#327c72" stroke-width="9" stroke-linecap="round"/><use href="#leaf" transform="translate(-5 -53) rotate(-15) scale(1.1)"/><use href="#leaf" transform="translate(-6 -120) scale(-1.1 1.1)"/><use href="#leaf" transform="translate(-1 -185) rotate(-10) scale(.9)"/><use href="#leaf" transform="translate(-1 -250) scale(-.85 .85)"/><use href="#leaf" transform="translate(-6 -305) scale(.65)"/></g></g>
+ <g transform="translate(1462 1025)"><g class="moving kelp second"><path d="M0 0C31-113-15-224 9-341" fill="none" stroke="#327c72" stroke-width="9" stroke-linecap="round"/><use href="#leaf" transform="translate(10 -53) scale(-1.1 1.1)"/><use href="#leaf" transform="translate(10 -126) rotate(-8) scale(1.05)"/><use href="#leaf" transform="translate(4 -199) scale(-.9 .9)"/><use href="#leaf" transform="translate(5 -262) scale(.8)"/></g></g>
+ <g transform="translate(276 1002)" stroke="#ab8266" stroke-width="3" stroke-linejoin="round"><path d="M-35 0q-9-31 6-49l13 28 14-35 13 35 21-22q14 31 5 44Z" fill="#d3a286"/><path d="M-20-7q-3-16-7-28M-2-3v-38m19 32 11-22" fill="none" stroke="#e6b89a"/></g>
+ <path d="m1265 991 13-27 11 23 28-1-22 17 9 27-26-14-23 14 5-27-23-14Z" fill="#d9a58a" stroke="#a78169" stroke-width="2.5" stroke-linejoin="round"/>
+ <g fill="#426e70" font-family="sans-serif" font-size="12" letter-spacing="2"><text x="349" y="1041">玻璃瓶潜水艇 × 卡其摄影马甲与贝雷帽</text><text x="1218" y="1041" text-anchor="end">ORIGINAL SVG · HKT</text></g>
+ <rect x="28" y="28" width="1544" height="1044" fill="url(#paper-grain)" pointer-events="none"/>
+</g>
+<g id="svg-toggle" role="button" tabindex="0" aria-label="暂停动画" aria-pressed="false" transform="translate(1011 923)"><rect width="220" height="46" rx="23" fill="#2e686d" stroke="#c3dec0" stroke-width="1.5"/><text id="svg-toggle-label" x="110" y="30" text-anchor="middle" fill="#f1efd0" font-family="sans-serif" font-size="16">暂停动画</text></g>
+<script><![CDATA[
+(function(){const art=document.documentElement;if(art.localName!=='svg')return;const button=document.getElementById('svg-toggle'),label=document.getElementById('svg-toggle-label');const reduced=matchMedia('(prefers-reduced-motion: reduce)');let manual=false;function sync(){const stopped=manual||reduced.matches||document.hidden;art.setAttribute('data-motion',stopped?'paused':'on');button.setAttribute('aria-pressed',String(manual));button.setAttribute('aria-label',manual?'继续动画':'暂停动画');label.textContent=manual?'继续动画':'暂停动画';}function toggle(){manual=!manual;sync();}button.style.display='inline';button.addEventListener('click',toggle);button.addEventListener('keydown',function(e){if(e.key===' '||e.key==='Enter'){e.preventDefault();toggle();}});reduced.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);sync();})();
+]]></script>
+</svg>

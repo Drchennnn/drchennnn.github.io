@@ -1,0 +1,49 @@
+{
+  "dateHKT": "2026-11-09",
+  "transport": "玻璃瓶潜水艇",
+  "outfit": "摄影师的卡其马甲与贝雷帽",
+  "vehicles": [
+    "玻璃瓶潜水艇",
+    "蘑菇热气球",
+    "月牙缆车",
+    "风筝帆板",
+    "书本飞毯",
+    "南瓜履带车",
+    "海螺摩托艇",
+    "银匙飞船",
+    "泡泡水母列车",
+    "星云独木舟",
+    "蒲公英滑翔伞",
+    "纸飞机双翼机"
+  ],
+  "outfits": [
+    "天文学家的靛蓝斗篷与星纹尖帽",
+    "面包师的白围裙与蓬松厨师帽",
+    "园丁的苔绿背带裤与草帽",
+    "爵士乐手的酒红西装与礼帽",
+    "海盗的绛红外套与三角帽",
+    "极地探险家的珊瑚色绒边派克大衣",
+    "水手的蓝白条纹上衣与海军帽",
+    "太空快递员的橘色飞行服",
+    "邮差的绿色短外套与邮差包",
+    "摄影师的卡其马甲与贝雷帽",
+    "陶艺师的蓝色围裙与头巾",
+    "芭蕾舞者的薄荷色披肩与练功服"
+  ],
+  "method": "Two independent uniform draws using Python secrets.choice from 12 vehicles and 12 outfits; recent bicycle, teapot unicycle, lotus hovercraft, clock capsule, comet sled and aviation-mail, magician, detective, lighthouse keeper outfits excluded before drawing.",
+  "title": "鹈鹕的瓶中摄影航线",
+  "slug": "pelican-bottle-photo-2026-11-09",
+  "subject": "Actual white pelican bird, not Perlica",
+  "artwork": "Original SVG paths, shapes, gradients, patterns and lettering. No third-party images or external libraries.",
+  "recentWorksChecked": [
+    "pelican-ride",
+    "pelican-run",
+    "perlica-cloud-tea-2026-11-05",
+    "pelican-lotus-magic-2026-11-06",
+    "pelican-clock-detective-2026-11-07",
+    "pelican-comet-keeper-2026-11-08"
+  ],
+  "baselineCommit": "7f4a55d785238754bc3f8573d903a5be63326287",
+  "duplicateDateCheck": "No toy dated 2026-11-09 was present in the repository tree before creation.",
+  "animation": "Native SVG CSS keyframes; keyboard/click pause, reduced motion and page visibility. Wrapper validates exact parent and boolean journal:motion. Static gallery cover. No camera flash."
+}
