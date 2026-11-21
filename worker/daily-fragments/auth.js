@@ -34,21 +34,28 @@ export async function finishLogin(request, env, fetchImpl = fetch) {
   if (!config) return new Response('登录尚未配置。', { status: 503 });
 
   const headers = new Headers({ 'Set-Cookie': cookie(FLOW_COOKIE, '', 0) });
-  const failed = () => new Response('GitHub 登录验证失败，请重新登录。', { status: 400, headers });
+  const failed = (message, status = 400) => new Response(message, { status, headers });
   const url = new URL(request.url);
   if (url.origin !== config.origin || url.pathname !== '/callback' || request.method !== 'GET') {
-    return failed();
+    return failed('GitHub 回调地址无效。');
   }
 
   const code = url.searchParams.get('code');
   const state = url.searchParams.get('state');
-  const flow = await verify('oauth', readCookie(request, FLOW_COOKIE), config, FLOW_TTL);
-  if (url.searchParams.has('error') || !code || !state || flow?.state !== state) return failed();
+  if (url.searchParams.has('error') || !code || !state) {
+    return failed('GitHub 未完成授权，请从日记首页重新登录。');
+  }
+  const flowCookie = readCookie(request, FLOW_COOKIE);
+  if (!flowCookie) return failed('浏览器未带回日记登录 Cookie，请在同一浏览器标签页重新登录。');
+  const flow = await verify('oauth', flowCookie, config, FLOW_TTL);
+  if (flow?.state !== state) return failed('本次登录状态已失效，请仅在一个标签页中重新登录。');
 
+  let providerStep = 'GitHub 授权码交换';
   try {
     const exchange = await fetchImpl('https://github.com/login/oauth/access_token', {
       method: 'POST',
-      redirect: 'error',
+      // Workers supports manual redirects. A non-2xx response is rejected by the caller.
+      redirect: 'manual',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -62,19 +69,33 @@ export async function finishLogin(request, env, fetchImpl = fetch) {
         code_verifier: flow.verifier,
       }),
     });
-    if (!exchange.ok) return failed();
     const credentials = await exchange.json();
-    if (credentials.error || !credentials.access_token || (credentials.scope ?? '') !== '') return failed();
+    if (credentials.error === 'incorrect_client_credentials') {
+      return failed('GitHub OAuth 凭证校验失败，请检查应用 Client ID 和 Client Secret。', 503);
+    }
+    if (credentials.error === 'redirect_uri_mismatch') {
+      return failed('GitHub OAuth 应用的回调地址与日记配置不一致。', 503);
+    }
+    if (credentials.error === 'bad_verification_code') {
+      return failed('GitHub 授权码已过期或已使用，请从日记首页重新登录。');
+    }
+    if (!exchange.ok || credentials.error || !credentials.access_token) {
+      return failed('GitHub 未返回登录令牌，请从日记首页重试。', 502);
+    }
+    if ((credentials.scope ?? '') !== '') {
+      return failed('GitHub 返回了额外权限。请核对是否使用日记的专用 OAuth 应用。');
+    }
 
+    providerStep = 'GitHub 账号身份查询';
     const identity = await fetchImpl('https://api.github.com/user', {
-      redirect: 'error',
+      redirect: 'manual',
       headers: {
         Accept: 'application/vnd.github+json',
         Authorization: `Bearer ${credentials.access_token}`,
         'User-Agent': 'Daily-Fragments',
       },
     });
-    if (!identity.ok) return failed();
+    if (!identity.ok) return failed('GitHub 账号身份查询失败，请稍后重试。', 502);
     const user = await identity.json();
     if (!Number.isSafeInteger(user.id) || String(user.id) !== config.ownerId) {
       return new Response('此 GitHub 账号无权查看日记。', { status: 403, headers });
@@ -85,7 +106,7 @@ export async function finishLogin(request, env, fetchImpl = fetch) {
     headers.set('Location', '/');
     return new Response(null, { status: 302, headers });
   } catch {
-    return failed();
+    return failed(`${providerStep}暂不可用，请稍后重试。`, 502);
   }
 }
 

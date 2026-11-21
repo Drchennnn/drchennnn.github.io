@@ -44,7 +44,7 @@ function fixtureGitHub({ beforeCommit, afterCommit, records = [starter] } = {}) 
   const fetchImpl = async (requestUrl, request) => {
     assert.equal(request.headers.Authorization, `Bearer ${env.ARCHIVE_TOKEN}`);
     assert.equal(request.cache, 'no-store');
-    assert.equal(request.redirect, 'error');
+    assert.equal(request.redirect, 'manual');
     const url = new URL(requestUrl);
     assert.equal(url.origin, 'https://api.github.com');
     if (url.pathname === `${repoPath}/git/ref/heads/main`) {

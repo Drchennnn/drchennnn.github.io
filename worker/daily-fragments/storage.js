@@ -73,7 +73,8 @@ async function github(path, env, fetchImpl, { accept = "application/vnd.github+j
     },
     ...(body === undefined ? {} : { body: JSON.stringify(body) }),
     cache: "no-store",
-    redirect: "error",
+    // Workers supports manual redirects. A non-2xx response is rejected by the caller.
+    redirect: "manual",
   });
 }
 

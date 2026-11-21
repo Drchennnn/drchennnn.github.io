@@ -32,7 +32,7 @@ function callback(flow, { origin = ORIGIN, state = flow.state, cookie = flow.coo
 
 function github(flow, { id = OWNER_ID, scope = '' } = {}) {
   return async (url, options) => {
-    assert.equal(options.redirect, 'error');
+    assert.equal(options.redirect, 'manual');
     if (url === 'https://github.com/login/oauth/access_token') {
       assert.equal(options.method, 'POST');
       assert.equal(options.body.get('client_secret'), env.GITHUB_CLIENT_SECRET);
@@ -137,4 +137,17 @@ test('logout requires exact origin when the CSRF helper is used and clears both 
   for (const name of ['__Host-fragments-oauth', '__Host-fragments-session']) {
     assert.match(readResponseCookie(response, name), /Max-Age=0; Path=\/; Secure; HttpOnly; SameSite=Lax/u);
   }
+});
+
+test('a token endpoint redirect is refused without an authenticated session', async () => {
+  const flow = await start();
+  let requests = 0;
+  const response = await finishLogin(callback(flow), env, async (_, options) => {
+    requests++;
+    assert.equal(options.redirect, 'manual');
+    return Response.redirect('https://untrusted.example/token', 302);
+  });
+  assert.equal(requests, 1);
+  assert.equal(response.status, 502);
+  assert.ok(!response.headers.get('Set-Cookie').includes('__Host-fragments-session='));
 });
