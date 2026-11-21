@@ -45,6 +45,12 @@ try {
 
   assert(html('dist/daily/index.html').includes('Legacy daily fixture'));
   assert(!html('dist/daily/index.html').includes('Study fixture'));
+  assert(html('dist/daily/index.html').includes('href="/fragments/"'));
+  const fragments = html('dist/fragments/index.html');
+  assert(fragments.includes('name="robots" content="noindex, nofollow"'));
+  assert(fragments.includes('href="https://daily-fragments.drchennnn.workers.dev/"'));
+  assert.deepEqual(readdirSync('dist/fragments'), ['index.html']);
+  assert(!fragments.includes('Legacy daily fixture'));
   assert(html('dist/study/index.html').includes('Study fixture'));
   assert(html('dist/photos/index.html').includes('Photo fixture'));
   assert(html('dist/photos/zz-lifecycle-photo/index.html').includes('Quiet caption phrase'));
@@ -63,6 +69,7 @@ try {
   assert(!existsSync('dist/play/zz-lifecycle-toy-draft/index.html'));
 
   const search = html('dist/search/index.html');
+  assert(!search.includes('data-href="/fragments/'), 'Private journal entry point must stay outside blog search');
   for (const phrase of ['Daily searchable phrase', 'Study searchable phrase', 'Quiet caption phrase', 'Playful searchable gadget', 'Toy detail searchable phrase', 'kinetic']) {
     assert(search.includes(phrase), `Search index missing: ${phrase}`);
   }

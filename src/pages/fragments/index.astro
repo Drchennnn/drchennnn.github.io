@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import TitleReveal from '../../components/TitleReveal.astro';
+---
+<Base title="每日碎片" description="Link 的私人日记入口。" noindex>
+  <section class="simple">
+    <a class="back" href="/daily/">← 返回日常记录</a>
+    <header class="article-heading">
+      <h1><TitleReveal>每日碎片</TitleReveal></h1>
+      <p class="lede">日记、照片与月度回顾，仅本人登录后可见。</p>
+    </header>
+    <div class="actions">
+      <a class="button" href="https://daily-fragments.drchennnn.workers.dev/" rel="noreferrer" data-astro-reload>打开私人日记 <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</Base>

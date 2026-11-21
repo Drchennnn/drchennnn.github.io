@@ -6,8 +6,8 @@ import '../styles/p3r-opening.css';
 import ReloadMotion from '../components/ReloadMotion.astro';
 import MusicPlayer from '../components/MusicPlayer.astro';
 import { ClientRouter } from 'astro:transitions';
-interface Props { title?: string; description?: string; category?: 'daily' | 'study'; }
-const { title = 'LINK RELOAD · 青蓝档案', description = 'Link 的个人档案：日常记录、学习档案、光影片段与交互实验。' } = Astro.props;
+interface Props { title?: string; description?: string; category?: 'daily' | 'study'; noindex?: boolean; }
+const { title = 'LINK RELOAD · 青蓝档案', description = 'Link 的个人档案：日常记录、学习档案、光影片段与交互实验。', noindex = false } = Astro.props;
 const path = Astro.url.pathname;
 const nav = [
   ['/daily/', 'LOG', '日常记录'], ['/study/', 'STUDY', '学习档案'], ['/photos/', 'GALLERY', '光影片段'],
@@ -19,6 +19,7 @@ const nav = [
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title} · Link</title><meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
   <meta name="theme-color" content="#0649bd" />
   <link rel="canonical" href={new URL(path, Astro.site)} />
   <link rel="icon" href="/brand-reload.svg" type="image/svg+xml" />

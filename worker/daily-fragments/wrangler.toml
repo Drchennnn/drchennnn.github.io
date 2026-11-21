@@ -1,0 +1,12 @@
+name = "daily-fragments"
+main = "index.js"
+compatibility_date = "2026-10-15"
+workers_dev = true
+preview_urls = false
+
+[vars]
+APP_ORIGIN = "https://daily-fragments.drchennnn.workers.dev"
+OWNER_ID = "172265187"
+
+[observability]
+enabled = false
